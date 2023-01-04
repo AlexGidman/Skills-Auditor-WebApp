@@ -1,0 +1,47 @@
+.component {
+    display: inline-block;
+    min-width: var(--s10);
+    padding: calc(var(--s1) / 2) var(--s1);
+    border: 3px solid;
+    border-radius: var(--border-rad);
+    color: var(--c-primary);
+    background-color: var(--c-white);
+    font-size: x-large;
+}
+
+.component:hover,
+.component:active,
+.component:focus-within {
+    color: var(--c-white);
+    background-color: var(--c-primary);
+}
+
+.component:active {
+    opacity: 0.8;
+    transform: scale(0.95);
+    transition-duration: 0.1s;
+}
+
+.component:disabled {
+    color: black;
+    background-color: var(--c-grey);
+    transform: none;
+}
+
+.loading {
+    animation-name: loading;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-color: var(--c-grey);
+    }
+    50% {
+        background-color: var(--c-primary);
+    }
+    100% {
+        background-color: var(--c-grey);
+    }
+}

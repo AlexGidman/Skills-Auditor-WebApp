@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyDetails renders correctly with currentUser's details 1`] = `
+<div>
+  <header>
+    <h1>
+      My Details
+    </h1>
+  </header>
+  <section
+    class="section"
+  >
+    <table
+      class="table"
+    >
+      <tbody>
+        <tr>
+          <th>
+            First name
+          </th>
+          <td>
+            John
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Last name
+          </th>
+          <td>
+            Smith
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Email
+          </th>
+          <td>
+            John@email.com
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Job role
+          </th>
+          <td>
+            Manager
+          </td>
+        </tr>
+        <tr>
+          <th>
+            System role
+          </th>
+          <td>
+            Admin
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <a
+      class="component button"
+      href="/edit/user/1"
+    >
+      Edit user details
+    </a>
+  </section>
+</div>
+`;

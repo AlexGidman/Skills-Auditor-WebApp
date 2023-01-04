@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditCategory renders correctly when data retrieval successful 1`] = `
+<div>
+  <header>
+    <h1>
+      Edit Category
+    </h1>
+  </header>
+  <section>
+    <form
+      class="form"
+    >
+      <div
+        class="component item"
+      >
+        <label
+          class="label"
+          for="Category-description-undefined"
+        >
+          Category description
+          :
+        </label>
+        <input
+          class="input"
+          id="Category-description-undefined"
+          maxlength="100"
+          minlength="0"
+          pattern="[a-zA-ZÀ-ȕ-]+$"
+          value="Category1"
+        />
+      </div>
+      <div
+        class="buttonWrapper"
+      >
+        <button
+          class="component button"
+          disabled=""
+        >
+          Save changes
+        </button>
+        <button
+          class="component button"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
+`;

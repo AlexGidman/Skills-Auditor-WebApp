@@ -1,0 +1,35 @@
+.content {
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: var(--s2);
+    margin-left: calc(var(--s1) * 17);
+    text-align: center;
+}
+.hamburger {
+    display: none;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: var(--s6);
+    padding: var(--s1);
+    color: var(--c-secondary);
+    background-color: var(--c-primary);
+}
+
+@media (max-width: 900px) {
+    .header {
+        justify-content: space-between;
+    }
+    .nav {
+        display: none;
+    }
+    .hamburger {
+        display: inline;
+    }
+    .content {
+        margin-left: 0;
+    }
+}

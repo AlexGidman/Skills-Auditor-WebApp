@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewSkills renders correctly when data successful 1`] = `
+<div>
+  <header>
+    <h1>
+      View Skills
+    </h1>
+  </header>
+  <section>
+    <div
+      class="component component listview"
+    >
+      <label
+        class="label"
+        for="Select-a skill-undefined"
+      >
+        Select a skill
+        :
+      </label>
+      <select
+        aria-label="Select a skill"
+        class="select"
+        name="Select a skill"
+        size="5"
+      >
+        <option
+          value="1"
+        >
+          Skill1 - Category1
+        </option>
+        <option
+          value="2"
+        >
+          Skill2 - Category1
+        </option>
+      </select>
+    </div>
+    <div
+      class="buttonWrapper"
+    >
+      <a
+        class="component button disabled"
+        href="/edit/skill/undefined"
+      >
+        Edit skill
+      </a>
+      <button
+        class="component button"
+        disabled=""
+      >
+        Delete Skill
+      </button>
+    </div>
+  </section>
+</div>
+`;
+
+exports[`ViewSkills renders correctly when error 1`] = `
+<div>
+  <div
+    aria-label="Oops"
+    class="component"
+    role="alert"
+  >
+    <h1>
+      Something went wrong...
+    </h1>
+    <p>
+      Oops
+    </p>
+  </div>
+</div>
+`;

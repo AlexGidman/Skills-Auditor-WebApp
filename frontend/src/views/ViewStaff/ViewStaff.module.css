@@ -1,0 +1,40 @@
+.button {
+    flex: 20%;
+    min-width: 16rem;
+    box-sizing: border-box;
+}
+.flexbox {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--s2);
+    flex-wrap: wrap;
+    margin-bottom: var(--s2);
+}
+
+.form {
+    margin: 0 10%;
+}
+
+.listview {
+    margin-bottom: var(--s2);
+}
+
+.skillsList {
+    composes: listview;
+
+    flex: 30%;
+}
+
+.table {
+    flex: 40%;
+}
+
+@media (max-width: 900px) {
+    th,
+    td {
+        font-size: small;
+    }
+    .form {
+        margin: 0;
+    }
+}

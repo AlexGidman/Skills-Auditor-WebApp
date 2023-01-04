@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewCategories renders correctly when data successful 1`] = `
+<div>
+  <header>
+    <h1>
+      View Categories
+    </h1>
+  </header>
+  <section>
+    <div
+      class="component component listview"
+    >
+      <label
+        class="label"
+        for="Select-a category-undefined"
+      >
+        Select a category
+        :
+      </label>
+      <select
+        aria-label="Select a category"
+        class="select"
+        name="Select a category"
+        size="5"
+      >
+        <option
+          value="1"
+        >
+          Category1
+        </option>
+        <option
+          value="2"
+        >
+          Category2
+        </option>
+      </select>
+    </div>
+    <div
+      class="buttonWrapper"
+    >
+      <a
+        class="component button disabled"
+        href="/edit/category/undefined"
+      >
+        Edit category
+      </a>
+      <button
+        class="component button"
+        disabled=""
+      >
+        Delete Category
+      </button>
+    </div>
+  </section>
+</div>
+`;
+
+exports[`ViewCategories renders correctly when error 1`] = `
+<div>
+  <div
+    aria-label="Oops"
+    class="component"
+    role="alert"
+  >
+    <h1>
+      Something went wrong...
+    </h1>
+    <p>
+      Oops
+    </p>
+  </div>
+</div>
+`;

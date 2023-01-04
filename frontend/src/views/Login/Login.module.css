@@ -1,0 +1,88 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: var(--s6);
+    padding: var(--s1);
+    color: var(--c-secondary);
+    background-color: var(--c-primary);
+    width: 100%;
+}
+
+@media (max-width: 899px) {
+    .logo {
+        margin-left: var(--s1);
+    }
+
+    .label {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding-bottom: var(--s2);
+    }
+
+    .input {
+        padding: calc(var(--s1));
+        margin-bottom: var(--s2);
+        width: 100%;
+        box-sizing: border-box;
+        font-size: larger;
+    }
+
+    .button {
+        width: 50%;
+        padding: var(--s1);
+    }
+}
+
+@media (min-width: 900px) {
+    .logo {
+        margin-left: var(--s3);
+    }
+
+    .label {
+        display: inline-block;
+        width: 15%;
+        text-align: left;
+    }
+
+    .input {
+        padding: calc(var(--s2) / 2);
+        margin: calc(var(--s1));
+        width: 75%;
+        box-sizing: border-box;
+        display: inline-block;
+        font-size: medium;
+    }
+}
+
+.logo {
+    composes: icon from "../../index.css";
+}
+
+.form {
+    width: 100%;
+}
+
+.formBox {
+    width: 70%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 15%;
+    position: fixed;
+}
+
+.holder {
+    width: 100%;
+    text-align: center;
+}
+.button {
+    margin-top: var(--s1);
+    margin-bottom: var(--s1);
+}
+
+.error {
+    color: red;
+}

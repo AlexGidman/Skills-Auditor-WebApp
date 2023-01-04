@@ -1,0 +1,39 @@
+.component {
+}
+
+.statusBadge {
+    border: solid 3px;
+    border-radius: var(--border-rad);
+    padding: 0 var(--s1);
+    vertical-align: middle;
+    margin-right: calc(var(--s1) / 2);
+}
+
+.admin {
+    composes: statusBadge;
+    color: gold;
+}
+
+.manager {
+    composes: statusBadge;
+    color: var(--c-white);
+}
+
+.pill {
+    border: solid 3px;
+    border-radius: var(--s2);
+    padding: var(--s1);
+    max-width: var(--s10);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: small;
+    color: var(--c-white);
+    background-color: var(--c-secondary);
+}
+
+@media (max-width: 900px) {
+    .statusBadge {
+        display: none;
+    }
+}

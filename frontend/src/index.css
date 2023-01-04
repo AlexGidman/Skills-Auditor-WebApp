@@ -1,0 +1,81 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+        "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: x-large;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+/* :root is where we put all global variables for css */
+:root {
+    --c-primary: #0d79a0;
+    --c-secondary: #096070;
+    --c-tertiary: #73919c;
+    --c-white: #ffffff;
+    --c-red: #c22d2d;
+    --c-grey: #928e8e;
+
+    --s1: 1rem; /* 16px base unit we can adjust*/
+    --s2: calc(var(--s1) * 2);
+    --s3: calc(var(--s1) * 3);
+    --s4: calc(var(--s1) * 4);
+    --s5: calc(var(--s1) * 5);
+    --s6: calc(var(--s1) * 6);
+    --s7: calc(var(--s1) * 7);
+    --s8: calc(var(--s1) * 8);
+    --s9: calc(var(--s1) * 9);
+    --s10: calc(var(--s1) * 10);
+
+    --border-rad: 0.5rem;
+}
+
+h1 {
+    font-size: xxx-large;
+}
+
+h2 {
+    font-size: xx-large;
+}
+
+h3 {
+    font-size: x-large;
+}
+
+li {
+    list-style-type: none;
+}
+
+ul {
+    padding: 0;
+}
+
+.icon {
+    --icon: var(--s5);
+    width: var(--icon);
+    height: var(--icon);
+}
+
+textarea {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+        "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+th,
+td {
+    border: 1px solid var(--c-primary);
+    border-radius: var(--border-rad);
+    padding: var(--s1);
+    font-size: medium;
+}
+
+@media (max-width: 900px) {
+    th,
+    td {
+        padding: calc(var(--s1) / 2);
+    }
+}

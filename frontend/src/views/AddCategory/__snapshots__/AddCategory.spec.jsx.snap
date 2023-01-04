@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddCategory renders correctly when data successful 1`] = `
+<div>
+  <header
+    class="content"
+  >
+    <h1>
+      Add Category
+    </h1>
+  </header>
+  <section>
+    <form
+      class="form"
+    >
+      <div
+        class="component textField content"
+      >
+        <label
+          class="label"
+          for="Enter-a category name-undefined"
+        >
+          Enter a category name
+          :
+        </label>
+        <input
+          class="input"
+          id="Enter-a category name-undefined"
+          maxlength="100"
+          minlength="0"
+          name="name"
+          pattern="[a-zA-ZÀ-ȕ-]+$"
+          required=""
+          value=""
+        />
+      </div>
+      <button
+        class="component button"
+        disabled=""
+      >
+        Add Category
+      </button>
+      <button
+        class="component button"
+      >
+        Cancel
+      </button>
+    </form>
+  </section>
+</div>
+`;

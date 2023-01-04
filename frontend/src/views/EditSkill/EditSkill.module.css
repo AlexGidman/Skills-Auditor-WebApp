@@ -1,0 +1,27 @@
+.button {
+    margin: 3%;
+    flex: 44%;
+    min-width: 14rem;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 10%;
+}
+
+.header {
+    margin-top: 10%;
+}
+
+.item {
+    min-width: 14rem;
+    margin: 0 3%;
+    flex: 44%;
+}
+
+@media (max-width: 900px) {
+    .form {
+        margin: 0;
+    }
+}

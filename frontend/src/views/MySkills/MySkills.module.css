@@ -1,0 +1,51 @@
+.header {
+    margin-top: 10%;
+}
+
+.button {
+    margin-top: var(--s2);
+    /* flex: 44%; */
+    /* min-width: 14rem; */
+}
+
+.buttonWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.form {
+    margin: 0 20%;
+}
+
+.welcomeMessage {
+    font-size: xx-large;
+}
+
+.listview {
+    margin-bottom: var(--s2);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.rowHeightColSpan {
+    height: 6.25rem;
+}
+
+@media (max-width: 900px) {
+    .form {
+        margin: 0;
+    }
+    .button {
+        flex: 100%;
+        margin-left: unset;
+        margin-right: unset;
+    }
+}

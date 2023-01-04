@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditSkill renders correctly when data retrieval successful 1`] = `
+<div>
+  <header>
+    <h1>
+      Edit Skill
+    </h1>
+  </header>
+  <section>
+    <form
+      class="form"
+    >
+      <div
+        class="component item"
+      >
+        <label
+          class="label"
+          for="Skill-description-undefined"
+        >
+          Skill description
+          :
+        </label>
+        <input
+          class="input"
+          id="Skill-description-undefined"
+          maxlength="100"
+          minlength="0"
+          pattern="[a-zA-ZÀ-ȕ-]+$"
+          value="Skill1"
+        />
+      </div>
+      <div
+        class="component item"
+      >
+        <label
+          class="label"
+          for="Skill-category-undefined"
+        >
+          Skill category
+          :
+        </label>
+        <select
+          aria-label="Skill category"
+          class="select"
+          name="Skill category"
+        >
+          <option
+            value="1"
+          >
+            Category1
+          </option>
+          <option
+            value="2"
+          >
+            Category2
+          </option>
+        </select>
+      </div>
+      <button
+        class="component button"
+        disabled=""
+      >
+        Save changes
+      </button>
+      <button
+        class="component button"
+      >
+        Cancel
+      </button>
+    </form>
+  </section>
+</div>
+`;

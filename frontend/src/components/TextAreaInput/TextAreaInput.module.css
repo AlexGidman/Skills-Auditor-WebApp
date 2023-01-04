@@ -1,0 +1,10 @@
+.component {
+    text-align: left;
+    display: block;
+}
+
+.input {
+    padding: calc(var(--s1) / 2);
+    width: 100%;
+    box-sizing: border-box;
+}

@@ -1,0 +1,76 @@
+{
+    "name": "skills-auditor-webapp",
+    "version": "1.0.0",
+    "description": "Skills Auditor Web App repository for agile web app university module.",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"## RUN TESTS FOR APPROPRIATE PROJECT ## \n- npm run test:api for backend tests\n- npm run test:ui for frontend tests\n\"",
+        "test:api": "npx jest --selectProjects backend-tests",
+        "test:ui": "cd frontend; npx react-scripts test --watchAll=false",
+        "configure-husky": "npx husky install && npx husky add .husky/pre-commit \"npx --no-install lint-staged\"",
+        "start": "cd frontend; npm run build; cd ..; node ./backend/bin/www",
+        "start-api": "nodemon ./backend/bin/www",
+        "start-ui": "cd frontend; npm run build; npm run start",
+        "start-logs": "mkdir -p logs && nodemon ./backend/bin/www | tee logs/logs_$(date +%Y-%m-%d_%T).txt",
+        "postinstall": "cd frontend && npm install"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "pre-push": "npm test"
+        }
+    },
+    "jest": {
+        "projects": [
+            {
+                "displayName": "backend-tests",
+                "roots": [
+                    "<rootDir>/backend/"
+                ],
+                "setupFilesAfterEnv": [
+                    "<rootDir>/backend/routes/__test__/testing.js"
+                ]
+            }
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sebroffey/Skills-Auditor-WebApp.git"
+    },
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/sebroffey/Skills-Auditor-WebApp/issues"
+    },
+    "homepage": "https://github.com/sebroffey/Skills-Auditor-WebApp#readme",
+    "devDependencies": {
+        "@types/jest": "^28.1.2",
+        "eslint": "^8.17.0",
+        "eslint-config-google": "^0.14.0",
+        "jest": "^28.1.1",
+        "supertest": "^6.2.3"
+    },
+    "dependencies": {
+        "argon2": "^0.28.5",
+        "create-react-app": "^5.0.1",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "express-brute": "^1.0.1",
+        "helmet": "^5.1.0",
+        "hpp": "^0.2.3",
+        "husky": "^8.0.1",
+        "jsonwebtoken": "^8.5.1",
+        "lint-staged": "^13.0.1",
+        "morgan": "^1.10.0",
+        "mysql2": "^2.3.3",
+        "node-toobusy": "^0.6.3",
+        "nodemon": "^2.0.16",
+        "prettier": "^2.6.2",
+        "sequelize": "^6.21.0"
+    },
+    "lint-staged": {
+        "**/*.{js}": [
+            "eslint . --fix",
+            "prettier --write ."
+        ]
+    }
+}

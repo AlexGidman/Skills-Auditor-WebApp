@@ -1,0 +1,26 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true
+  },
+  "extends": ["google"],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "ignorePatterns": ["**/package-lock.json", "**/package.json", ".eslintrc.json", "*.sql", "/frontend"],
+  "rules": {
+    "quotes": ["error", "double"],
+    "semi": ["error", "always"],
+    "object-curly-spacing": ["error", "always"],
+    "max-len": [1, 350],
+    "indent": [1, 4],
+    "new-cap": 0,
+    "no-unused-vars": [1],
+    "require-jsdoc": "off",
+    "linebreak-style":"off",
+    "space-before-function-paren":"off",
+    "eol-last":"off",
+    "no-trailing-spaces": "off"
+  }
+}

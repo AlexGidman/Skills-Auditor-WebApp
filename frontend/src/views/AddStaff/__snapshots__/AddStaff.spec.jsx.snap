@@ -1,0 +1,170 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddStaff renders correctly 1`] = `
+<div>
+  <header>
+    <h1>
+      Add Staff
+    </h1>
+  </header>
+  <section>
+    <form
+      class="form"
+    >
+      <div
+        class="component item"
+      >
+        <label
+          class="label"
+          for="First-name-undefined"
+        >
+          First name
+          :
+        </label>
+        <input
+          class="input"
+          id="First-name-undefined"
+          maxlength="100"
+          minlength="0"
+          pattern="[a-zA-ZÀ-ȕ-]+$"
+          required=""
+          value=""
+        />
+      </div>
+      <div
+        class="component item"
+      >
+        <label
+          class="label"
+          for="Last-name-undefined"
+        >
+          Last name
+          :
+        </label>
+        <input
+          class="input"
+          id="Last-name-undefined"
+          maxlength="100"
+          minlength="0"
+          pattern="[a-zA-ZÀ-ȕ-]+$"
+          required=""
+          value=""
+        />
+      </div>
+      <div
+        class="component item"
+      >
+        <label
+          class="label"
+          for="Password-undefined"
+        >
+          Password
+          :
+        </label>
+        <input
+          class="input"
+          id="Password-undefined"
+          maxlength="100"
+          minlength="0"
+          pattern="[a-zA-ZÀ-ȕ-]+$"
+          type="password"
+          value=""
+        />
+      </div>
+      <div
+        class="component item"
+      >
+        <label
+          class="label"
+          for="Job-role-undefined"
+        >
+          Job role
+          :
+        </label>
+        <select
+          aria-label="Job role"
+          class="select"
+          name="Job role"
+          required=""
+        >
+          <option
+            value="Mid-Level Developer"
+          >
+            Mid-Level Developer
+          </option>
+          <option
+            value="Senior Developer"
+          >
+            Senior Developer
+          </option>
+          <option
+            value="Manager"
+          >
+            Manager
+          </option>
+        </select>
+      </div>
+      <div
+        class="component item"
+      >
+        <label
+          class="label"
+          for="Email-undefined"
+        >
+          Email
+          :
+        </label>
+        <input
+          class="input"
+          id="Email-undefined"
+          maxlength="100"
+          minlength="0"
+          pattern="\\\\S+@\\\\S+\\\\.\\\\S+"
+          required=""
+          type="email"
+          value=""
+        />
+      </div>
+      <div
+        class="component item"
+      >
+        <label
+          class="label"
+          for="System-role-undefined"
+        >
+          System role
+          :
+        </label>
+        <select
+          aria-label="System role"
+          class="select"
+          name="System role"
+          required=""
+        >
+          <option
+            value="StaffUser"
+          >
+            StaffUser
+          </option>
+          <option
+            value="Manager"
+          >
+            Manager
+          </option>
+          <option
+            value="Admin"
+          >
+            Admin
+          </option>
+        </select>
+      </div>
+      <button
+        class="component button"
+        disabled=""
+      >
+        Add Staff
+      </button>
+    </form>
+  </section>
+</div>
+`;

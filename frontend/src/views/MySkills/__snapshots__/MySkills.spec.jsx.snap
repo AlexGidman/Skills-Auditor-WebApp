@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MySkills renders correctly when data retrieval fails 1`] = `
+<div>
+  <header>
+    <h1>
+      My Skills
+    </h1>
+  </header>
+  <section>
+    <form
+      class="form"
+    >
+      <div
+        aria-label="Oops"
+        class="component"
+        role="alert"
+      >
+        <h1>
+          Something went wrong...
+        </h1>
+        <p>
+          Oops
+        </p>
+      </div>
+      <div
+        class="buttonWrapper"
+      >
+        <a
+          class="component button disabled"
+          href="/edit/staffskill/null"
+        >
+          Edit
+        </a>
+        <button
+          class="component button"
+          disabled=""
+        >
+          Delete
+        </button>
+        <a
+          class="component button"
+          href="/addstaffskill"
+        >
+          Add Skill
+        </a>
+      </div>
+    </form>
+  </section>
+</div>
+`;
+
+exports[`MySkills renders correctly when data successful 1`] = `
+<div>
+  <header>
+    <h1>
+      My Skills
+    </h1>
+  </header>
+  <section>
+    <form
+      class="form"
+    >
+      <div
+        class="component component listview"
+      >
+        <label
+          class="label"
+          for="Select-a user skill-undefined"
+        >
+          Select a user skill
+          :
+        </label>
+        <select
+          aria-label="Select a user skill"
+          class="select"
+          name="Select a user skill"
+          size="5"
+        >
+          <option
+            value="100"
+          >
+            Skill1 - testname1
+          </option>
+        </select>
+      </div>
+      <table
+        class="table"
+      >
+        <tbody>
+          <tr>
+            <th>
+              Skill Level:
+            </th>
+            <td>
+              None
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Expiry Date:
+            </th>
+            <td>
+              N/A
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table
+        class="table"
+      >
+        <tbody>
+          <tr
+            class="rowHeightColSpan"
+          >
+            <td>
+              test notes
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div
+        class="buttonWrapper"
+      >
+        <a
+          class="component button"
+          href="/edit/staffskill/100"
+        >
+          Edit
+        </a>
+        <button
+          class="component button"
+          disabled=""
+        >
+          Delete
+        </button>
+        <a
+          class="component button"
+          href="/addstaffskill"
+        >
+          Add Skill
+        </a>
+      </div>
+    </form>
+  </section>
+</div>
+`;

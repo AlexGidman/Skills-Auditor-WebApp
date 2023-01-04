@@ -1,0 +1,35 @@
+.buttonWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--s2);
+    margin: 0 10%;
+}
+
+.button {
+    flex: 40%;
+}
+.header {
+    margin-top: 10%;
+}
+
+.welcomeMessage {
+    font-size: xx-large;
+}
+
+.listview {
+    margin-bottom: var(--s2);
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+@media (max-width: 900px) {
+    .buttonWrapper {
+        margin: 0;
+    }
+
+    .listview {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

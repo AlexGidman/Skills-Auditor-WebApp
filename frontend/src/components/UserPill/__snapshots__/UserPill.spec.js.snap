@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserPill renders correctly when passed admin props 1`] = `
+<div>
+  <div
+    class="component"
+  >
+    <span
+      aria-label="You are logged in as an admin"
+      class="admin"
+      role="status"
+    >
+      ADMIN
+    </span>
+    <span
+      aria-label="test@email.com is logged in"
+      class="pill"
+      role="status"
+    >
+      test@email.com
+    </span>
+  </div>
+</div>
+`;
+
+exports[`UserPill renders correctly when passed manager props 1`] = `
+<div>
+  <div
+    class="component"
+  >
+    <span
+      aria-label="You are logged in as a manager"
+      class="manager"
+      role="status"
+    >
+      MANAGER
+    </span>
+    <span
+      aria-label="test@email.com is logged in"
+      class="pill"
+      role="status"
+    >
+      test@email.com
+    </span>
+  </div>
+</div>
+`;
+
+exports[`UserPill renders correctly when passed no props 1`] = `
+<div>
+  <div
+    class="component"
+  >
+    <span
+      aria-label="No user is logged in"
+      class="pill"
+      role="status"
+    >
+      No user
+    </span>
+  </div>
+</div>
+`;
+
+exports[`UserPill renders correctly when passed staff user props 1`] = `
+<div>
+  <div
+    class="component"
+  >
+    <span
+      aria-label="test@email.com is logged in"
+      class="pill"
+      role="status"
+    >
+      test@email.com
+    </span>
+  </div>
+</div>
+`;

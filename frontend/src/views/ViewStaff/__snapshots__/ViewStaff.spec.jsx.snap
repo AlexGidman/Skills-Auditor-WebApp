@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewStaff renders correctly when data retrieval fails 1`] = `
+<div>
+  <div
+    aria-label="Oops"
+    class="component"
+    role="alert"
+  >
+    <h1>
+      Something went wrong...
+    </h1>
+    <p>
+      Oops
+    </p>
+  </div>
+</div>
+`;
+
+exports[`ViewStaff renders correctly when data retrieval successful 1`] = `
+<div>
+  <header>
+    <h1>
+      View Staff
+    </h1>
+  </header>
+  <section>
+    <form
+      class="form"
+    >
+      <div
+        class="component component listview"
+      >
+        <label
+          class="label"
+          for="Direct-Reports-undefined"
+        >
+          Direct Reports
+          :
+        </label>
+        <select
+          aria-label="Direct Reports"
+          class="select"
+          name="Direct Reports"
+          size="5"
+        >
+          <option
+            value="1"
+          >
+            testForename1 testSurname1
+          </option>
+          <option
+            value="2"
+          >
+            testForename2 testSurname2
+          </option>
+        </select>
+      </div>
+      <div
+        class="flexbox"
+      >
+        <table
+          class="table"
+        >
+          <tbody>
+            <tr>
+              <th>
+                Email
+              </th>
+              <td>
+                test1@email.com
+              </td>
+            </tr>
+            <tr>
+              <th>
+                Job role
+              </th>
+              <td>
+                Mid-Level Developer
+              </td>
+            </tr>
+            <tr>
+              <th>
+                System role
+              </th>
+              <td>
+                Manager
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div
+          class="component component skillsList"
+        >
+          <label
+            class="label"
+            for="Skills-undefined"
+          >
+            Skills
+            :
+          </label>
+          <select
+            aria-label="Skills"
+            class="select"
+            name="Skills"
+            size="5"
+          >
+            <option
+              value="100"
+            >
+              Skill1 - None
+            </option>
+          </select>
+        </div>
+      </div>
+      <div
+        class="flexbox"
+      >
+        <a
+          class="component button"
+          href="/edit/user/1"
+        >
+          Edit User
+        </a>
+        <button
+          class="component button"
+        >
+          Delete Report
+        </button>
+        <a
+          class="component button"
+          href="/addstaffskill/1"
+        >
+          Add Skill
+        </a>
+        <a
+          class="component button"
+          href="/edit/staffskill/100"
+        >
+          Edit Skill
+        </a>
+        <button
+          class="component button"
+        >
+          Delete Skill
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
+`;

@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddSkill renders correctly when data successful 1`] = `
+<div>
+  <header
+    class="content"
+  >
+    <h1>
+      Add Skill
+    </h1>
+  </header>
+  <section>
+    <form
+      class="form"
+    >
+      <div
+        class="component item"
+      >
+        <label
+          class="label"
+          for="Enter-a skill description-undefined"
+        >
+          Enter a skill description
+          :
+        </label>
+        <input
+          class="input"
+          id="Enter-a skill description-undefined"
+          maxlength="100"
+          minlength="0"
+          name="name"
+          pattern="[a-zA-ZÀ-ȕ-]+$"
+          required=""
+          value=""
+        />
+      </div>
+      <div
+        class="component item"
+      >
+        <label
+          class="label"
+          for="Select-a skill category-undefined"
+        >
+          Select a skill category
+          :
+        </label>
+        <select
+          aria-label="Select a skill category"
+          class="select"
+          name="Select a skill category"
+          required=""
+        >
+          <option
+            value="1"
+          >
+            Programming
+          </option>
+          <option
+            value="2"
+          >
+            Office365
+          </option>
+          <option
+            value="3"
+          >
+            Version Control
+          </option>
+        </select>
+      </div>
+      <a
+        class="component linkButton"
+        href="/addcategory"
+      >
+        Add Category
+      </a>
+      <button
+        class="component button"
+        disabled=""
+      >
+        Add Skill
+      </button>
+    </form>
+  </section>
+</div>
+`;
+
+exports[`AddSkill renders correctly when error 1`] = `
+<div>
+  <div
+    aria-label="Oops"
+    class="component"
+    role="alert"
+  >
+    <h1>
+      Something went wrong...
+    </h1>
+    <p>
+      Oops
+    </p>
+  </div>
+</div>
+`;

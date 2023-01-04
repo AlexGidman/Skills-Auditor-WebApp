@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Homepage renders correctly 1`] = `
+<div>
+  <header
+    class="header"
+  >
+    <h1>
+      Welcome to Skills Auditor!
+    </h1>
+  </header>
+  <section
+    class="welcomeMessage"
+  >
+    Click on navigation options to view details, add skills, and optimise your team
+  </section>
+</div>
+`;

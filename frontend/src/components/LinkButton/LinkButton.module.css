@@ -1,0 +1,23 @@
+@import "../Button/Button.module.css";
+
+.component {
+    composes: component from "../Button/Button.module.css";
+}
+
+.component:link,
+.component:visited {
+    text-decoration: none;
+}
+
+.component:hover,
+.component:active,
+.component:focus-within {
+    text-decoration: none;
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: black !important;
+    background-color: var(--c-grey) !important;
+}
