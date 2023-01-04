@@ -1,6 +1,6 @@
 # Skills-Auditor-WebApp
 
-Skills Auditor Web App repository for agile web app university module.
+A web application using React and Node for auditing skills.
 
 ## Getting Started
 
