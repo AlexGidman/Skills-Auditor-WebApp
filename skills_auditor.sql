@@ -53,13 +53,7 @@ CREATE TABLE `direct_report` (
   `report_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `direct_report`
---
 
-INSERT INTO `direct_report` (`id`, `user_id`, `report_id`) VALUES
-(2, 2, 1),
-(3, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -80,7 +74,7 @@ CREATE TABLE `skill` (
 INSERT INTO `skill` (`id`, `name`, `category_id`) VALUES
 (1, 'AWS CCP', 1),
 (2, 'Power Point', 2),
-(3, 'Git Skill', 3);
+(3, 'Git', 3);
 
 -- --------------------------------------------------------
 
@@ -103,9 +97,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `forename`, `surname`, `email`, `password`, `system_role`, `job_role`) VALUES
-(1, 'Alex', 'Gidman', 'Alex@Gidman', '$argon2id$v=19$m=15360,t=3,p=1$P8dAhB8e1Y9vMvtMfJ5gyQ$tSHA+y3mghxDHxKJ35bvu6fqf3oq7ki5QholzsUbfJE', 'Admin', 'Manager'),
-(2, 'Seb', 'Roffey', 'Seb@Roffey', '$argon2id$v=19$m=15360,t=3,p=1$IAryVPbmPSWk/UJAV9LGeQ$6cNPIRsS+JnPCXmduirRKh2WN67OrmIth860hi8IC4Y', 'Manager', 'Senior Developer'),
-(3, 'Billy', 'Mc', 'Billy@Mc', '$argon2id$v=19$m=15360,t=3,p=1$svbG44iQxGd0hsChOBo5/w$Ec0vZ0lN4UXHQnYWU/TtVIT3q5OapVrEldMFL+rsFAk', 'StaffUser', 'Mid-Level Developer');
+(1, 'Test', 'User', 'admin@email.com', '$argon2id$v=19$m=15360,t=3,p=1$P8dAhB8e1Y9vMvtMfJ5gyQ$tSHA+y3mghxDHxKJ35bvu6fqf3oq7ki5QholzsUbfJE', 'Admin', 'Manager');
+
 
 -- --------------------------------------------------------
 
@@ -127,9 +120,9 @@ CREATE TABLE `user_to_skill` (
 --
 
 INSERT INTO `user_to_skill` (`id`, `user_id`, `skill_id`, `skill_level`, `notes`, `expiry_date`) VALUES
-(1, 1, 1, 1, 'Only recently passed exam.', '2024-06-16'),
-(2, 2, 2, 3, 'Really good with Power Point', '0000-00-00'),
-(3, 3, 3, 2, 'Qualified in Git', '2023-06-16');
+(1, 1, 1, 1, 'Passed exam with 80%', '2029-01-01'),
+(2, 1, 2, 3, 'Power Point skills proficienct', '0000-00-00'),
+(3, 1, 3, 2, 'Git version control skills proficient', '0000-00-00');
 
 --
 -- Indexes for dumped tables

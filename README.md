@@ -2,6 +2,11 @@
 
 A web application using React and Node for auditing skills.
 
+## Requirements
+
+-   Node
+-   MySQL server (e.g. XAMPP for local development)
+
 ## Getting Started
 
 1. Install all node modules (checkout root project directory)
@@ -12,18 +17,24 @@ npm install
 
 2. Create a .env file in the backend directory and a TOKEN_SECRET variable. For example:
 
-
 ```
 TOKEN_SECRET="secret"
 ```
 
-3. Run application (production)
+3. Start the MySQL database server and initialise with skills_auditor.sql.
+
+4. Run application (production build of frontend served by the API)
 
 ```bash
 npm start
 ```
 
 Open web browser and access http://localhost:8900/
+
+**NOTE: Test admin user credentials set as follows:**
+
+-   Username: admin@email.com
+-   Password: password
 
 ### Running app for development
 
