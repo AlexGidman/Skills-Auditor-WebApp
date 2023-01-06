@@ -15,10 +15,12 @@ A web application using React and Node for auditing skills.
 npm install
 ```
 
-2. Create a .env file in the backend directory and a TOKEN_SECRET variable. For example:
+2. Create a .env file in the backend directory; this requires a TOKEN_SECRET variable, and an
+   optional port variable. For example:
 
 ```
 TOKEN_SECRET="secret"
+PORT="8080"
 ```
 
 3. Start the MySQL database server and initialise with skills_auditor.sql.
@@ -53,8 +55,13 @@ npm run start-ui
 
 Open web browser and access http://localhost:3000/
 
-**Note** The application will also be hosted on port 8900; this is the production build, so won't be
-updated dynamically. For development, ignore this route.
+**Note:** The development frontend will make API calls to the endpoint set by the 'proxy' value in
+frontend/package.json (default localhost:8900). Change this if you have set the backend to serve on
+a different port / endpoint.
+
+**Note** The production build of the application will also be hosted on the same port as your
+backend; this won't be updated dynamically when the code changes. For development, ignore this
+route.
 
 ## API Tests
 
