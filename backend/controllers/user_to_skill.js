@@ -1,5 +1,10 @@
-const router = require("../routes/user_to_skill");
-const utilities = require("../utilities/utility");
+const {
+    formatErrorResponse,
+    actionIsPermittedBySystemRole,
+    isUserOrDirectReportOfUser,
+    stringIsValidLength,
+    checkForDuplicateEntry,
+} = require("../utilities/utility");
 const constants = require("../utilities/constants");
 
 const db = require("../models");
@@ -7,11 +12,20 @@ const UserSkill = db.userSkill;
 const Category = db.category;
 const Skill = db.skill;
 
-getAll = async (req, res) => {
+const NOTES_MIN = 5;
+const NOTES_MAX = 255;
+
+function checkNotesLength(notes) {
+    if (!stringIsValidLength(notes, NOTES_MIN, NOTES_MAX)) {
+        throw new Error(
+            `Notes must contain a minimum of ${NOTES_MIN} characters and a maximum of ${NOTES_MAX} characters`,
+        );
+    }
+}
+
+const getAll = async (req, res) => {
     try {
-        if (
-            !(await utilities.actionIsPermittedBySystemRole(res.locals.userId, [constants.ADMIN]))
-        ) {
+        if (!(await actionIsPermittedBySystemRole(res.locals.userId, [constants.ADMIN]))) {
             throw new Error("Not Permitted!");
         }
         const userSkills = await UserSkill.findAll({
@@ -27,14 +41,14 @@ getAll = async (req, res) => {
         });
         res.status(200).json(userSkills);
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 
-getByUserId = async (req, res) => {
+const getByUserId = async (req, res) => {
     const id = req.params.id;
     try {
-        if (!(await utilities.isUserOrDirectReportOfUser(res.locals.userId, id))) {
+        if (!(await isUserOrDirectReportOfUser(res.locals.userId, id))) {
             throw new Error("Not Permitted!");
         }
         const userSkills = await UserSkill.findAll({
@@ -53,11 +67,11 @@ getByUserId = async (req, res) => {
         }
         res.status(200).json(userSkills);
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 
-getByStaffSkillId = async (req, res) => {
+const getByStaffSkillId = async (req, res) => {
     const id = req.params.id;
     try {
         if (!id) {
@@ -76,16 +90,16 @@ getByStaffSkillId = async (req, res) => {
         if (!userSkill) {
             throw new Error("Unable to find User Skill with id " + id);
         }
-        if (!(await utilities.isUserOrDirectReportOfUser(res.locals.userId, userSkill.user_id))) {
+        if (!(await isUserOrDirectReportOfUser(res.locals.userId, userSkill.user_id))) {
             throw new Error("Not Permitted!");
         }
         res.status(200).json(userSkill);
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 
-create = async (req, res) => {
+const create = async (req, res) => {
     let userSkill = {
         user_id: req.body.user_id,
         skill_id: req.body.skill_id,
@@ -94,7 +108,7 @@ create = async (req, res) => {
         expiry_date: req.body.expiry_date || null,
     };
     try {
-        if (!(await utilities.isUserOrDirectReportOfUser(res.locals.userId, userSkill.user_id))) {
+        if (!(await isUserOrDirectReportOfUser(res.locals.userId, userSkill.user_id))) {
             throw new Error("Not Permitted!");
         }
         if (
@@ -109,13 +123,9 @@ create = async (req, res) => {
             throw new Error("Skill level must be 1, 2, 3, 4, or 5");
         }
 
-        if (!utilities.stringIsValidLength(userSkill.notes, 5, 255)) {
-            throw new Error(
-                "Notes must contain a minimum of 5 characters and a maximum of 255 characters",
-            );
-        }
+        checkNotesLength(userSkill.notes);
 
-        await utilities.checkForDuplicateEntry(UserSkill, {
+        await checkForDuplicateEntry(UserSkill, {
             where: { user_id: userSkill.user_id, skill_id: userSkill.skill_id },
         });
 
@@ -123,11 +133,11 @@ create = async (req, res) => {
 
         res.status(201).json("User Skill added");
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 
-deleting = async (req, res) => {
+const deleting = async (req, res) => {
     const id = req.body.id;
     try {
         if (!id) {
@@ -146,7 +156,7 @@ deleting = async (req, res) => {
         if (!userSkill) {
             throw new Error("Id not found");
         }
-        if (!(await utilities.isUserOrDirectReportOfUser(res.locals.userId, userSkill.user_id))) {
+        if (!(await isUserOrDirectReportOfUser(res.locals.userId, userSkill.user_id))) {
             throw new Error("Not Permitted!");
         }
         const deleted = await UserSkill.destroy({ where: { id: id } });
@@ -155,11 +165,11 @@ deleting = async (req, res) => {
         }
         res.status(200).send("User Skill deleted");
     } catch (error) {
-        utilities.formatErrorResponse(res, 404, error);
+        formatErrorResponse(res, 404, error);
     }
 };
 
-update = async (req, res) => {
+const update = async (req, res) => {
     const id = req.body.id;
 
     const userSkill = {
@@ -172,11 +182,7 @@ update = async (req, res) => {
             throw new Error("Essential fields missing");
         }
 
-        if (!utilities.stringIsValidLength(userSkill.notes, 5, 255)) {
-            throw new Error(
-                "Notes must contain a minimum of 5 characters and a maximum of 255 characters",
-            );
-        }
+        checkNotesLength(userSkill.notes);
 
         if (userSkill.skill_level > 5 || userSkill.skill_level < 1) {
             throw new Error("Skill level must be 1, 2, 3, 4, or 5");
@@ -194,12 +200,7 @@ update = async (req, res) => {
         if (!existingUserSkill) {
             throw new Error("Id not found");
         }
-        if (
-            !(await utilities.isUserOrDirectReportOfUser(
-                res.locals.userId,
-                existingUserSkill.user_id,
-            ))
-        ) {
+        if (!(await isUserOrDirectReportOfUser(res.locals.userId, existingUserSkill.user_id))) {
             throw new Error("Not Permitted!");
         }
         const updatedArray = await UserSkill.update(userSkill, { where: { id: id } });
@@ -215,7 +216,7 @@ update = async (req, res) => {
         }
         res.status(200).json("User Skill updated");
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 

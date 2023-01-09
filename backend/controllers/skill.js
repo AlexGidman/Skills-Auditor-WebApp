@@ -1,11 +1,14 @@
-const router = require("../routes/skill");
-const utilities = require("../utilities/utility");
+const {
+    formatErrorResponse,
+    actionIsPermittedBySystemRole,
+    checkForDuplicateEntry,
+} = require("../utilities/utility");
 const db = require("../models");
 const { ADMIN, MANAGER_SR } = require("../utilities/constants");
 const Skill = db.skill;
 const Category = db.category;
 
-getAll = async (req, res) => {
+const getAll = async (req, res) => {
     try {
         const skills = await Skill.findAll({
             order: ["id"],
@@ -18,11 +21,11 @@ getAll = async (req, res) => {
         });
         res.status(200).json(skills);
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 
-getById = async (req, res) => {
+const getById = async (req, res) => {
     const id = req.params.id;
     try {
         const skill = await Skill.findByPk(id, { include: [{ model: Category, required: true }] });
@@ -31,19 +34,17 @@ getById = async (req, res) => {
         }
         res.status(200).json(skill);
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 
-create = async (req, res) => {
+const create = async (req, res) => {
     let skill = {
         name: req.body.name,
         category_id: req.body.category_id,
     };
     try {
-        if (
-            !(await utilities.actionIsPermittedBySystemRole(res.locals.userId, [ADMIN, MANAGER_SR]))
-        ) {
+        if (!(await actionIsPermittedBySystemRole(res.locals.userId, [ADMIN, MANAGER_SR]))) {
             throw new Error("Not Permitted!");
         }
 
@@ -51,7 +52,7 @@ create = async (req, res) => {
             throw new Error("Essential fields missing");
         }
 
-        await utilities.checkForDuplicateEntry(Skill, {
+        await checkForDuplicateEntry(Skill, {
             where: { name: skill.name, category_id: skill.category_id },
         });
 
@@ -59,16 +60,14 @@ create = async (req, res) => {
 
         res.status(201).json("Skill created");
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 
-deleting = async (req, res) => {
+const deleting = async (req, res) => {
     const id = req.body.id;
     try {
-        if (
-            !(await utilities.actionIsPermittedBySystemRole(res.locals.userId, [ADMIN, MANAGER_SR]))
-        ) {
+        if (!(await actionIsPermittedBySystemRole(res.locals.userId, [ADMIN, MANAGER_SR]))) {
             throw new Error("Not Permitted!");
         }
         if (!id) {
@@ -84,11 +83,11 @@ deleting = async (req, res) => {
         if (error.name === "SequelizeForeignKeyConstraintError") {
             error = new Error("Cannot delete Skill option - already assigned to User Skills");
         }
-        utilities.formatErrorResponse(res, 404, error);
+        formatErrorResponse(res, 404, error);
     }
 };
 
-update = async (req, res) => {
+const update = async (req, res) => {
     const id = req.body.id;
 
     const skill = {
@@ -97,15 +96,13 @@ update = async (req, res) => {
     };
 
     try {
-        if (
-            !(await utilities.actionIsPermittedBySystemRole(res.locals.userId, [ADMIN, MANAGER_SR]))
-        ) {
+        if (!(await actionIsPermittedBySystemRole(res.locals.userId, [ADMIN, MANAGER_SR]))) {
             throw new Error("Not Permitted!");
         }
         if (!id || !skill.name || !skill.category_id) {
             throw new Error("Essential fields missing");
         }
-        await utilities.checkForDuplicateEntry(Skill, {
+        await checkForDuplicateEntry(Skill, {
             where: { name: skill.name, category_id: skill.category_id },
         });
 
@@ -122,7 +119,7 @@ update = async (req, res) => {
         }
         res.status(200).json("Skill updated");
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 

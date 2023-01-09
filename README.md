@@ -25,7 +25,10 @@ PORT="8080"
 
 3. Start the MySQL database server and initialise with skills_auditor.sql.
 
-4. Run application (production build of frontend served by the API)
+4. Ensure backend/config/config.js is setup with correct settings for your MySQL server (defaults
+   are set to XAMPP settings)
+
+5. Run application (production build of frontend served by the API)
 
 ```bash
 npm start
