@@ -1,4 +1,3 @@
-const app = require("../app");
 const controller = require("../controllers/direct_report");
 const express = require("express");
 const router = express.Router();
