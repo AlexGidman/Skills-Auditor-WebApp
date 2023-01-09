@@ -1,36 +1,56 @@
-const router = require("../routes/user");
-const utilities = require("../utilities/utility");
+const {
+    formatErrorResponse,
+    actionIsPermittedBySystemRole,
+    isUserOrDirectReportOfUser,
+    stringIsValidLength,
+    checkForDuplicateEntry,
+    notValidUser,
+    getPasswordHash,
+} = require("../utilities/utility");
 const db = require("../models");
 const jwt = require("jsonwebtoken");
 const constants = require("../utilities/constants");
 const User = db.user;
 
-getAll = async (req, res) => {
+function sanitiseUser(user) {
+    return {
+        id: user.id,
+        forename: user.forename,
+        surname: user.surname,
+        email: user.email,
+        system_role: user.system_role,
+        job_role: user.job_role,
+    };
+}
+
+const PASSWORD_MIN = 10;
+const PASSWORD_MAX = 16;
+
+function checkPasswordLength(password) {
+    if (!stringIsValidLength(password, PASSWORD_MIN, PASSWORD_MAX)) {
+        throw new Error(
+            `Password must contain a minimum of ${PASSWORD_MIN} characters and a maximum of ${PASSWORD_MAX} characters`,
+        );
+    }
+}
+
+const getAll = async (req, res) => {
     try {
-        if (
-            !(await utilities.actionIsPermittedBySystemRole(res.locals.userId, [constants.ADMIN]))
-        ) {
+        if (!(await actionIsPermittedBySystemRole(res.locals.userId, [constants.ADMIN]))) {
             throw new Error("Not Permitted!");
         }
         const users = await User.findAll();
-        const sanitisedUsers = users.map((user) => ({
-            id: user.id,
-            forename: user.forename,
-            surname: user.surname,
-            email: user.email,
-            system_role: user.system_role,
-            job_role: user.job_role,
-        }));
+        const sanitisedUsers = users.map((user) => sanitiseUser(user));
         res.status(200).json(sanitisedUsers);
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 
-getById = async (req, res) => {
+const getById = async (req, res) => {
     const id = req.params.id;
     try {
-        if (!(await utilities.isUserOrDirectReportOfUser(res.locals.userId, id))) {
+        if (!(await isUserOrDirectReportOfUser(res.locals.userId, id))) {
             throw new Error("Not Permitted!");
         }
         const user = await User.findByPk(id);
@@ -38,20 +58,13 @@ getById = async (req, res) => {
             throw new Error("Unable to find User with id " + id);
         }
 
-        res.status(200).json({
-            id: user.id,
-            forename: user.forename,
-            surname: user.surname,
-            email: user.email,
-            system_role: user.system_role,
-            job_role: user.job_role,
-        });
+        res.status(200).json(sanitiseUser(user));
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 
-getByToken = async (req, res) => {
+const getByToken = async (req, res) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     const decoded = jwt.decode(token);
@@ -61,20 +74,13 @@ getByToken = async (req, res) => {
             throw new Error("Unable to find User with id " + id);
         }
 
-        res.status(200).json({
-            id: user.id,
-            forename: user.forename,
-            surname: user.surname,
-            email: user.email,
-            system_role: user.system_role,
-            job_role: user.job_role,
-        });
+        res.status(200).json(sanitiseUser(user));
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 
-create = async (req, res) => {
+const create = async (req, res) => {
     let user = {
         forename: req.body.forename,
         surname: req.body.surname,
@@ -85,57 +91,53 @@ create = async (req, res) => {
     };
     try {
         if (
-            !(await utilities.actionIsPermittedBySystemRole(res.locals.userId, [
+            !(await actionIsPermittedBySystemRole(res.locals.userId, [
                 constants.ADMIN,
                 constants.MANAGER_SR,
             ]))
         ) {
             throw new Error("Not Permitted!");
         }
-        if (utilities.notValidUser(user)) {
+        if (notValidUser(user)) {
             throw new Error("Essential fields missing");
         }
 
-        await utilities.checkForDuplicateEntry(User, { where: { email: user.email } });
+        await checkForDuplicateEntry(User, { where: { email: user.email } });
 
-        if (!utilities.isValidItem(constants.SYSTEM_ROLE, user.system_role)) {
+        if (!constants.SYSTEM_ROLE.includes(user.system_role)) {
             throw new Error(
                 "Not a valid entry for System Role: Options are Admin, Manager, StaffUser",
             );
         }
 
-        if (!utilities.isValidItem(constants.JOB_ROLE, user.job_role)) {
+        if (!constants.JOB_ROLE.includes(user.job_role)) {
             throw new Error(
                 "Not a valid entry for Job Role: Options are Manager, Senior Developer, Mid-Level Developer",
             );
         }
 
-        if (!utilities.stringIsValidLength(user.password, 10, 16)) {
-            throw new Error(
-                "Password must contain a minimum of 10 characters and a maximum of 16 characters",
-            );
-        }
+        checkPasswordLength(user.password);
 
         // Hash Password
-        user.password = await utilities.getPasswordHash(req.body.password);
+        user.password = await getPasswordHash(req.body.password);
 
         user = await User.create(user);
 
         res.status(201).json({ id: user.id, message: "User created" });
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 
-deleting = async (req, res) => {
+const deleting = async (req, res) => {
     const id = req.body.id;
     try {
         if (
-            !(await utilities.actionIsPermittedBySystemRole(res.locals.userId, [
+            !(await actionIsPermittedBySystemRole(res.locals.userId, [
                 constants.ADMIN,
                 constants.MANAGER_SR,
             ])) ||
-            !(await utilities.isUserOrDirectReportOfUser(res.locals.userId, id))
+            !(await isUserOrDirectReportOfUser(res.locals.userId, id))
         ) {
             throw new Error("Not Permitted!");
         }
@@ -149,11 +151,11 @@ deleting = async (req, res) => {
         }
         res.status(200).send("User deleted");
     } catch (error) {
-        utilities.formatErrorResponse(res, 404, error);
+        formatErrorResponse(res, 404, error);
     }
 };
 
-update = async (req, res) => {
+const update = async (req, res) => {
     const id = req.body.id;
     const user = {
         forename: req.body.forename,
@@ -166,7 +168,7 @@ update = async (req, res) => {
     const passwordNotSupplied = !!!req.body.password;
 
     try {
-        if (!(await utilities.isUserOrDirectReportOfUser(res.locals.userId, id))) {
+        if (!(await isUserOrDirectReportOfUser(res.locals.userId, id))) {
             throw new Error("Not Permitted!");
         }
         const dbUser = await User.findByPk(id);
@@ -175,29 +177,25 @@ update = async (req, res) => {
         if (passwordNotSupplied) {
             user.password = dbUser.password;
         } else {
-            if (!utilities.stringIsValidLength(user.password, 10, 16)) {
-                throw new Error(
-                    "Password must contain a minimum of 10 characters and a maximum of 16 characters",
-                );
-            }
-            user.password = await utilities.getPasswordHash(req.body.password);
+            checkPasswordLength(user.password);
+            user.password = await getPasswordHash(req.body.password);
         }
 
-        if (utilities.notValidUser(user)) {
+        if (notValidUser(user)) {
             throw new Error("Essential fields missing");
         }
 
         if (dbUser.email !== user.email) {
-            await utilities.checkForDuplicateEntry(User, { where: { email: user.email } });
+            await checkForDuplicateEntry(User, { where: { email: user.email } });
         }
 
-        if (!utilities.isValidItem(constants.SYSTEM_ROLE, user.system_role)) {
+        if (!constants.SYSTEM_ROLE.includes(user.system_role)) {
             throw new Error(
                 "Not a valid entry for System Role: Options are Admin, Manager, StaffUser",
             );
         }
 
-        if (!utilities.isValidItem(constants.JOB_ROLE, user.job_role)) {
+        if (!constants.JOB_ROLE.includes(user.job_role)) {
             throw new Error(
                 "Not a valid entry for Job Role: Options are Manager, Senior Developer, Mid-Level Developer",
             );
@@ -217,7 +215,7 @@ update = async (req, res) => {
 
         res.status(200).json("User updated");
     } catch (error) {
-        utilities.formatErrorResponse(res, 400, error);
+        formatErrorResponse(res, 400, error);
     }
 };
 
