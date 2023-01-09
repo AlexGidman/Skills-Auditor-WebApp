@@ -45,29 +45,6 @@ async function checkForDuplicateEntry(model, predicate) {
     }
 }
 
-function changeObjectItemValue(payload, item, value) {
-    if (Array.isArray(payload)) {
-        for (let i = 0; i < payload.length; i++) {
-            payload[i][item] = value;
-        }
-        return payload;
-    } else {
-        payload[item] = value;
-        return payload;
-    }
-}
-
-function isValidItem(arrayOfItems, item) {
-    if (arrayOfItems) {
-        for (let i = 0; i < arrayOfItems.length; i++) {
-            if (item === arrayOfItems[i]) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 function stringIsValidLength(item, min, max) {
     const lengthOfItem = item.length;
     return lengthOfItem >= min && lengthOfItem <= max;
@@ -87,7 +64,7 @@ function generateAccessToken(id) {
     return jwt.sign({ id }, process.env.TOKEN_SECRET, { expiresIn: constants.JWT_EXPIRES_IN });
 }
 
-function checkToken(req, res, action) {
+function checkToken(req, res, next) {
     const token = extractToken(req);
     if (!token || !constants.LOGIN_USER_ID) {
         return formatErrorResponse(res, 401, "Authorisation required");
@@ -105,7 +82,7 @@ function checkToken(req, res, action) {
         }
         res.locals.userId = decoded.id;
 
-        action();
+        next();
     });
 }
 
@@ -154,8 +131,6 @@ module.exports = {
     checkForDuplicateEntry,
     getPasswordHash,
     passwordsMatch,
-    changeObjectItemValue,
-    isValidItem,
     stringIsValidLength,
     generateAccessToken,
     checkToken,
