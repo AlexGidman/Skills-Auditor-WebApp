@@ -1,9 +1,17 @@
 import React from "react";
+const cx = require("classnames");
+const styles = require("./Button.module.css");
 
-import styles from "./Button.module.css";
-import cx from "classnames";
+interface Props extends React.ComponentProps<"button"> {
+    loading: boolean;
+}
 
-export const Button = ({ className, children, loading = false, ...rest }) => {
+export const Button = ({
+    className,
+    children,
+    loading = false,
+    ...rest
+}: Props): React.ReactElement => {
     const { disabled } = rest;
     return (
         <button
