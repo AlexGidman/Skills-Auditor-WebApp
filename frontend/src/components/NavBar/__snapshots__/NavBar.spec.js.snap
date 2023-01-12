@@ -103,7 +103,6 @@ exports[`HamburgerNavBar renders correctly when passed admin props 1`] = `
         <button
           class="component signoutButton"
           name="Sign Out"
-          path="/login"
         >
           Sign out
         </button>
@@ -216,7 +215,6 @@ exports[`HamburgerNavBar renders correctly when passed manager props 1`] = `
         <button
           class="component signoutButton"
           name="Sign Out"
-          path="/login"
         >
           Sign out
         </button>
@@ -279,7 +277,6 @@ exports[`HamburgerNavBar renders correctly when passed staff user props 1`] = `
         <button
           class="component signoutButton"
           name="Sign Out"
-          path="/login"
         >
           Sign out
         </button>
@@ -387,7 +384,6 @@ exports[`NavBar renders correctly when passed admin props 1`] = `
         <button
           class="component signoutButton"
           name="Sign Out"
-          path="/login"
         >
           Sign out
         </button>
@@ -495,7 +491,6 @@ exports[`NavBar renders correctly when passed manager props 1`] = `
         <button
           class="component signoutButton"
           name="Sign Out"
-          path="/login"
         >
           Sign out
         </button>
@@ -553,7 +548,6 @@ exports[`NavBar renders correctly when passed staff user props 1`] = `
         <button
           class="component signoutButton"
           name="Sign Out"
-          path="/login"
         >
           Sign out
         </button>

@@ -78,7 +78,6 @@ exports[`EditStaffSkill renders correctly when data retrieval successful and ski
           id="Notes-undefined"
           maxlength="100"
           minlength="0"
-          pattern="[a-zA-ZÀ-ȕ-]+$"
           rows="4"
         >
           test notes
@@ -180,7 +179,6 @@ exports[`EditStaffSkill renders correctly when data retrieval successful and ski
           id="Notes-undefined"
           maxlength="100"
           minlength="0"
-          pattern="[a-zA-ZÀ-ȕ-]+$"
           rows="4"
         >
           test notes

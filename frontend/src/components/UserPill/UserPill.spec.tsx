@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import React from "react";
 import { ADMIN, MANAGER_SR, STAFF_USER } from "../../utility/types";
 import { UserPill } from "./UserPill";
 

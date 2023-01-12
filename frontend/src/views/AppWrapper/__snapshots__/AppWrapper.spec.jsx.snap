@@ -108,7 +108,6 @@ exports[`AppWrapper renders correctly 1`] = `
           <button
             class="component signoutButton"
             name="Sign Out"
-            path="/login"
           >
             Sign out
           </button>
@@ -230,7 +229,6 @@ exports[`AppWrapper renders correctly 1`] = `
         <button
           class="component signoutButton"
           name="Sign Out"
-          path="/login"
         >
           Sign out
         </button>

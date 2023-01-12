@@ -112,7 +112,6 @@ exports[`AddStaffSkill renders correctly when data successful 1`] = `
           maxlength="100"
           minlength="0"
           name="notes"
-          pattern="[a-zA-ZÀ-ȕ-]+$"
           required=""
           rows="4"
         />
