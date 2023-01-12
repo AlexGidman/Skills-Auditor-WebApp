@@ -3,7 +3,7 @@ import cx from "classnames";
 import styles from "./Button.module.css";
 
 interface Props extends React.ComponentProps<"button"> {
-    loading: boolean;
+    loading?: boolean;
 }
 
 export const Button = ({

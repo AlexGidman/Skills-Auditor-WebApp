@@ -26,7 +26,7 @@ export const EditUserDetails = () => {
     } = useAPI(getAllDirectReports, [currentUser.id]);
 
     useEffect(() => {
-        if (currentUser.id.toString() !== userId.toString()) {
+        if (userId && currentUser.id.toString() !== userId.toString()) {
             if (
                 !!directReportsError ||
                 (!!directReportsData &&

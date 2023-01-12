@@ -3,7 +3,17 @@ import cx from "classnames";
 import styles from "./UserPill.module.css";
 import { MANAGER_SR, STAFF_USER, ADMIN } from "../../utility/types";
 
-export const UserPill = ({ email = "No user", systemRole = STAFF_USER, className, ...rest }) => {
+interface Props extends React.ComponentProps<"div"> {
+    email?: string;
+    systemRole?: string; // TODO: Change this when sytsem role type changes
+}
+
+export const UserPill = ({
+    email = "No user",
+    systemRole = STAFF_USER,
+    className,
+    ...rest
+}: Props) => {
     return (
         <div className={cx(styles.component, className)} {...rest}>
             {systemRole === MANAGER_SR && (

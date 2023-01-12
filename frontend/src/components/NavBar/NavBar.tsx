@@ -52,7 +52,11 @@ const navLinks = [
     },
 ];
 
-export const NavBar = ({ systemRole, className, ...rest }) => {
+interface Props extends React.ComponentProps<"nav"> {
+    systemRole: string; // TODO: change this type when system role changes
+}
+
+export const NavBar = ({ systemRole, className, ...rest }: Props): React.ReactElement => {
     const processLogout = useLogout();
 
     return (
@@ -79,7 +83,6 @@ export const NavBar = ({ systemRole, className, ...rest }) => {
                 <li className={styles.listItem}>
                     <Button
                         className={styles.signoutButton}
-                        path={"/login"}
                         name="Sign Out"
                         onClick={() => processLogout()}
                     >
@@ -91,7 +94,7 @@ export const NavBar = ({ systemRole, className, ...rest }) => {
     );
 };
 
-export const HamburgerNavBar = ({ systemRole, className, ...rest }) => {
+export const HamburgerNavBar = ({ systemRole, className, ...rest }: Props): React.ReactElement => {
     const [menuVisible, setMenuVisible] = useState(false);
     const processLogout = useLogout();
 
@@ -125,7 +128,6 @@ export const HamburgerNavBar = ({ systemRole, className, ...rest }) => {
                 <li className={styles.listItem}>
                     <Button
                         className={styles.signoutButton}
-                        path={"/login"}
                         name="Sign Out"
                         onClick={() => processLogout()}
                     >

@@ -19,3 +19,10 @@ export const BASIC = SKILL_LEVELS[1];
 export const INTERMEDIATE = SKILL_LEVELS[2];
 export const HIGH = SKILL_LEVELS[3];
 export const EXPERT = SKILL_LEVELS[4];
+
+export type User = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+};

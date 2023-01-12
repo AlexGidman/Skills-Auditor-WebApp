@@ -10,11 +10,13 @@ import {
     MANAGER_SR,
     SYSTEM_ROLES,
     TOKEN_COOKIE,
+    User,
 } from "./types";
 import { useCookies } from "react-cookie";
+import { AxiosResponse, AxiosError } from "axios";
 
 export const useLogout = () => {
-    const [, , removeCookie] = useCookies(TOKEN_COOKIE);
+    const [, , removeCookie] = useCookies([TOKEN_COOKIE]); // TODO: Check this works!
     const navigate = useNavigate();
     const [logout, setLogout] = useState(false);
 
@@ -29,42 +31,47 @@ export const useLogout = () => {
     return () => setLogout(true);
 };
 
-export const hyphenate = (string) => {
-    return string.trim().replace(" ", "-");
+export const hyphenate = (str: string) => {
+    return str.trim().replace(" ", "-");
 };
 
-export const useAPI = (apiCallback, varArray = [], lazy = false, auth = true) => {
-    const [cookies] = useCookies(TOKEN_COOKIE);
+export const useAPI = (
+    apiCallback: Function,
+    varArray: unknown[] = [],
+    lazy = false,
+    auth = true,
+) => {
+    const [cookies] = useCookies([TOKEN_COOKIE]); // TODO: Check this works!
     const navigate = useNavigate();
 
     const [callAPI, setCallAPI] = useState(!lazy);
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(!lazy);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<Error | null>(null);
 
     const callback = () => {
         setLoading(true);
         setCallAPI(true);
     };
 
-    const authHeaders = {
-        headers: {
-            authorization: cookies[TOKEN_COOKIE],
-        },
-    };
-
     useEffect(() => {
         if (callAPI) {
+            const authHeaders = {
+                headers: {
+                    authorization: cookies[TOKEN_COOKIE],
+                },
+            };
+
             apiCallback
                 .apply(null, auth ? [authHeaders, ...varArray] : [...varArray])
-                .then((response) => {
+                .then((response: AxiosResponse) => {
                     setData(response.data);
                 })
-                .catch((error) => {
+                .catch((error: AxiosError<{ error: Error }>) => {
                     if (unauthorisedError(error)) {
                         navigate("/login");
                     } else {
-                        setError(error.response.data.error);
+                        setError(error?.response?.data?.error || null);
                     }
                 })
                 .finally(() => {
@@ -72,12 +79,12 @@ export const useAPI = (apiCallback, varArray = [], lazy = false, auth = true) =>
                     setCallAPI(false);
                 });
         }
-    }, [apiCallback, auth, callAPI, navigate, varArray]);
+    }, [apiCallback, auth, callAPI, cookies, navigate, varArray]);
 
     return { data, loading, error, callback };
 };
 
-export const getSelectOptionsFromArray = (valArray = [], labelArray = []) => {
+export const getSelectOptionsFromArray = (valArray: string[] = [], labelArray: string[] = []) => {
     return valArray.length === labelArray.length
         ? valArray.map((val, i) => {
               return { value: val, label: labelArray[i] };
@@ -87,7 +94,8 @@ export const getSelectOptionsFromArray = (valArray = [], labelArray = []) => {
           });
 };
 
-export const getAssignableSystemRoleOptions = (currentUserSystemRole) => {
+export const getAssignableSystemRoleOptions = (currentUserSystemRole: string) => {
+    // TODO implement proper type for system role
     const systemRolesOptions = getSelectOptionsFromArray(SYSTEM_ROLES);
     switch (currentUserSystemRole) {
         case ADMIN:
@@ -103,15 +111,15 @@ export const getAssignableSystemRoleOptions = (currentUserSystemRole) => {
     }
 };
 
-export const isValidString = (val, min = 0, max = 100) => {
+export const isValidString = (val: string, min = 0, max = 100) => {
     return !!val && val.length >= min && val.length <= max;
 };
 
-export const isValidEmail = (val) => {
+export const isValidEmail = (val: string) => {
     return /\S+@\S+\.\S+/.test(val);
 };
 
-export const isValidUser = (user) => {
+export const isValidUser = (user: User) => {
     return (
         !!user.firstName &&
         isValidString(user.firstName, 1) &&
@@ -124,7 +132,8 @@ export const isValidUser = (user) => {
 };
 
 export const useIsAdminOrManager = () => {
-    const [currentUser, setShowToast] = useOutletContext();
+    // @ts-ignore
+    const [currentUser, setShowToast] = useOutletContext(); // TODO fix type for AppOutletContext here
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -139,16 +148,18 @@ export const useIsAdminOrManager = () => {
     });
 };
 
-const unauthorisedError = (error) => error.response.status === 401 || error.response.status === 403;
+const unauthorisedError = (error: AxiosError): boolean =>
+    !!error?.response?.status || error?.response?.status === 401 || error?.response?.status === 403;
 
-export const formatDate = (_date) => {
+export const formatDate = (_date: Date) => {
     if (!_date) return "N/A";
     let newDate = new Date(_date);
     newDate.toLocaleDateString();
     return newDate.toLocaleDateString();
 };
 
-export const formatSkillLevel = (_skillLevel) => {
+export const formatSkillLevel = (_skillLevel: number) => {
+    // TODO implement proper type for skill level
     if (_skillLevel === 5) {
         return EXPERT;
     } else if (_skillLevel === 4) {
@@ -162,7 +173,8 @@ export const formatSkillLevel = (_skillLevel) => {
     }
 };
 
-export const convertSkillLevelName = (_skillLevel) => {
+export const convertSkillLevelName = (_skillLevel: string) => {
+    // TODO implement proper type for skill level
     if (_skillLevel === "Expert") {
         return 5;
     } else if (_skillLevel === "High") {
@@ -176,7 +188,7 @@ export const convertSkillLevelName = (_skillLevel) => {
     }
 };
 
-export const expiryDateNullFormatter = (_expiryDate) => {
+export const expiryDateNullFormatter = (_expiryDate: Date) => {
     if (_expiryDate === null) {
         return "N/A";
     } else {

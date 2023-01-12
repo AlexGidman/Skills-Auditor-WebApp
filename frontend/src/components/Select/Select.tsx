@@ -4,7 +4,20 @@ import { hyphenate } from "../../utility/helper";
 import styles from "./Select.module.css";
 import cx from "classnames";
 
-export const Select = ({ options, labelText = "", className, children, ...rest }) => {
+export type SelectOption = { value: string; label: string };
+
+interface Props extends React.ComponentProps<"select"> {
+    labelText?: string;
+    options: SelectOption[];
+}
+
+export const Select = ({
+    options,
+    labelText = "",
+    className,
+    children,
+    ...rest
+}: Props): React.ReactElement => {
     const id = `${hyphenate(labelText)}-${uuidv4()}`;
     if (!options) {
         options = [{ label: "-", value: "" }];

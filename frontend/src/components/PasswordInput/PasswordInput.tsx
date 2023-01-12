@@ -5,7 +5,16 @@ import cx from "classnames";
 
 import { hyphenate } from "../../utility/helper";
 
-export const PasswordInput = ({ labelText, className, children, ...rest }) => {
+interface Props extends React.ComponentProps<"input"> {
+    labelText: string;
+}
+
+export const PasswordInput = ({
+    labelText,
+    className,
+    children,
+    ...rest
+}: Props): React.ReactElement => {
     const id = `${hyphenate(labelText)}-${uuidv4()}`;
 
     return (

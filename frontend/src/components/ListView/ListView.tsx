@@ -1,7 +1,13 @@
 import React from "react";
 import cx from "classnames";
-import { Select } from "../Select/Select";
+import { Select, SelectOption } from "../Select/Select";
 import styles from "./ListView.module.css";
+
+interface Props extends React.ComponentProps<"select"> {
+    options: SelectOption[];
+    labelText: string;
+    totalVisibleItems?: number;
+}
 
 export const ListView = ({
     options,
@@ -10,7 +16,7 @@ export const ListView = ({
     className,
     children,
     ...rest
-}) => {
+}: Props) => {
     return (
         <Select
             options={options}
