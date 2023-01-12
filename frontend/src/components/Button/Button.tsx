@@ -1,6 +1,6 @@
 import React from "react";
-const cx = require("classnames");
-const styles = require("./Button.module.css");
+import cx from "classnames";
+import styles from "./Button.module.css";
 
 interface Props extends React.ComponentProps<"button"> {
     loading: boolean;
