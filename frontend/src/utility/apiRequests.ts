@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestHeaders } from "axios";
 
 const categoryEndpoint = "/api/category";
 const skillEndpoint = "/api/skill";
@@ -8,22 +8,26 @@ const loginEndpoint = "/api/login";
 const userSkillEndpoint = "/api/userskill";
 
 //CATEGORY
-export const getAllCategories = async (authHeaders) => {
+export const getAllCategories = async (authHeaders: AxiosRequestHeaders) => {
     return axios.get(categoryEndpoint, authHeaders);
 };
 
-export const getCategory = async (authHeaders, id) => {
+export const getCategory = async (authHeaders: AxiosRequestHeaders, id: string) => {
     return axios.get(`${categoryEndpoint}/${id}`, authHeaders);
 };
 
-export const addCategory = async (authHeaders, name) => {
+export const addCategory = async (authHeaders: AxiosRequestHeaders, name: string) => {
     const data = {
         name,
     };
     return axios.post(`${categoryEndpoint}`, data, authHeaders);
 };
 
-export const updateCategory = async (authHeaders, id, name) => {
+export const updateCategory = async (
+    authHeaders: AxiosRequestHeaders,
+    id: string,
+    name: string,
+) => {
     const data = {
         id,
         name,
@@ -31,21 +35,25 @@ export const updateCategory = async (authHeaders, id, name) => {
     return axios.put(categoryEndpoint, data, authHeaders);
 };
 
-export const deleteCategory = async (authHeaders, id) => {
+export const deleteCategory = async (authHeaders: AxiosRequestHeaders, id: string) => {
     const data = { id };
     return axios.delete(categoryEndpoint, { ...authHeaders, data });
 };
 
 //SKILL
-export const getAllSkills = async (authHeaders) => {
+export const getAllSkills = async (authHeaders: AxiosRequestHeaders) => {
     return axios.get(skillEndpoint, authHeaders);
 };
 
-export const getSkill = async (authHeaders, id) => {
+export const getSkill = async (authHeaders: AxiosRequestHeaders, id: string) => {
     return axios.get(`${skillEndpoint}/${id}`, authHeaders);
 };
 
-export const addSkill = async (authHeaders, name, category_id) => {
+export const addSkill = async (
+    authHeaders: AxiosRequestHeaders,
+    name: string,
+    category_id: string,
+) => {
     const data = {
         name,
         category_id,
@@ -53,7 +61,12 @@ export const addSkill = async (authHeaders, name, category_id) => {
     return axios.post(`${skillEndpoint}`, data, authHeaders);
 };
 
-export const updateSkill = async (authHeaders, id, name, categoryId) => {
+export const updateSkill = async (
+    authHeaders: AxiosRequestHeaders,
+    id: string,
+    name: string,
+    categoryId: string,
+) => {
     const data = {
         id,
         name,
@@ -62,29 +75,29 @@ export const updateSkill = async (authHeaders, id, name, categoryId) => {
     return axios.put(skillEndpoint, data, authHeaders);
 };
 
-export const deleteSkill = async (authHeaders, id) => {
+export const deleteSkill = async (authHeaders: AxiosRequestHeaders, id: string) => {
     const data = { id };
     return axios.delete(skillEndpoint, { ...authHeaders, data });
 };
 
 //USER
-export const getUserDetails = async (authHeaders, id) => {
+export const getUserDetails = async (authHeaders: AxiosRequestHeaders, id: string) => {
     return axios.get(`${userEndpoint}/${id}`, authHeaders);
 };
 
-export const getUserFromToken = async (authHeaders) => {
+export const getUserFromToken = async (authHeaders: AxiosRequestHeaders) => {
     return axios.get(`${userEndpoint}/token`, authHeaders);
 };
 
 export const updateUserDetails = async (
-    authHeaders,
-    id,
-    forename,
-    surname,
-    email,
-    password,
-    job_role,
-    system_role,
+    authHeaders: AxiosRequestHeaders,
+    id: string,
+    forename: string,
+    surname: string,
+    email: string,
+    password: string,
+    job_role: string, // TODO: change when job role type changes
+    system_role: string, // TODO: change when job system type changes
 ) => {
     const data = {
         id,
@@ -100,13 +113,13 @@ export const updateUserDetails = async (
 };
 
 export const addUser = async (
-    authHeaders,
-    forename,
-    surname,
-    email,
-    password,
-    job_role,
-    system_role,
+    authHeaders: AxiosRequestHeaders,
+    forename: string,
+    surname: string,
+    email: string,
+    password: string,
+    job_role: string, // TODO: change when job role type changes
+    system_role: string, // TODO: change when job system type changes
 ) => {
     const data = {
         forename,
@@ -119,17 +132,21 @@ export const addUser = async (
     return axios.post(userEndpoint, data, authHeaders);
 };
 
-export const deleteUser = async (authHeaders, id) => {
+export const deleteUser = async (authHeaders: AxiosRequestHeaders, id: string) => {
     const data = { id };
     return axios.delete(userEndpoint, { ...authHeaders, data });
 };
 
 //DIRECT REPORTS
-export const getAllDirectReports = async (authHeaders, id) => {
+export const getAllDirectReports = async (authHeaders: AxiosRequestHeaders, id: string) => {
     return axios.get(`${directReportEndpoint}/${id}`, authHeaders);
 };
 
-export const addDirectReport = async (authHeaders, userId, reportId) => {
+export const addDirectReport = async (
+    authHeaders: AxiosRequestHeaders,
+    userId: string,
+    reportId: string,
+) => {
     const data = {
         user_id: userId,
         report_id: reportId,
@@ -138,26 +155,26 @@ export const addDirectReport = async (authHeaders, userId, reportId) => {
 };
 
 //STAFF SKILLS
-export const getAllStaffSkills = async (authHeaders, id) => {
+export const getAllStaffSkills = async (authHeaders: AxiosRequestHeaders, id: string) => {
     return axios.get(`${userSkillEndpoint}/byuser/${id}`, authHeaders);
 };
 
-export const getStaffSkill = async (authHeaders, id) => {
+export const getStaffSkill = async (authHeaders: AxiosRequestHeaders, id: string) => {
     return axios.get(`${userSkillEndpoint}/${id}`, authHeaders);
 };
 
-export const deleteStaffSkill = async (authHeaders, id) => {
+export const deleteStaffSkill = async (authHeaders: AxiosRequestHeaders, id: string) => {
     const data = { id };
     return axios.delete(userSkillEndpoint, { ...authHeaders, data });
 };
 
 export const addUserSkill = async (
-    authHeaders,
-    user_id,
-    skill_id,
-    skill_level,
-    notes,
-    expiry_date,
+    authHeaders: AxiosRequestHeaders,
+    user_id: string,
+    skill_id: string,
+    skill_level: number, // TODO: chnage this when skill level type changes
+    notes: string,
+    expiry_date: Date,
 ) => {
     const data = {
         user_id,
@@ -169,7 +186,12 @@ export const addUserSkill = async (
     return axios.post(`${userSkillEndpoint}`, data, authHeaders);
 };
 
-export const updateStaffSkill = async (authHeaders, id, skill_level, notes) => {
+export const updateStaffSkill = async (
+    authHeaders: AxiosRequestHeaders,
+    id: string,
+    skill_level: number, // TODO: chnage this when skill level type changes
+    notes: string,
+) => {
     const data = {
         id,
         skill_level,
@@ -181,11 +203,11 @@ export const updateStaffSkill = async (authHeaders, id, skill_level, notes) => {
 
 //LOGIN
 
-export const postLogin = async (email, password) => {
+export const postLogin = async (email: string, password: string) => {
     const credentials = { email, password };
     return axios.post(`${loginEndpoint}`, credentials);
 };
 
-export const validateToken = async (authHeaders) => {
+export const validateToken = async (authHeaders: AxiosRequestHeaders) => {
     return axios.get(`${loginEndpoint}/validate`, authHeaders);
 };
