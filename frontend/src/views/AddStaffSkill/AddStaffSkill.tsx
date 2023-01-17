@@ -17,7 +17,7 @@ import {
 
 import styles from "./AddStaffSkill.module.css";
 import { getAllSkills, addUserSkill, getAllDirectReports } from "../../utility/apiRequests";
-import { DirectReport, Skill, skillLevelS } from "../../utility/types";
+import { DirectReport, Skill, SKILL_LEVELS } from "../../utility/types";
 
 export const AddStaffSkill = () => {
     const { userId } = useParams();
@@ -78,7 +78,7 @@ const Form = ({ data, userId }: FormProps) => {
     const [inputValues, setInputValues] = useImmer({
         userId: userId,
         skillId: data ? data[0].id : null,
-        skillLevel: convertSkillLevelName(skillLevelS[0]),
+        skillLevel: convertSkillLevelName(SKILL_LEVELS[0]),
         notes: "",
         expiryDate: "",
     });
@@ -131,7 +131,7 @@ const Form = ({ data, userId }: FormProps) => {
                 />
             )}
             <Select
-                options={getSelectOptionsFromArray(skillLevelS)}
+                options={getSelectOptionsFromArray(SKILL_LEVELS)}
                 labelText="Select a level"
                 className={styles.item}
                 value={skillLevelValue}

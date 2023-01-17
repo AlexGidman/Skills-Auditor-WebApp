@@ -5,6 +5,7 @@ import * as ReactDom from "react-router-dom";
 import { wait } from "@testing-library/user-event/dist/utils";
 import { EditCategory } from "./EditCategory";
 import React from "react";
+import { Category } from "../../utility/types";
 
 jest.mock("react-router-dom", () => {
     return {
@@ -14,7 +15,7 @@ jest.mock("react-router-dom", () => {
     };
 });
 
-const mockCategory1 = {
+const mockCategory1: Category = {
     id: "1",
     name: "Category1",
 };

@@ -10,7 +10,7 @@ import { getStaffSkill, updateStaffSkill, getAllDirectReports } from "../../util
 import styles from "./EditStaffSkill.module.css";
 
 import { useNavigate, useParams, useOutletContext } from "react-router-dom";
-import { DirectReport, skillLevelS, StaffSkill } from "../../utility/types";
+import { DirectReport, SKILL_LEVELS, StaffSkill } from "../../utility/types";
 
 export const EditStaffSkill = () => {
     const { staffskillId } = useParams();
@@ -106,7 +106,7 @@ const Form = ({ data }: FormProps) => {
             <Select
                 className={styles.item}
                 labelText="Select a level"
-                options={getSelectOptionsFromArray(["1", "2", "3", "4", "5"], skillLevelS)}
+                options={getSelectOptionsFromArray(["1", "2", "3", "4", "5"], SKILL_LEVELS)}
                 value={skillLevel}
                 onChange={(e) => {
                     setSkillLevel(e.target.value);

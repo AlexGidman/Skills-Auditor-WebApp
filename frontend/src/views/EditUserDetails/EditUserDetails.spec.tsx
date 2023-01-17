@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import { EditUserDetails } from "./EditUserDetails";
-import { ADMIN, MANAGER_JR, SENIOR_DEVELOPER, STAFF_USER } from "../../utility/types";
+import { ADMIN, MANAGER_JR, SENIOR_DEVELOPER, STAFF_USER, User } from "../../utility/types";
 import { wait } from "@testing-library/user-event/dist/utils";
 import React from "react";
 
@@ -15,8 +15,8 @@ jest.mock("react-router-dom", () => {
     };
 });
 
-const mockUser = {
-    id: 1,
+const mockUser: User = {
+    id: "1",
     firstName: "John",
     lastName: "Smith",
     email: "John@email.com",

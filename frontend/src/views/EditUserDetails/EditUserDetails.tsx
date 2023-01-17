@@ -10,7 +10,7 @@ import { Select } from "../../components/Select/Select";
 
 import { useAPI, getAssignableSystemRoleOptions } from "../../utility/helper";
 import { getUserDetails, getAllDirectReports, updateUserDetails } from "../../utility/apiRequests";
-import { DirectReport, jobRoleS, User } from "../../utility/types";
+import { DirectReport, JOB_ROLES, User } from "../../utility/types";
 import { getSelectOptionsFromArray, isValidUser } from "../../utility/helper";
 import styles from "./EditUserDetails.module.css";
 
@@ -144,7 +144,7 @@ const Form = ({ data }: FormProps) => {
                 required
             />
             <Select
-                options={getSelectOptionsFromArray(jobRoleS)}
+                options={getSelectOptionsFromArray(JOB_ROLES)}
                 labelText="Job role"
                 className={styles.item}
                 value={userDetails.jobRole}

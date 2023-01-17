@@ -3,6 +3,7 @@ import { MyDetails } from "./MyDetails";
 import { mockApiRequests } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import React from "react";
+import { ADMIN, MANAGER_JR, User } from "../../utility/types";
 
 jest.mock("react-router-dom", () => {
     return {
@@ -11,13 +12,13 @@ jest.mock("react-router-dom", () => {
     };
 });
 
-const mockUser = {
-    id: 1,
+const mockUser: User = {
+    id: "1",
     firstName: "John",
     lastName: "Smith",
     email: "John@email.com",
-    jobRole: "Manager",
-    systemRole: "Admin",
+    jobRole: MANAGER_JR,
+    systemRole: ADMIN,
 };
 
 describe("MyDetails", () => {

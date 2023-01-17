@@ -1,4 +1,5 @@
 import axios, { AxiosRequestHeaders } from "axios";
+import { JOB_ROLES, SKILL_LEVELS, SYSTEM_ROLES } from "./types";
 
 const categoryEndpoint = "/api/category";
 const skillEndpoint = "/api/skill";
@@ -96,8 +97,8 @@ export const updateUserDetails = async (
     lastName: string,
     email: string,
     password: string,
-    jobRole: string, // TODO: change when job role type changes
-    systemRole: string, // TODO: change when job system type changes
+    jobRole: typeof JOB_ROLES[number],
+    systemRole: typeof SYSTEM_ROLES[number],
 ) => {
     const data = {
         id,
@@ -118,8 +119,8 @@ export const addUser = async (
     lastName: string,
     email: string,
     password: string,
-    jobRole: string, // TODO: change when job role type changes
-    systemRole: string, // TODO: change when job system type changes
+    jobRole: typeof JOB_ROLES[number],
+    systemRole: typeof SYSTEM_ROLES[number],
 ) => {
     const data = {
         firstName,
@@ -172,7 +173,7 @@ export const addUserSkill = async (
     authHeaders: AxiosRequestHeaders,
     userId: string,
     skillId: string,
-    skillLevel: number, // TODO: chnage this when skill level type changes
+    skillLevel: typeof SKILL_LEVELS[number],
     notes: string,
     expiryDate: Date,
 ) => {
@@ -189,7 +190,7 @@ export const addUserSkill = async (
 export const updateStaffSkill = async (
     authHeaders: AxiosRequestHeaders,
     id: string,
-    skillLevel: number, // TODO: chnage this when skill level type changes
+    skillLevel: typeof SKILL_LEVELS[number],
     notes: string,
 ) => {
     const data = {

@@ -1,11 +1,11 @@
 import React from "react";
 import cx from "classnames";
 import styles from "./UserPill.module.css";
-import { MANAGER_SR, STAFF_USER, ADMIN } from "../../utility/types";
+import { MANAGER_SR, STAFF_USER, ADMIN, SYSTEM_ROLES } from "../../utility/types";
 
 interface Props extends React.ComponentProps<"div"> {
     email?: string;
-    systemRole?: string; // TODO: Change this when sytsem role type changes
+    systemRole?: typeof SYSTEM_ROLES[number];
 }
 
 export const UserPill = ({

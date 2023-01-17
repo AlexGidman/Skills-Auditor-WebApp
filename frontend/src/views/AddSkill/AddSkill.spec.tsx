@@ -3,6 +3,7 @@ import { AddSkill } from "./AddSkill";
 import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import React from "react";
+import { Category } from "../../utility/types";
 
 jest.mock("react-router-dom", () => {
     return {
@@ -11,7 +12,7 @@ jest.mock("react-router-dom", () => {
     };
 });
 
-const mockCategories = [
+const mockCategories: Category[] = [
     {
         id: "1",
         name: "Programming",
