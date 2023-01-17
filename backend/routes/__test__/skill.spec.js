@@ -3,8 +3,8 @@ const request = require("supertest");
 const app = require("../../app");
 const { mockModel, mockError } = require("./testing");
 
-const mockSkill1 = { id: "1", name: "testname1", category_id: "1" };
-const mockSkill2 = { id: "2", name: "testname2", category_id: "1" };
+const mockSkill1 = { id: "1", name: "testname1", categoryId: "1" };
+const mockSkill2 = { id: "2", name: "testname2", categoryId: "1" };
 
 describe("/api/skill", () => {
     describe("GET all", () => {
@@ -71,7 +71,7 @@ describe("/api/skill", () => {
     describe("POST", () => {
         it("should return 201 and skill when POST /api/skill called successfully", async () => {
             mockModel.create.mockResolvedValue(mockSkill1);
-            const mockRequestBody = { name: mockSkill1.name, category_id: mockSkill1.category_id };
+            const mockRequestBody = { name: mockSkill1.name, categoryId: mockSkill1.categoryId };
 
             const response = await request(app)
                 .post("/api/skill")
@@ -85,17 +85,17 @@ describe("/api/skill", () => {
         it("should return 400 and error when POST /api/skill called without name", async () => {
             const response = await request(app)
                 .post("/api/skill")
-                .send({ name: undefined, category_id: mockSkill1.category_id })
+                .send({ name: undefined, categoryId: mockSkill1.categoryId })
                 .expect("Content-Type", /json/)
                 .expect(400);
             expect(mockModel.create).not.toHaveBeenCalled();
             expect(response.body.error.message).toEqual("Essential fields missing");
         });
 
-        it("should return 400 and error when POST /api/skill called without category_id", async () => {
+        it("should return 400 and error when POST /api/skill called without categoryId", async () => {
             const response = await request(app)
                 .post("/api/skill")
-                .send({ name: mockSkill1.name, category_id: undefined })
+                .send({ name: mockSkill1.name, categoryId: undefined })
                 .expect("Content-Type", /json/)
                 .expect(400);
             expect(mockModel.create).not.toHaveBeenCalled();
@@ -104,7 +104,7 @@ describe("/api/skill", () => {
 
         it("should return 400 and error when POST /api/skill called with database error", async () => {
             mockModel.create.mockRejectedValue(mockError);
-            const mockRequestBody = { name: mockSkill1.name, category_id: mockSkill1.category_id };
+            const mockRequestBody = { name: mockSkill1.name, categoryId: mockSkill1.categoryId };
 
             const response = await request(app)
                 .post("/api/skill")
@@ -114,9 +114,9 @@ describe("/api/skill", () => {
             expect(response.body.error.message).toEqual(mockError.message);
         });
 
-        it("should return 400 and error when POST /api/skill called with name and category_id that already exists", async () => {
+        it("should return 400 and error when POST /api/skill called with name and categoryId that already exists", async () => {
             mockModel.findOne.mockResolvedValue(mockSkill1);
-            const mockRequestBody = { name: mockSkill1.name, category_id: mockSkill1.category_id };
+            const mockRequestBody = { name: mockSkill1.name, categoryId: mockSkill1.categoryId };
 
             const response = await request(app)
                 .post("/api/skill")
@@ -134,7 +134,7 @@ describe("/api/skill", () => {
             const mockRequestBody = {
                 id: mockSkill1.id,
                 name: "updated",
-                category_id: "2",
+                categoryId: "2",
             };
 
             const response = await request(app)
@@ -143,7 +143,7 @@ describe("/api/skill", () => {
                 .expect("Content-Type", /json/)
                 .expect(200);
             expect(mockModel.update).toHaveBeenLastCalledWith(
-                { name: "updated", category_id: "2" },
+                { name: "updated", categoryId: "2" },
                 { where: { id: mockRequestBody.id } },
             );
             expect(response.body).toEqual("Skill updated");
@@ -153,7 +153,7 @@ describe("/api/skill", () => {
             const mockRequestBody = {
                 id: undefined,
                 name: "updated",
-                category_id: "2",
+                categoryId: "2",
             };
 
             const response = await request(app)
@@ -169,7 +169,7 @@ describe("/api/skill", () => {
             const mockRequestBody = {
                 id: mockSkill1.id,
                 name: undefined,
-                category_id: "2",
+                categoryId: "2",
             };
 
             const response = await request(app)
@@ -181,11 +181,11 @@ describe("/api/skill", () => {
             expect(response.body.error.message).toEqual("Essential fields missing");
         });
 
-        it("should return 400 and error when PUT /api/skill called without category_id", async () => {
+        it("should return 400 and error when PUT /api/skill called without categoryId", async () => {
             const mockRequestBody = {
                 id: mockSkill1.id,
                 name: "updated",
-                category_id: undefined,
+                categoryId: undefined,
             };
 
             const response = await request(app)
@@ -205,7 +205,7 @@ describe("/api/skill", () => {
             const mockRequestBody = {
                 id: invalidId,
                 name: "updated",
-                category_id: "2",
+                categoryId: "2",
             };
 
             const response = await request(app)
@@ -218,7 +218,7 @@ describe("/api/skill", () => {
             );
         });
 
-        it("should return 400 and error when PUT /api/skill called with existing name and category_id", async () => {
+        it("should return 400 and error when PUT /api/skill called with existing name and categoryId", async () => {
             const updatedZeroRecords = [0];
             mockModel.update.mockResolvedValue(updatedZeroRecords);
             mockModel.findByPk.mockResolvedValue(mockSkill1);
@@ -238,7 +238,7 @@ describe("/api/skill", () => {
             const mockRequestBody = {
                 id: mockSkill1.id,
                 name: "updated",
-                category_id: "2",
+                categoryId: "2",
             };
 
             const response = await request(app)

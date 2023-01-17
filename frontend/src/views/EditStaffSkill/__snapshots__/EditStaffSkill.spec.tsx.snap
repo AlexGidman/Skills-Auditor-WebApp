@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditStaffSkill renders correctly when data retrieval successful and skill has no expiry date 1`] = `
+<div>
+  <header>
+    <h1>
+      Edit Staff Skill
+    </h1>
+  </header>
+  <section>
+    <form
+      class="form"
+    >
+      <span
+        aria-label="Skill1 (Expires N/A)"
+        class="item"
+        role="status"
+      >
+        Skill1
+        <em>
+           (Expires N/A)
+        </em>
+      </span>
+      <div
+        class="component item"
+      >
+        <label
+          class="label"
+          for="Select-a level-undefined"
+        >
+          Select a level
+          :
+        </label>
+        <select
+          aria-label="Select a level"
+          class="select"
+          name="Select a level"
+        >
+          <option
+            value="1"
+          >
+            None
+          </option>
+          <option
+            value="2"
+          >
+            Basic
+          </option>
+          <option
+            value="3"
+          >
+            Intermediate
+          </option>
+          <option
+            value="4"
+          >
+            High
+          </option>
+          <option
+            value="5"
+          >
+            Expert
+          </option>
+        </select>
+      </div>
+      <div
+        class="component item"
+      >
+        <label
+          class="label"
+          for="Notes-undefined"
+        >
+          Notes
+          :
+        </label>
+        <textarea
+          class="input"
+          id="Notes-undefined"
+          maxlength="100"
+          minlength="0"
+          rows="4"
+        >
+          test notes
+        </textarea>
+      </div>
+      <div
+        class="buttonWrapper"
+      >
+        <button
+          class="component button"
+          disabled=""
+        >
+          Save changes
+        </button>
+        <button
+          class="component button"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
+`;

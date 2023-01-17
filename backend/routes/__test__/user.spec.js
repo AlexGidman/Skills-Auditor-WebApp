@@ -9,21 +9,21 @@ let mockUser2;
 beforeEach(() => {
     mockUser1 = {
         id: "1",
-        forename: "testForename1",
-        surname: "testSurname1",
+        firstName: "testfirstName1",
+        lastName: "testlastName1",
         email: "test1@email.com",
         password: "testPassword",
-        system_role: "Manager",
-        job_role: "Manager",
+        systemRole: "Manager",
+        jobRole: "Manager",
     };
     mockUser2 = {
         id: "2",
-        forename: "testForename2",
-        surname: "testSurname2",
+        firstName: "testfirstName2",
+        lastName: "testlastName2",
         email: "test2@email.com",
         password: "testPassword",
-        system_role: "StaffUser",
-        job_role: "Senior Developer",
+        systemRole: "StaffUser",
+        jobRole: "Senior Developer",
     };
 });
 
@@ -95,12 +95,12 @@ describe("/api/user", () => {
             mockArgon2.hash.mockImplementation((password) => password);
             mockModel.create.mockResolvedValue(mockUser1);
             const mockRequestBody = {
-                forename: mockUser1.forename,
-                surname: mockUser1.surname,
+                firstName: mockUser1.firstName,
+                lastName: mockUser1.lastName,
                 email: mockUser1.email,
                 password: mockUser1.password,
-                system_role: mockUser1.system_role,
-                job_role: mockUser1.job_role,
+                systemRole: mockUser1.systemRole,
+                jobRole: mockUser1.jobRole,
             };
 
             const response = await request(app)
@@ -112,13 +112,13 @@ describe("/api/user", () => {
             expect(response.body).toEqual({ id: "1", message: "User created" });
         });
 
-        it("should return 400 and error when POST /api/user called without forename", async () => {
+        it("should return 400 and error when POST /api/user called without firstName", async () => {
             const mockRequestBody = {
-                surname: mockUser1.surname,
+                lastName: mockUser1.lastName,
                 email: mockUser1.email,
                 password: mockUser1.password,
-                system_role: mockUser1.system_role,
-                job_role: mockUser1.job_role,
+                systemRole: mockUser1.systemRole,
+                jobRole: mockUser1.jobRole,
             };
 
             const response = await request(app)
@@ -130,13 +130,13 @@ describe("/api/user", () => {
             expect(response.body.error.message).toEqual("Essential fields missing");
         });
 
-        it("should return 400 and error when POST /api/user called without surname", async () => {
+        it("should return 400 and error when POST /api/user called without lastName", async () => {
             const mockRequestBody = {
-                forename: mockUser1.forename,
+                firstName: mockUser1.firstName,
                 email: mockUser1.email,
                 password: mockUser1.password,
-                system_role: mockUser1.system_role,
-                job_role: mockUser1.job_role,
+                systemRole: mockUser1.systemRole,
+                jobRole: mockUser1.jobRole,
             };
 
             const response = await request(app)
@@ -150,11 +150,11 @@ describe("/api/user", () => {
 
         it("should return 400 and error when POST /api/user called without email", async () => {
             const mockRequestBody = {
-                forename: mockUser1.forename,
-                surname: mockUser1.surname,
+                firstName: mockUser1.firstName,
+                lastName: mockUser1.lastName,
                 password: mockUser1.password,
-                system_role: mockUser1.system_role,
-                job_role: mockUser1.job_role,
+                systemRole: mockUser1.systemRole,
+                jobRole: mockUser1.jobRole,
             };
 
             const response = await request(app)
@@ -168,11 +168,11 @@ describe("/api/user", () => {
 
         it("should return 400 and error when POST /api/user called without password", async () => {
             const mockRequestBody = {
-                forename: mockUser1.forename,
-                surname: mockUser1.surname,
+                firstName: mockUser1.firstName,
+                lastName: mockUser1.lastName,
                 email: mockUser1.email,
-                system_role: mockUser1.system_role,
-                job_role: mockUser1.job_role,
+                systemRole: mockUser1.systemRole,
+                jobRole: mockUser1.jobRole,
             };
 
             const response = await request(app)
@@ -186,11 +186,11 @@ describe("/api/user", () => {
 
         it("should return 400 and error when POST /api/user called without system role", async () => {
             const mockRequestBody = {
-                forename: mockUser1.forename,
-                surname: mockUser1.surname,
+                firstName: mockUser1.firstName,
+                lastName: mockUser1.lastName,
                 email: mockUser1.email,
                 password: mockUser1.password,
-                job_role: mockUser1.job_role,
+                jobRole: mockUser1.jobRole,
             };
 
             const response = await request(app)
@@ -204,12 +204,12 @@ describe("/api/user", () => {
 
         it("should return 400 and error when POST /api/user called with invalid system role", async () => {
             const mockRequestBody = {
-                forename: mockUser1.forename,
-                surname: mockUser1.surname,
+                firstName: mockUser1.firstName,
+                lastName: mockUser1.lastName,
                 email: mockUser1.email,
                 password: mockUser1.password,
-                system_role: "INVALID SYSTEM ROLE",
-                job_role: mockUser1.job_role,
+                systemRole: "INVALID SYSTEM ROLE",
+                jobRole: mockUser1.jobRole,
             };
 
             const response = await request(app)
@@ -225,11 +225,11 @@ describe("/api/user", () => {
 
         it("should return 400 and error when POST /api/user called without job role", async () => {
             const mockRequestBody = {
-                forename: mockUser1.forename,
-                surname: mockUser1.surname,
+                firstName: mockUser1.firstName,
+                lastName: mockUser1.lastName,
                 email: mockUser1.email,
                 password: mockUser1.password,
-                system_role: mockUser1.system_role,
+                systemRole: mockUser1.systemRole,
             };
 
             const response = await request(app)
@@ -243,12 +243,12 @@ describe("/api/user", () => {
 
         it("should return 400 and error when POST /api/user called with invalid job role", async () => {
             const mockRequestBody = {
-                forename: mockUser1.forename,
-                surname: mockUser1.surname,
+                firstName: mockUser1.firstName,
+                lastName: mockUser1.lastName,
                 email: mockUser1.email,
                 password: mockUser1.password,
-                system_role: mockUser1.job_role,
-                job_role: "INVALID JOB ROLE",
+                systemRole: mockUser1.jobRole,
+                jobRole: "INVALID JOB ROLE",
             };
 
             const response = await request(app)
@@ -267,12 +267,12 @@ describe("/api/user", () => {
             mockModel.create.mockRejectedValue(mockError);
 
             const mockRequestBody = {
-                forename: mockUser1.forename,
-                surname: mockUser1.surname,
+                firstName: mockUser1.firstName,
+                lastName: mockUser1.lastName,
                 email: mockUser1.email,
                 password: mockUser1.password,
-                system_role: mockUser1.system_role,
-                job_role: mockUser1.job_role,
+                systemRole: mockUser1.systemRole,
+                jobRole: mockUser1.jobRole,
             };
 
             const response = await request(app)
@@ -289,12 +289,12 @@ describe("/api/user", () => {
 
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: "updatedpass",
-                system_role: "StaffUser",
-                job_role: "Senior Developer",
+                systemRole: "StaffUser",
+                jobRole: "Senior Developer",
             };
             const response = await request(app)
                 .post("/api/user")
@@ -306,12 +306,12 @@ describe("/api/user", () => {
 
         it("should return 400 and error when POST /api/user called with password shorter than 10 chars", async () => {
             const mockRequestBody = {
-                forename: mockUser1.forename,
-                surname: mockUser1.surname,
+                firstName: mockUser1.firstName,
+                lastName: mockUser1.lastName,
                 email: mockUser1.email,
                 password: "123456789",
-                system_role: mockUser1.system_role,
-                job_role: mockUser1.job_role,
+                systemRole: mockUser1.systemRole,
+                jobRole: mockUser1.jobRole,
             };
 
             const response = await request(app)
@@ -327,12 +327,12 @@ describe("/api/user", () => {
 
         it("should return 400 and error when POST /api/user called with password longer than 16 chars", async () => {
             const mockRequestBody = {
-                forename: mockUser1.forename,
-                surname: mockUser1.surname,
+                firstName: mockUser1.firstName,
+                lastName: mockUser1.lastName,
                 email: mockUser1.email,
                 password: "ThisPasswordIsTooLong",
-                system_role: mockUser1.system_role,
-                job_role: mockUser1.job_role,
+                systemRole: mockUser1.systemRole,
+                jobRole: mockUser1.jobRole,
             };
 
             const response = await request(app)
@@ -357,12 +357,12 @@ describe("/api/user", () => {
             mockModel.update.mockResolvedValue(updatedOneRecord);
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: "updatedpass",
-                system_role: "StaffUser",
-                job_role: "Senior Developer",
+                systemRole: "StaffUser",
+                jobRole: "Senior Developer",
             };
 
             const response = await request(app)
@@ -372,12 +372,12 @@ describe("/api/user", () => {
                 .expect(200);
             expect(mockModel.update).toHaveBeenLastCalledWith(
                 {
-                    forename: mockRequestBody.forename,
-                    surname: mockRequestBody.surname,
+                    firstName: mockRequestBody.firstName,
+                    lastName: mockRequestBody.lastName,
                     email: mockRequestBody.email,
                     password: mockRequestBody.password,
-                    system_role: mockRequestBody.system_role,
-                    job_role: mockRequestBody.job_role,
+                    systemRole: mockRequestBody.systemRole,
+                    jobRole: mockRequestBody.jobRole,
                 },
                 { where: { id: mockRequestBody.id } },
             );
@@ -389,12 +389,12 @@ describe("/api/user", () => {
         it("should return 400 and error when PUT /api/user called without id", async () => {
             const mockRequestBody = {
                 id: undefined,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: "updatedpass",
-                system_role: "StaffUser",
-                job_role: "Senior Developer",
+                systemRole: "StaffUser",
+                jobRole: "Senior Developer",
             };
 
             const response = await request(app)
@@ -406,15 +406,15 @@ describe("/api/user", () => {
             expect(response.body.error.message).toEqual("Essential fields missing");
         });
 
-        it("should return 400 and error when PUT /api/user called without forename", async () => {
+        it("should return 400 and error when PUT /api/user called without firstName", async () => {
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: undefined,
-                surname: "updated",
+                firstName: undefined,
+                lastName: "updated",
                 email: "updated",
                 password: "updatedpass",
-                system_role: "StaffUser",
-                job_role: "Senior Developer",
+                systemRole: "StaffUser",
+                jobRole: "Senior Developer",
             };
 
             const response = await request(app)
@@ -426,15 +426,15 @@ describe("/api/user", () => {
             expect(response.body.error.message).toEqual("Essential fields missing");
         });
 
-        it("should return 400 and error when PUT /api/user called without surname", async () => {
+        it("should return 400 and error when PUT /api/user called without lastName", async () => {
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: undefined,
+                firstName: "updated",
+                lastName: undefined,
                 email: "updated",
                 password: "updatedpass",
-                system_role: "StaffUser",
-                job_role: "Senior Developer",
+                systemRole: "StaffUser",
+                jobRole: "Senior Developer",
             };
 
             const response = await request(app)
@@ -449,12 +449,12 @@ describe("/api/user", () => {
         it("should return 400 and error when PUT /api/user called without email", async () => {
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: undefined,
                 password: "updatedpass",
-                system_role: "StaffUser",
-                job_role: "Senior Developer",
+                systemRole: "StaffUser",
+                jobRole: "Senior Developer",
             };
 
             const response = await request(app)
@@ -470,12 +470,12 @@ describe("/api/user", () => {
             mockModel.findByPk.mockResolvedValue(undefined);
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: undefined,
-                system_role: "StaffUser",
-                job_role: "Senior Developer",
+                systemRole: "StaffUser",
+                jobRole: "Senior Developer",
             };
 
             const response = await request(app)
@@ -493,12 +493,12 @@ describe("/api/user", () => {
             mockModel.findByPk.mockResolvedValue(mockUser1);
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: undefined,
-                system_role: "StaffUser",
-                job_role: "Senior Developer",
+                systemRole: "StaffUser",
+                jobRole: "Senior Developer",
             };
 
             const response = await request(app)
@@ -514,12 +514,12 @@ describe("/api/user", () => {
         it("should return 400 and error when PUT /api/user called without system role", async () => {
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: "updatedpass",
-                system_role: undefined,
-                job_role: "Senior Developer",
+                systemRole: undefined,
+                jobRole: "Senior Developer",
             };
 
             const response = await request(app)
@@ -536,12 +536,12 @@ describe("/api/user", () => {
 
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: "updatedpass",
-                system_role: "INVALID SYSTEM ROLE",
-                job_role: "Senior Developer",
+                systemRole: "INVALID SYSTEM ROLE",
+                jobRole: "Senior Developer",
             };
 
             const response = await request(app)
@@ -558,12 +558,12 @@ describe("/api/user", () => {
         it("should return 400 and error when PUT /api/user called without job role", async () => {
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: "updatedpass",
-                system_role: "StaffUser",
-                job_role: undefined,
+                systemRole: "StaffUser",
+                jobRole: undefined,
             };
 
             const response = await request(app)
@@ -580,12 +580,12 @@ describe("/api/user", () => {
 
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: "updatedpass",
-                system_role: "Admin",
-                job_role: "INVALID JOB ROLE",
+                systemRole: "Admin",
+                jobRole: "INVALID JOB ROLE",
             };
 
             const response = await request(app)
@@ -607,12 +607,12 @@ describe("/api/user", () => {
             mockModel.findByPk.mockResolvedValue(undefined);
             const mockRequestBody = {
                 id: invalidId,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: "updatedpass",
-                system_role: "StaffUser",
-                job_role: "Senior Developer",
+                systemRole: "StaffUser",
+                jobRole: "Senior Developer",
             };
 
             const response = await request(app)
@@ -645,12 +645,12 @@ describe("/api/user", () => {
 
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: "updatedpass",
-                system_role: "StaffUser",
-                job_role: "Senior Developer",
+                systemRole: "StaffUser",
+                jobRole: "Senior Developer",
             };
             const response = await request(app)
                 .put("/api/user")
@@ -666,12 +666,12 @@ describe("/api/user", () => {
 
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: "updatedpass",
-                system_role: "StaffUser",
-                job_role: "Senior Developer",
+                systemRole: "StaffUser",
+                jobRole: "Senior Developer",
             };
             const response = await request(app)
                 .put("/api/user")
@@ -684,12 +684,12 @@ describe("/api/user", () => {
         it("should return 400 and error when PUT /api/user called withpassword shorter than 10 chars", async () => {
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: "123456789",
-                system_role: "StaffUser",
-                job_role: "Senior Developer",
+                systemRole: "StaffUser",
+                jobRole: "Senior Developer",
             };
 
             const response = await request(app)
@@ -705,12 +705,12 @@ describe("/api/user", () => {
         it("should return 400 and error when PUT /api/user called withpassword longer than 16 chars", async () => {
             const mockRequestBody = {
                 id: mockUser1.id,
-                forename: "updated",
-                surname: "updated",
+                firstName: "updated",
+                lastName: "updated",
                 email: "updated",
                 password: "ThisPasswordIsTooLong",
-                system_role: "StaffUser",
-                job_role: "Senior Developer",
+                systemRole: "StaffUser",
+                jobRole: "Senior Developer",
             };
 
             const response = await request(app)

@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize, category) => {
         },
     );
 
-    Skill.belongsTo(category, { foreignKey: "category_id", onDelete: "CASCADE" });
+    Skill.belongsTo(category, { foreignKey: "categoryId", onDelete: "CASCADE" });
 
     return Skill;
 };

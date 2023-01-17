@@ -52,11 +52,11 @@ export const getSkill = async (authHeaders: AxiosRequestHeaders, id: string) => 
 export const addSkill = async (
     authHeaders: AxiosRequestHeaders,
     name: string,
-    category_id: string,
+    categoryId: string,
 ) => {
     const data = {
         name,
-        category_id,
+        categoryId,
     };
     return axios.post(`${skillEndpoint}`, data, authHeaders);
 };
@@ -70,7 +70,7 @@ export const updateSkill = async (
     const data = {
         id,
         name,
-        category_id: categoryId,
+        categoryId: categoryId,
     };
     return axios.put(skillEndpoint, data, authHeaders);
 };
@@ -92,21 +92,21 @@ export const getUserFromToken = async (authHeaders: AxiosRequestHeaders) => {
 export const updateUserDetails = async (
     authHeaders: AxiosRequestHeaders,
     id: string,
-    forename: string,
-    surname: string,
+    firstName: string,
+    lastName: string,
     email: string,
     password: string,
-    job_role: string, // TODO: change when job role type changes
-    system_role: string, // TODO: change when job system type changes
+    jobRole: string, // TODO: change when job role type changes
+    systemRole: string, // TODO: change when job system type changes
 ) => {
     const data = {
         id,
-        forename,
-        surname,
+        firstName,
+        lastName,
         email,
         password,
-        job_role,
-        system_role,
+        jobRole,
+        systemRole,
     };
 
     return axios.put(`${userEndpoint}`, data, authHeaders);
@@ -114,20 +114,20 @@ export const updateUserDetails = async (
 
 export const addUser = async (
     authHeaders: AxiosRequestHeaders,
-    forename: string,
-    surname: string,
+    firstName: string,
+    lastName: string,
     email: string,
     password: string,
-    job_role: string, // TODO: change when job role type changes
-    system_role: string, // TODO: change when job system type changes
+    jobRole: string, // TODO: change when job role type changes
+    systemRole: string, // TODO: change when job system type changes
 ) => {
     const data = {
-        forename,
-        surname,
+        firstName,
+        lastName,
         email,
         password,
-        job_role,
-        system_role,
+        jobRole,
+        systemRole,
     };
     return axios.post(userEndpoint, data, authHeaders);
 };
@@ -148,8 +148,8 @@ export const addDirectReport = async (
     reportId: string,
 ) => {
     const data = {
-        user_id: userId,
-        report_id: reportId,
+        userId: userId,
+        reportId: reportId,
     };
     return axios.post(directReportEndpoint, data, authHeaders);
 };
@@ -170,18 +170,18 @@ export const deleteStaffSkill = async (authHeaders: AxiosRequestHeaders, id: str
 
 export const addUserSkill = async (
     authHeaders: AxiosRequestHeaders,
-    user_id: string,
-    skill_id: string,
-    skill_level: number, // TODO: chnage this when skill level type changes
+    userId: string,
+    skillId: string,
+    skillLevel: number, // TODO: chnage this when skill level type changes
     notes: string,
-    expiry_date: Date,
+    expiryDate: Date,
 ) => {
     const data = {
-        user_id,
-        skill_id,
-        skill_level,
+        userId,
+        skillId,
+        skillLevel,
         notes,
-        expiry_date,
+        expiryDate,
     };
     return axios.post(`${userSkillEndpoint}`, data, authHeaders);
 };
@@ -189,12 +189,12 @@ export const addUserSkill = async (
 export const updateStaffSkill = async (
     authHeaders: AxiosRequestHeaders,
     id: string,
-    skill_level: number, // TODO: chnage this when skill level type changes
+    skillLevel: number, // TODO: chnage this when skill level type changes
     notes: string,
 ) => {
     const data = {
         id,
-        skill_level,
+        skillLevel,
         notes,
     };
 

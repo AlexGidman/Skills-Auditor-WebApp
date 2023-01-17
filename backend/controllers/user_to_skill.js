@@ -33,7 +33,7 @@ const getAll = async (req, res) => {
             include: [
                 {
                     model: Skill,
-                    as: "skillID",
+                    as: "skill",
                     required: true,
                     include: [{ model: Category, required: true }],
                 },
@@ -52,11 +52,11 @@ const getByUserId = async (req, res) => {
             throw new Error("Not Permitted!");
         }
         const userSkills = await UserSkill.findAll({
-            where: { user_id: id },
+            where: { userId: id },
             include: [
                 {
                     model: Skill,
-                    as: "skillID",
+                    as: "skill",
                     required: true,
                     include: [{ model: Category, required: true }],
                 },
@@ -71,7 +71,7 @@ const getByUserId = async (req, res) => {
     }
 };
 
-const getByStaffSkillId = async (req, res) => {
+const getByStaffskillId = async (req, res) => {
     const id = req.params.id;
     try {
         if (!id) {
@@ -81,7 +81,7 @@ const getByStaffSkillId = async (req, res) => {
             include: [
                 {
                     model: Skill,
-                    as: "skillID",
+                    as: "skill",
                     required: true,
                     include: [{ model: Category, required: true }],
                 },
@@ -90,7 +90,7 @@ const getByStaffSkillId = async (req, res) => {
         if (!userSkill) {
             throw new Error("Unable to find User Skill with id " + id);
         }
-        if (!(await isUserOrDirectReportOfUser(res.locals.userId, userSkill.user_id))) {
+        if (!(await isUserOrDirectReportOfUser(res.locals.userId, userSkill.userId))) {
             throw new Error("Not Permitted!");
         }
         res.status(200).json(userSkill);
@@ -101,32 +101,27 @@ const getByStaffSkillId = async (req, res) => {
 
 const create = async (req, res) => {
     let userSkill = {
-        user_id: req.body.user_id,
-        skill_id: req.body.skill_id,
-        skill_level: req.body.skill_level,
+        userId: req.body.userId,
+        skillId: req.body.skillId,
+        skillLevel: req.body.skillLevel,
         notes: req.body.notes,
-        expiry_date: req.body.expiry_date || null,
+        expiryDate: req.body.expiryDate || null,
     };
     try {
-        if (!(await isUserOrDirectReportOfUser(res.locals.userId, userSkill.user_id))) {
+        if (!(await isUserOrDirectReportOfUser(res.locals.userId, userSkill.userId))) {
             throw new Error("Not Permitted!");
         }
-        if (
-            !userSkill.user_id ||
-            !userSkill.skill_id ||
-            !userSkill.skill_level ||
-            !userSkill.notes
-        ) {
+        if (!userSkill.userId || !userSkill.skillId || !userSkill.skillLevel || !userSkill.notes) {
             throw new Error("Essential fields missing");
         }
-        if (userSkill.skill_level > 5 || userSkill.skill_level < 1) {
+        if (userSkill.skillLevel > 5 || userSkill.skillLevel < 1) {
             throw new Error("Skill level must be 1, 2, 3, 4, or 5");
         }
 
         checkNotesLength(userSkill.notes);
 
         await checkForDuplicateEntry(UserSkill, {
-            where: { user_id: userSkill.user_id, skill_id: userSkill.skill_id },
+            where: { userId: userSkill.userId, skillId: userSkill.skillId },
         });
 
         userSkill = await UserSkill.create(userSkill);
@@ -147,7 +142,7 @@ const deleting = async (req, res) => {
             include: [
                 {
                     model: Skill,
-                    as: "skillID",
+                    as: "skill",
                     required: true,
                     include: [{ model: Category, required: true }],
                 },
@@ -156,7 +151,7 @@ const deleting = async (req, res) => {
         if (!userSkill) {
             throw new Error("Id not found");
         }
-        if (!(await isUserOrDirectReportOfUser(res.locals.userId, userSkill.user_id))) {
+        if (!(await isUserOrDirectReportOfUser(res.locals.userId, userSkill.userId))) {
             throw new Error("Not Permitted!");
         }
         const deleted = await UserSkill.destroy({ where: { id: id } });
@@ -173,25 +168,25 @@ const update = async (req, res) => {
     const id = req.body.id;
 
     const userSkill = {
-        skill_level: req.body.skill_level,
+        skillLevel: req.body.skillLevel,
         notes: req.body.notes,
     };
 
     try {
-        if (!id || !userSkill.skill_level || !userSkill.notes) {
+        if (!id || !userSkill.skillLevel || !userSkill.notes) {
             throw new Error("Essential fields missing");
         }
 
         checkNotesLength(userSkill.notes);
 
-        if (userSkill.skill_level > 5 || userSkill.skill_level < 1) {
+        if (userSkill.skillLevel > 5 || userSkill.skillLevel < 1) {
             throw new Error("Skill level must be 1, 2, 3, 4, or 5");
         }
         const existingUserSkill = await UserSkill.findByPk(id, {
             include: [
                 {
                     model: Skill,
-                    as: "skillID",
+                    as: "skill",
                     required: true,
                     include: [{ model: Category, required: true }],
                 },
@@ -200,7 +195,7 @@ const update = async (req, res) => {
         if (!existingUserSkill) {
             throw new Error("Id not found");
         }
-        if (!(await isUserOrDirectReportOfUser(res.locals.userId, existingUserSkill.user_id))) {
+        if (!(await isUserOrDirectReportOfUser(res.locals.userId, existingUserSkill.userId))) {
             throw new Error("Not Permitted!");
         }
         const updatedArray = await UserSkill.update(userSkill, { where: { id: id } });
@@ -220,4 +215,4 @@ const update = async (req, res) => {
     }
 };
 
-module.exports = { getAll, getByUserId, getByStaffSkillId, create, deleting, update };
+module.exports = { getAll, getByUserId, getByStaffskillId, create, deleting, update };

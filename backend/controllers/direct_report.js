@@ -15,11 +15,11 @@ function sanitiseUsers(directReports) {
         id: directReport.id,
         report: directReport.reportID && {
             id: directReport.reportID.id,
-            forename: directReport.reportID.forename,
-            surname: directReport.reportID.surname,
+            firstName: directReport.reportID.firstName,
+            lastName: directReport.reportID.lastName,
             email: directReport.reportID.email,
-            system_role: directReport.reportID.system_role,
-            job_role: directReport.reportID.job_role,
+            systemRole: directReport.reportID.systemRole,
+            jobRole: directReport.reportID.systemRole,
         },
     }));
 }
@@ -37,12 +37,13 @@ const getAllReports = async (req, res) => {
             throw new Error("Not Permitted!");
         }
         const directReports = await DirectReport.findAll({
-            where: { user_id: id },
+            where: { userId: id },
             include: [{ model: User, as: "reportID", required: true }],
         });
         if (!directReports || !directReports.length) {
             throw new Error("Unable to find reports for user with id " + id);
         }
+
         res.status(200).json(sanitiseUsers(directReports));
     } catch (error) {
         formatErrorResponse(res, 400, error);
@@ -51,8 +52,8 @@ const getAllReports = async (req, res) => {
 
 const create = async (req, res) => {
     let directReport = {
-        user_id: req.body.user_id,
-        report_id: req.body.report_id,
+        userId: req.body.userId,
+        reportId: req.body.reportId,
     };
     try {
         if (
@@ -60,23 +61,23 @@ const create = async (req, res) => {
                 constants.ADMIN,
                 constants.MANAGER_SR,
             ])) ||
-            !(await isUserOrDirectReportOfUser(res.locals.userId, directReport.user_id))
+            !(await isUserOrDirectReportOfUser(res.locals.userId, directReport.userId))
         ) {
             throw new Error("Not Permitted!");
         }
-        if (!directReport.user_id || !directReport.report_id) {
+        if (!directReport.userId || !directReport.reportId) {
             throw new Error("Essential fields missing");
         }
 
-        if (directReport.user_id === directReport.report_id) {
+        if (directReport.userId === directReport.reportId) {
             throw new Error("a manager cannot manage themselves!");
         }
 
         await checkForDuplicateEntry(DirectReport, {
-            where: { user_id: directReport.user_id, report_id: directReport.report_id },
+            where: { userId: directReport.userId, reportId: directReport.reportId },
         });
         await checkRegisteredRelationship(DirectReport, {
-            where: { user_id: directReport.report_id, report_id: directReport.user_id },
+            where: { userId: directReport.reportId, reportId: directReport.userId },
         });
         directReport = await DirectReport.create(directReport);
         res.status(201).json("Direct Report added");

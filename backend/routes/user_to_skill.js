@@ -7,7 +7,7 @@ const { checkToken } = require("../utilities/utility");
 router.all("*", [checkToken]);
 
 router.get("/", controller.getAll);
-router.get("/:id", controller.getByStaffSkillId);
+router.get("/:id", controller.getByStaffskillId);
 router.get("/byuser/:id", controller.getByUserId);
 router.post("/", controller.create);
 router.delete("/", controller.deleting);

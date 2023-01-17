@@ -8,7 +8,7 @@ import {
     NONE,
     INTERMEDIATE,
     MANAGER_SR,
-    SYSTEM_ROLES,
+    systemRoleS,
     TOKEN_COOKIE,
     User,
 } from "./types";
@@ -35,18 +35,18 @@ export const hyphenate = (str: string) => {
     return str.trim().replace(" ", "-");
 };
 
-export const useAPI = (
+export function useAPI<T>(
     apiCallback: Function,
     varArray: unknown[] = [],
     lazy = false,
     auth = true,
-) => {
+): { data: T | null; loading: boolean; error: Error | null; callback: CallableFunction } {
     const [cookies] = useCookies([TOKEN_COOKIE]); // TODO: Check this works!
     const navigate = useNavigate();
 
-    const [callAPI, setCallAPI] = useState(!lazy);
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(!lazy);
+    const [callAPI, setCallAPI] = useState<boolean>(!lazy);
+    const [data, setData] = useState<T | null>(null);
+    const [loading, setLoading] = useState<boolean>(!lazy);
     const [error, setError] = useState<Error | null>(null);
 
     const callback = () => {
@@ -64,7 +64,7 @@ export const useAPI = (
 
             apiCallback
                 .apply(null, auth ? [authHeaders, ...varArray] : [...varArray])
-                .then((response: AxiosResponse) => {
+                ?.then((response: AxiosResponse) => {
                     setData(response.data);
                 })
                 .catch((error: AxiosError<{ error: Error }>) => {
@@ -82,7 +82,7 @@ export const useAPI = (
     }, [apiCallback, auth, callAPI, cookies, navigate, varArray]);
 
     return { data, loading, error, callback };
-};
+}
 
 export const getSelectOptionsFromArray = (valArray: string[] = [], labelArray: string[] = []) => {
     return valArray.length === labelArray.length
@@ -96,7 +96,7 @@ export const getSelectOptionsFromArray = (valArray: string[] = [], labelArray: s
 
 export const getAssignableSystemRoleOptions = (currentUserSystemRole: string) => {
     // TODO implement proper type for system role
-    const systemRolesOptions = getSelectOptionsFromArray(SYSTEM_ROLES);
+    const systemRolesOptions = getSelectOptionsFromArray(systemRoleS);
     switch (currentUserSystemRole) {
         case ADMIN:
             return systemRolesOptions;
@@ -132,15 +132,15 @@ export const isValidUser = (user: User) => {
 };
 
 export const useIsAdminOrManager = () => {
-    // @ts-ignore
-    const [currentUser, setShowToast] = useOutletContext(); // TODO fix type for AppOutletContext here
+    // @ts-ignore TODO fix type for AppOutletContext here
+    const [currentUser, setShowToast] = useOutletContext();
     const navigate = useNavigate();
 
     useEffect(() => {
         if (
             currentUser &&
-            currentUser.system_role !== ADMIN &&
-            currentUser.system_role !== MANAGER_SR
+            currentUser.systemRole !== ADMIN &&
+            currentUser.systemRole !== MANAGER_SR
         ) {
             setShowToast({ error: "Unauthorised route" });
             navigate("/");
@@ -148,25 +148,30 @@ export const useIsAdminOrManager = () => {
     });
 };
 
-const unauthorisedError = (error: AxiosError): boolean =>
-    !!error?.response?.status || error?.response?.status === 401 || error?.response?.status === 403;
+const unauthorisedError = (error: AxiosError): boolean => {
+    return (
+        !!!error?.response?.status ||
+        error?.response?.status === 401 ||
+        error?.response?.status === 403
+    );
+};
 
-export const formatDate = (_date: Date) => {
-    if (!_date) return "N/A";
+export const formatDate = (_date: string) => {
+    if (!_date || _date === "0000-00-00") return "N/A";
     let newDate = new Date(_date);
     newDate.toLocaleDateString();
     return newDate.toLocaleDateString();
 };
 
-export const formatSkillLevel = (_skillLevel: number) => {
+export const formatSkillLevel = (_skillLevel: string) => {
     // TODO implement proper type for skill level
-    if (_skillLevel === 5) {
+    if (_skillLevel === "5") {
         return EXPERT;
-    } else if (_skillLevel === 4) {
+    } else if (_skillLevel === "4") {
         return HIGH;
-    } else if (_skillLevel === 3) {
+    } else if (_skillLevel === "3") {
         return INTERMEDIATE;
-    } else if (_skillLevel === 2) {
+    } else if (_skillLevel === "2") {
         return BASIC;
     } else {
         return NONE;
@@ -176,22 +181,14 @@ export const formatSkillLevel = (_skillLevel: number) => {
 export const convertSkillLevelName = (_skillLevel: string) => {
     // TODO implement proper type for skill level
     if (_skillLevel === "Expert") {
-        return 5;
+        return "5";
     } else if (_skillLevel === "High") {
-        return 4;
+        return "4";
     } else if (_skillLevel === "Intermediate") {
-        return 3;
+        return "3";
     } else if (_skillLevel === "Basic") {
-        return 2;
+        return "2";
     } else {
-        return 1;
-    }
-};
-
-export const expiryDateNullFormatter = (_expiryDate: Date) => {
-    if (_expiryDate === null) {
-        return "N/A";
-    } else {
-        return _expiryDate;
+        return "1";
     }
 };

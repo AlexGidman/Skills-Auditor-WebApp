@@ -49,8 +49,8 @@ INSERT INTO `category` (`id`, `name`) VALUES
 
 CREATE TABLE `direct_report` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `report_id` int(11) NOT NULL
+  `userId` int(11) NOT NULL,
+  `reportId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
@@ -64,14 +64,14 @@ CREATE TABLE `direct_report` (
 CREATE TABLE `skill` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `category_id` int(11) NOT NULL
+  `categoryId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `skill`
 --
 
-INSERT INTO `skill` (`id`, `name`, `category_id`) VALUES
+INSERT INTO `skill` (`id`, `name`, `categoryId`) VALUES
 (1, 'AWS CCP', 1),
 (2, 'Power Point', 2),
 (3, 'Git', 3);
@@ -84,19 +84,19 @@ INSERT INTO `skill` (`id`, `name`, `category_id`) VALUES
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `forename` varchar(255) NOT NULL,
-  `surname` varchar(255) NOT NULL,
+  `firstName` varchar(255) NOT NULL,
+  `lastName` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `system_role` varchar(255) NOT NULL,
-  `job_role` varchar(255) NOT NULL
+  `systemRole` varchar(255) NOT NULL,
+  `jobRole` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `forename`, `surname`, `email`, `password`, `system_role`, `job_role`) VALUES
+INSERT INTO `user` (`id`, `firstName`, `lastName`, `email`, `password`, `systemRole`, `jobRole`) VALUES
 (1, 'Test', 'User', 'admin@email.com', '$argon2id$v=19$m=15360,t=3,p=1$P8dAhB8e1Y9vMvtMfJ5gyQ$tSHA+y3mghxDHxKJ35bvu6fqf3oq7ki5QholzsUbfJE', 'Admin', 'Manager');
 
 
@@ -108,18 +108,18 @@ INSERT INTO `user` (`id`, `forename`, `surname`, `email`, `password`, `system_ro
 
 CREATE TABLE `user_to_skill` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `skill_id` int(11) NOT NULL,
-  `skill_level` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `skillId` int(11) NOT NULL,
+  `skillLevel` int(11) NOT NULL,
   `notes` varchar(255) NOT NULL,
-  `expiry_date` date NULL
+  `expiryDate` date NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user_to_skill`
 --
 
-INSERT INTO `user_to_skill` (`id`, `user_id`, `skill_id`, `skill_level`, `notes`, `expiry_date`) VALUES
+INSERT INTO `user_to_skill` (`id`, `userId`, `skillId`, `skillLevel`, `notes`, `expiryDate`) VALUES
 (1, 1, 1, 1, 'Passed exam with 80%', '2029-01-01'),
 (2, 1, 2, 3, 'Power Point skills proficienct', '0000-00-00'),
 (3, 1, 3, 2, 'Git version control skills proficient', '0000-00-00');
@@ -139,15 +139,15 @@ ALTER TABLE `category`
 --
 ALTER TABLE `direct_report`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`,`report_id`),
-  ADD KEY `report_id` (`report_id`);
+  ADD KEY `userId` (`userId`,`reportId`),
+  ADD KEY `reportId` (`reportId`);
 
 --
 -- Indexes for table `skill`
 --
 ALTER TABLE `skill`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `category_id` (`category_id`);
+  ADD KEY `categoryId` (`categoryId`);
 
 --
 -- Indexes for table `user`
@@ -160,8 +160,8 @@ ALTER TABLE `user`
 --
 ALTER TABLE `user_to_skill`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `skill_id` (`skill_id`);
+  ADD KEY `userId` (`userId`),
+  ADD KEY `skillId` (`skillId`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -205,21 +205,21 @@ ALTER TABLE `user_to_skill`
 -- Constraints for table `direct_report`
 --
 ALTER TABLE `direct_report`
-  ADD CONSTRAINT `direct_report_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `direct_report_ibfk_2` FOREIGN KEY (`report_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `direct_report_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `direct_report_ibfk_2` FOREIGN KEY (`reportId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `skill`
 --
 ALTER TABLE `skill`
-  ADD CONSTRAINT `skill_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `skill_ibfk_1` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user_to_skill`
 --
 ALTER TABLE `user_to_skill`
-  ADD CONSTRAINT `user_to_skill_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_to_skill_ibfk_2` FOREIGN KEY (`skill_id`) REFERENCES `skill` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_to_skill_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_to_skill_ibfk_2` FOREIGN KEY (`skillId`) REFERENCES `skill` (`id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
