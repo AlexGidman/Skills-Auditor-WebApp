@@ -15,11 +15,11 @@ const User = db.user;
 function sanitiseUser(user) {
     return {
         id: user.id,
-        forename: user.forename,
-        surname: user.surname,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
-        system_role: user.system_role,
-        job_role: user.job_role,
+        systemRole: user.systemRole,
+        jobRole: user.jobRole,
     };
 }
 
@@ -82,12 +82,12 @@ const getByToken = async (req, res) => {
 
 const create = async (req, res) => {
     let user = {
-        forename: req.body.forename,
-        surname: req.body.surname,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
-        system_role: req.body.system_role,
-        job_role: req.body.job_role,
+        systemRole: req.body.systemRole,
+        jobRole: req.body.jobRole,
     };
     try {
         if (
@@ -104,13 +104,13 @@ const create = async (req, res) => {
 
         await checkForDuplicateEntry(User, { where: { email: user.email } });
 
-        if (!constants.SYSTEM_ROLE.includes(user.system_role)) {
+        if (!constants.systemRole.includes(user.systemRole)) {
             throw new Error(
                 "Not a valid entry for System Role: Options are Admin, Manager, StaffUser",
             );
         }
 
-        if (!constants.JOB_ROLE.includes(user.job_role)) {
+        if (!constants.jobRole.includes(user.jobRole)) {
             throw new Error(
                 "Not a valid entry for Job Role: Options are Manager, Senior Developer, Mid-Level Developer",
             );
@@ -158,12 +158,12 @@ const deleting = async (req, res) => {
 const update = async (req, res) => {
     const id = req.body.id;
     const user = {
-        forename: req.body.forename,
-        surname: req.body.surname,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
-        system_role: req.body.system_role,
-        job_role: req.body.job_role,
+        systemRole: req.body.systemRole,
+        jobRole: req.body.jobRole,
     };
     const passwordNotSupplied = !!!req.body.password;
 
@@ -189,13 +189,13 @@ const update = async (req, res) => {
             await checkForDuplicateEntry(User, { where: { email: user.email } });
         }
 
-        if (!constants.SYSTEM_ROLE.includes(user.system_role)) {
+        if (!constants.systemRole.includes(user.systemRole)) {
             throw new Error(
                 "Not a valid entry for System Role: Options are Admin, Manager, StaffUser",
             );
         }
 
-        if (!constants.JOB_ROLE.includes(user.job_role)) {
+        if (!constants.jobRole.includes(user.jobRole)) {
             throw new Error(
                 "Not a valid entry for Job Role: Options are Manager, Senior Developer, Mid-Level Developer",
             );

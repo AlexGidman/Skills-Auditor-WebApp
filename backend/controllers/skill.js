@@ -41,19 +41,19 @@ const getById = async (req, res) => {
 const create = async (req, res) => {
     let skill = {
         name: req.body.name,
-        category_id: req.body.category_id,
+        categoryId: req.body.categoryId,
     };
     try {
         if (!(await actionIsPermittedBySystemRole(res.locals.userId, [ADMIN, MANAGER_SR]))) {
             throw new Error("Not Permitted!");
         }
 
-        if (!skill.name || !skill.category_id) {
+        if (!skill.name || !skill.categoryId) {
             throw new Error("Essential fields missing");
         }
 
         await checkForDuplicateEntry(Skill, {
-            where: { name: skill.name, category_id: skill.category_id },
+            where: { name: skill.name, categoryId: skill.categoryId },
         });
 
         skill = await Skill.create(skill);
@@ -92,18 +92,18 @@ const update = async (req, res) => {
 
     const skill = {
         name: req.body.name,
-        category_id: req.body.category_id,
+        categoryId: req.body.categoryId,
     };
 
     try {
         if (!(await actionIsPermittedBySystemRole(res.locals.userId, [ADMIN, MANAGER_SR]))) {
             throw new Error("Not Permitted!");
         }
-        if (!id || !skill.name || !skill.category_id) {
+        if (!id || !skill.name || !skill.categoryId) {
             throw new Error("Essential fields missing");
         }
         await checkForDuplicateEntry(Skill, {
-            where: { name: skill.name, category_id: skill.category_id },
+            where: { name: skill.name, categoryId: skill.categoryId },
         });
 
         const updatedArray = await Skill.update(skill, { where: { id: id } });

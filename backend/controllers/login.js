@@ -28,11 +28,11 @@ const login = async (req, res) => {
         }
 
         const token = generateAccessToken(user["id"]);
-        constants.LOGIN_USER_ID = user["id"];
+        constants.LOGIN_userId = user["id"];
 
         res.status(200).json({
             token: `Bearer ${token}`,
-            id: constants.LOGIN_USER_ID,
+            id: constants.LOGIN_userId,
         });
     } catch (error) {
         formatErrorResponse(res, 400, { message: error.message });

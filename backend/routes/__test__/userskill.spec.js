@@ -4,47 +4,47 @@ const app = require("../../app");
 const { mockModel, mockError } = require("./testing");
 
 const mockUserSkill1 = {
-    user_id: 1,
-    skill_id: 1,
-    skill_level: 1,
+    userId: 1,
+    skillId: 1,
+    skillLevel: 1,
     notes: "Test Notes",
-    expiry_date: "2025-02-23",
+    expiryDate: "2025-02-23",
 };
 
 const user1 = {
-    userID: {
+    userId: {
         id: 1,
-        forename: "Test",
-        surname: "User",
+        firstName: "Test",
+        lastName: "User",
         email: "test-user@email.co.uk",
         password: "password",
-        system_role: "Manager",
-        job_role: "Expert Engineer",
+        systemRole: "Manager",
+        jobRole: "Expert Engineer",
     },
 };
 
 const skill1 = {
-    skillID: {
+    skillId: {
         id: 1,
         name: "TestSkill1",
-        category_id: 1,
+        categoryId: 1,
     },
 };
 
 const skill2 = {
-    skillID: {
+    skillId: {
         id: 2,
         name: "TestSkill1",
-        category_id: 1,
+        categoryId: 1,
     },
 };
 
 const mockUserSkill2 = {
-    user_id: 1,
-    skill_id: 2,
-    skill_level: 3,
+    userId: 1,
+    skillId: 2,
+    skillLevel: 3,
     notes: "Test Notes 2",
-    expiry_date: null,
+    expiryDate: null,
 };
 
 describe("/api/userskill", () => {
@@ -132,14 +132,14 @@ describe("/api/userskill", () => {
             expect(response.body).toEqual("User Skill added");
         });
 
-        it("should return 201 and userskill when POST /api/userskill called without expiry_date", async () => {
+        it("should return 201 and userskill when POST /api/userskill called without expiryDate", async () => {
             mockModel.create.mockResolvedValue(mockUserSkill1);
             const mockRequestBody = {
-                user_id: 1,
-                skill_id: 1,
-                skill_level: 1,
+                userId: 1,
+                skillId: 1,
+                skillLevel: 1,
                 notes: "Test Notes",
-                expiry_date: undefined,
+                expiryDate: undefined,
             };
 
             const response = await request(app)
@@ -149,18 +149,18 @@ describe("/api/userskill", () => {
                 .expect(201);
             expect(mockModel.create).toHaveBeenLastCalledWith({
                 ...mockUserSkill1,
-                expiry_date: null,
+                expiryDate: null,
             });
             expect(response.body).toEqual("User Skill added");
         });
 
-        it("should return 400 and error when POST /api/userskill called without user_id", async () => {
+        it("should return 400 and error when POST /api/userskill called without userId", async () => {
             const mockRequestBody = {
-                user_id: undefined,
-                skill_id: 1,
-                skill_level: 1,
+                userId: undefined,
+                skillId: 1,
+                skillLevel: 1,
                 notes: "Test Notes",
-                expiry_date: "2025-02-23",
+                expiryDate: "2025-02-23",
             };
 
             const response = await request(app)
@@ -172,13 +172,13 @@ describe("/api/userskill", () => {
             expect(response.body.error.message).toEqual("Essential fields missing");
         });
 
-        it("should return 400 and error when POST /api/userskill called without skill_id", async () => {
+        it("should return 400 and error when POST /api/userskill called without skillId", async () => {
             const mockRequestBody = {
-                user_id: 1,
-                skill_id: undefined,
-                skill_level: 1,
+                userId: 1,
+                skillId: undefined,
+                skillLevel: 1,
                 notes: "Test Notes",
-                expiry_date: "2025-02-23",
+                expiryDate: "2025-02-23",
             };
 
             const response = await request(app)
@@ -190,13 +190,13 @@ describe("/api/userskill", () => {
             expect(response.body.error.message).toEqual("Essential fields missing");
         });
 
-        it("should return 400 and error when POST /api/userskill called without skill_level", async () => {
+        it("should return 400 and error when POST /api/userskill called without skillLevel", async () => {
             const mockRequestBody = {
-                user_id: 1,
-                skill_id: 1,
-                skill_level: undefined,
+                userId: 1,
+                skillId: 1,
+                skillLevel: undefined,
                 notes: "Test Notes",
-                expiry_date: "2025-02-23",
+                expiryDate: "2025-02-23",
             };
 
             const response = await request(app)
@@ -210,11 +210,11 @@ describe("/api/userskill", () => {
 
         it("should return 400 and error when POST /api/userskill called without notes", async () => {
             const mockRequestBody = {
-                user_id: 1,
-                skill_id: 1,
-                skill_level: 1,
+                userId: 1,
+                skillId: 1,
+                skillLevel: 1,
                 notes: undefined,
-                expiry_date: "2025-02-23",
+                expiryDate: "2025-02-23",
             };
 
             const response = await request(app)
@@ -228,11 +228,11 @@ describe("/api/userskill", () => {
 
         it("should return 400 and error when POST /api/userskill called with notes shorter than 5 chars", async () => {
             const mockRequestBody = {
-                user_id: 1,
-                skill_id: 1,
-                skill_level: 1,
+                userId: 1,
+                skillId: 1,
+                skillLevel: 1,
                 notes: "1234",
-                expiry_date: "2025-02-23",
+                expiryDate: "2025-02-23",
             };
 
             const response = await request(app)
@@ -248,15 +248,15 @@ describe("/api/userskill", () => {
 
         it("should return 400 and error when POST /api/userskill called with notes longer than 255 chars", async () => {
             const mockRequestBody = {
-                user_id: 1,
-                skill_id: 1,
-                skill_level: 1,
+                userId: 1,
+                skillId: 1,
+                skillLevel: 1,
                 notes:
                     "thisStringIsGreaterThan255CharactersthisStringIsGreaterThan255CharactersthisStringIsGreaterThan255Characters" +
                     "thisStringIsGreaterThan255CharactersthisStringIsGreaterThan255CharactersthisStringIsGreaterThan255Characters" +
                     "thisStringIsGreaterThan255CharactersthisStringIsGreaterThan255CharactersthisStringIsGreaterThan255Characters" +
                     "thisStringIsGreaterThan255CharactersthisStringIsGreaterThan255CharactersthisStringIsGreaterThan255Characters",
-                expiry_date: "2025-02-23",
+                expiryDate: "2025-02-23",
             };
 
             const response = await request(app)
@@ -281,7 +281,7 @@ describe("/api/userskill", () => {
             expect(response.body.error.message).toEqual(mockError.message);
         });
 
-        it("should return 400 and error when POST /api/userskill called with duplate user_id and skill_id", async () => {
+        it("should return 400 and error when POST /api/userskill called with duplate userId and skillId", async () => {
             mockModel.findOne.mockResolvedValue(mockUserSkill1);
             mockModel.create.mockRejectedValue(mockError);
 
@@ -298,7 +298,7 @@ describe("/api/userskill", () => {
 
             const response = await request(app)
                 .post("/api/userskill")
-                .send({ ...mockUserSkill1, skill_level: -2 })
+                .send({ ...mockUserSkill1, skillLevel: -2 })
                 .expect("Content-Type", /json/)
                 .expect(400);
             expect(response.body.error.message).toEqual("Skill level must be 1, 2, 3, 4, or 5");
@@ -309,7 +309,7 @@ describe("/api/userskill", () => {
 
             const response = await request(app)
                 .post("/api/userskill")
-                .send({ ...mockUserSkill1, skill_level: 6 })
+                .send({ ...mockUserSkill1, skillLevel: 6 })
                 .expect("Content-Type", /json/)
                 .expect(400);
             expect(response.body.error.message).toEqual("Skill level must be 1, 2, 3, 4, or 5");
@@ -321,14 +321,14 @@ describe("/api/userskill", () => {
             const updatedOneRecord = [1];
             mockModel.findByPk.mockResolvedValue({
                 id: 1,
-                skill_level: 2,
+                skillLevel: 2,
                 notes: "updates",
             });
             mockModel.update.mockResolvedValue(updatedOneRecord);
 
             const mockRequestBody = {
                 id: 1,
-                skill_level: 2,
+                skillLevel: 2,
                 notes: "updates",
             };
 
@@ -339,7 +339,7 @@ describe("/api/userskill", () => {
                 .expect(200);
             expect(mockModel.update).toHaveBeenLastCalledWith(
                 {
-                    skill_level: 2,
+                    skillLevel: 2,
                     notes: "updates",
                 },
                 { where: { id: mockRequestBody.id } },
@@ -350,11 +350,11 @@ describe("/api/userskill", () => {
         it("should return 400 and error when PUT /api/userskill called without id", async () => {
             const mockRequestBody = {
                 id: undefined,
-                user_id: 1,
-                skill_id: 1,
-                skill_level: 2,
+                userId: 1,
+                skillId: 1,
+                skillLevel: 2,
                 notes: "updates",
-                expiry_date: "2025-02-25",
+                expiryDate: "2025-02-25",
             };
 
             const response = await request(app)
@@ -366,10 +366,10 @@ describe("/api/userskill", () => {
             expect(response.body.error.message).toEqual("Essential fields missing");
         });
 
-        it("should return 400 and error when PUT /api/userskill called without skill_level", async () => {
+        it("should return 400 and error when PUT /api/userskill called without skillLevel", async () => {
             const mockRequestBody = {
                 id: 1,
-                skill_level: undefined,
+                skillLevel: undefined,
                 notes: "updates",
             };
 
@@ -385,7 +385,7 @@ describe("/api/userskill", () => {
         it("should return 400 and error when PUT /api/userskill called without notes", async () => {
             const mockRequestBody = {
                 id: 1,
-                skill_level: 2,
+                skillLevel: 2,
                 notes: undefined,
             };
 
@@ -406,7 +406,7 @@ describe("/api/userskill", () => {
             mockModel.findByPk.mockResolvedValue(undefined);
             const mockRequestBody = {
                 id: invalidId,
-                skill_level: 2,
+                skillLevel: 2,
                 notes: "updates",
             };
 
@@ -423,7 +423,7 @@ describe("/api/userskill", () => {
             mockModel.update.mockResolvedValue(updatedZeroRecords);
             mockModel.findByPk.mockResolvedValue({
                 id: 1,
-                skill_level: 2,
+                skillLevel: 2,
                 notes: "updates",
             });
 
@@ -431,7 +431,7 @@ describe("/api/userskill", () => {
                 .put("/api/userskill")
                 .send({
                     id: 1,
-                    skill_level: 2,
+                    skillLevel: 2,
                     notes: "updates",
                 })
                 .expect("Content-Type", /json/)
@@ -445,12 +445,12 @@ describe("/api/userskill", () => {
             mockModel.update.mockRejectedValue(mockError);
             mockModel.findByPk.mockResolvedValue({
                 id: 1,
-                skill_level: 2,
+                skillLevel: 2,
                 notes: "updates",
             });
             const mockRequestBody = {
                 id: 1,
-                skill_level: 2,
+                skillLevel: 2,
                 notes: "updates",
             };
             const response = await request(app)
@@ -464,7 +464,7 @@ describe("/api/userskill", () => {
         it("should return 400 and error when PUT /api/userskill called with notes shorter than 5 chars", async () => {
             const mockRequestBody = {
                 id: 1,
-                skill_level: 1,
+                skillLevel: 1,
                 notes: "1234",
             };
 
@@ -482,7 +482,7 @@ describe("/api/userskill", () => {
         it("should return 400 and error when PUT /api/userskill called with notes longer than 255 chars", async () => {
             const mockRequestBody = {
                 id: 1,
-                skill_level: 1,
+                skillLevel: 1,
                 notes:
                     "thisStringIsGreaterThan255CharactersthisStringIsGreaterThan255CharactersthisStringIsGreaterThan255Characters" +
                     "thisStringIsGreaterThan255CharactersthisStringIsGreaterThan255CharactersthisStringIsGreaterThan255Characters" +
@@ -505,7 +505,7 @@ describe("/api/userskill", () => {
             mockModel.findOne.mockResolvedValue(mockUserSkill1);
             const mockRequestBody = {
                 id: 1,
-                skill_level: -2,
+                skillLevel: -2,
                 notes: "Test notes",
             };
             const response = await request(app)
@@ -520,7 +520,7 @@ describe("/api/userskill", () => {
             mockModel.findOne.mockResolvedValue(mockUserSkill1);
             const mockRequestBody = {
                 id: 1,
-                skill_level: 6,
+                skillLevel: 6,
                 notes: "Test notes",
             };
             const response = await request(app)
@@ -537,7 +537,7 @@ describe("/api/userskill", () => {
             mockModel.destroy.mockResolvedValue(1);
             mockModel.findByPk.mockResolvedValue({
                 id: 1,
-                skill_level: 2,
+                skillLevel: 2,
                 notes: "updates",
             });
             const mockRequestBody = { id: 1 };
@@ -577,7 +577,7 @@ describe("/api/userskill", () => {
             mockModel.destroy.mockRejectedValue(mockError);
             mockModel.findByPk.mockResolvedValue({
                 id: 1,
-                skill_level: 2,
+                skillLevel: 2,
                 notes: "updates",
             });
             const response = await request(app)

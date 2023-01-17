@@ -3,8 +3,8 @@ const request = require("supertest");
 const app = require("../../app");
 const { mockModel, mockError } = require("./testing");
 
-const mockDirectReport1 = { id: "1", user_id: "2", report_id: "3" };
-const mockDirectReport2 = { id: "2", user_id: "3", report_id: "1" };
+const mockDirectReport1 = { id: "1", userId: "2", reportId: "3" };
+const mockDirectReport2 = { id: "2", userId: "3", reportId: "1" };
 
 describe("/api/directreport", () => {
     describe("GET all reports", () => {
@@ -36,13 +36,13 @@ describe("/api/directreport", () => {
 
     describe("POST", () => {
         beforeEach(() => {
-            mockModel.findByPk.mockResolvedValue({ system_role: "Admin" });
+            mockModel.findByPk.mockResolvedValue({ systemRole: "Admin" });
         });
         it("should return 201 and Direct Report when POST /api/directreport called successfully", async () => {
             mockModel.create.mockResolvedValue(mockDirectReport1);
             const mockRequestBody = {
-                user_id: mockDirectReport1.user_id,
-                report_id: mockDirectReport1.report_id,
+                userId: mockDirectReport1.userId,
+                reportId: mockDirectReport1.reportId,
             };
 
             const response = await request(app)
@@ -54,10 +54,10 @@ describe("/api/directreport", () => {
             expect(response.body).toEqual("Direct Report added");
         });
 
-        it("should return 400 and error when POST /api/directreport called without user_id", async () => {
+        it("should return 400 and error when POST /api/directreport called without userId", async () => {
             const response = await request(app)
                 .post("/api/directreport")
-                .send({ user_id: undefined })
+                .send({ userId: undefined })
                 .expect("Content-Type", /json/)
                 .expect(400);
             expect(mockModel.create).not.toHaveBeenCalled();
@@ -67,8 +67,8 @@ describe("/api/directreport", () => {
         it("should return 400 and error when POST /api/directreport called with database error", async () => {
             mockModel.create.mockRejectedValue(mockError);
             const mockRequestBody = {
-                user_id: mockDirectReport1.user_id,
-                report_id: mockDirectReport1.report_id,
+                userId: mockDirectReport1.userId,
+                reportId: mockDirectReport1.reportId,
             };
 
             const response = await request(app)
@@ -82,7 +82,7 @@ describe("/api/directreport", () => {
         it("should return 400 and error when POST /api/directreport called with matching user id and report id", async () => {
             const response = await request(app)
                 .post("/api/directreport")
-                .send({ user_id: 1, report_id: 1 })
+                .send({ userId: 1, reportId: 1 })
                 .expect("Content-Type", /json/)
                 .expect(400);
             expect(mockModel.create).not.toHaveBeenCalled();
@@ -91,10 +91,10 @@ describe("/api/directreport", () => {
 
         it("should return 201 and Direct Report when POST /api/directreport called by manager", async () => {
             mockModel.create.mockResolvedValue(mockDirectReport1);
-            mockModel.findByPk.mockResolvedValue({ system_role: "Manager" });
+            mockModel.findByPk.mockResolvedValue({ systemRole: "Manager" });
             const mockRequestBody = {
-                user_id: mockDirectReport1.user_id,
-                report_id: mockDirectReport1.report_id,
+                userId: mockDirectReport1.userId,
+                reportId: mockDirectReport1.reportId,
             };
 
             const response = await request(app)
@@ -109,7 +109,7 @@ describe("/api/directreport", () => {
             mockModel.findOne.mockResolvedValue(mockDirectReport1);
             const response = await request(app)
                 .post("/api/directreport")
-                .send({ user_id: 1, report_id: 2 })
+                .send({ userId: 1, reportId: 2 })
                 .expect("Content-Type", /json/)
                 .expect(400);
             expect(mockModel.create).not.toHaveBeenCalled();
@@ -120,7 +120,7 @@ describe("/api/directreport", () => {
             mockModel.findOne.mockResolvedValueOnce(mockDirectReport1);
             const response = await request(app)
                 .post("/api/directreport")
-                .send({ user_id: 1, report_id: 2 })
+                .send({ userId: 1, reportId: 2 })
                 .expect("Content-Type", /json/)
                 .expect(400);
             expect(mockModel.create).not.toHaveBeenCalled();
@@ -132,7 +132,7 @@ describe("/api/directreport", () => {
 
     describe("DELETE", () => {
         beforeEach(() => {
-            mockModel.findByPk.mockResolvedValue({ system_role: "Admin" });
+            mockModel.findByPk.mockResolvedValue({ systemRole: "Admin" });
         });
         it("should return 200 when DELETE /api/directreport called successfully", async () => {
             mockModel.destroy.mockResolvedValue(1);
@@ -185,7 +185,7 @@ describe("/api/directreport", () => {
         });
 
         it("should return 200 and Direct Report when DELETE /api/directreport called by manager", async () => {
-            mockModel.findByPk.mockResolvedValue({ system_role: "Manager" });
+            mockModel.findByPk.mockResolvedValue({ systemRole: "Manager" });
             mockModel.destroy.mockResolvedValue(1);
             const mockRequestBody = { id: mockDirectReport1.id };
 

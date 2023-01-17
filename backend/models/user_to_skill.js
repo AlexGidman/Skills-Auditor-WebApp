@@ -2,13 +2,13 @@ module.exports = (sequelize, Sequelize, user, skill) => {
     const UserSkill = sequelize.define(
         "userSkill",
         {
-            skill_level: {
+            skillLevel: {
                 type: Sequelize.STRING,
             },
             notes: {
                 type: Sequelize.STRING,
             },
-            expiry_date: {
+            expiryDate: {
                 type: Sequelize.DATEONLY,
             },
         },
@@ -19,10 +19,9 @@ module.exports = (sequelize, Sequelize, user, skill) => {
         },
     );
 
-    UserSkill.belongsTo(user, { as: "userID", foreignKey: "user_id", onDelete: "CASCADE" });
+    UserSkill.belongsTo(user, { foreignKey: "userId", onDelete: "CASCADE" });
     UserSkill.belongsTo(skill, {
-        as: "skillID",
-        foreignKey: "skill_id",
+        foreignKey: "skillId",
     });
 
     return UserSkill;

@@ -1,0 +1,558 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HamburgerNavBar renders correctly when passed admin props 1`] = `
+<div>
+  <nav>
+    <button
+      aria-label="Navigation"
+      class="button"
+    >
+      <img
+        alt="menu"
+        aria-hidden="true"
+        class="hamburgerIcon"
+        src="hamburger.svg"
+      />
+    </button>
+    <ul
+      class="hamburgerLinks hidden"
+    >
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/"
+        >
+          Home
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/mydetails"
+        >
+          My Details
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/myskills"
+        >
+          My Skills
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/viewstaff"
+        >
+          View Staff
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/addstaff"
+        >
+          Add Staff
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/viewskills"
+        >
+          View Skills
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/addskill"
+        >
+          Add Skill
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/viewcategories"
+        >
+          View Categories
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <button
+          class="component signoutButton"
+          name="Sign Out"
+        >
+          Sign out
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>
+`;
+
+exports[`HamburgerNavBar renders correctly when passed manager props 1`] = `
+<div>
+  <nav>
+    <button
+      aria-label="Navigation"
+      class="button"
+    >
+      <img
+        alt="menu"
+        aria-hidden="true"
+        class="hamburgerIcon"
+        src="hamburger.svg"
+      />
+    </button>
+    <ul
+      class="hamburgerLinks hidden"
+    >
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/"
+        >
+          Home
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/mydetails"
+        >
+          My Details
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/myskills"
+        >
+          My Skills
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/viewstaff"
+        >
+          View Staff
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/addstaff"
+        >
+          Add Staff
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/viewskills"
+        >
+          View Skills
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/addskill"
+        >
+          Add Skill
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/viewcategories"
+        >
+          View Categories
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <button
+          class="component signoutButton"
+          name="Sign Out"
+        >
+          Sign out
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>
+`;
+
+exports[`HamburgerNavBar renders correctly when passed staff user props 1`] = `
+<div>
+  <nav>
+    <button
+      aria-label="Navigation"
+      class="button"
+    >
+      <img
+        alt="menu"
+        aria-hidden="true"
+        class="hamburgerIcon"
+        src="hamburger.svg"
+      />
+    </button>
+    <ul
+      class="hamburgerLinks hidden"
+    >
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/"
+        >
+          Home
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/mydetails"
+        >
+          My Details
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component"
+          href="/myskills"
+        >
+          My Skills
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <button
+          class="component signoutButton"
+          name="Sign Out"
+        >
+          Sign out
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>
+`;
+
+exports[`NavBar renders correctly when passed admin props 1`] = `
+<div>
+  <nav
+    class="component"
+  >
+    <img
+      alt="logo"
+      aria-hidden="true"
+      class="logo"
+      src="logo.svg"
+    />
+    <ul>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/"
+        >
+          Home
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/mydetails"
+        >
+          My Details
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/myskills"
+        >
+          My Skills
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/viewstaff"
+        >
+          View Staff
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/addstaff"
+        >
+          Add Staff
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/viewskills"
+        >
+          View Skills
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/addskill"
+        >
+          Add Skill
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/viewcategories"
+        >
+          View Categories
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <button
+          class="component signoutButton"
+          name="Sign Out"
+        >
+          Sign out
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>
+`;
+
+exports[`NavBar renders correctly when passed manager props 1`] = `
+<div>
+  <nav
+    class="component"
+  >
+    <img
+      alt="logo"
+      aria-hidden="true"
+      class="logo"
+      src="logo.svg"
+    />
+    <ul>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/"
+        >
+          Home
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/mydetails"
+        >
+          My Details
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/myskills"
+        >
+          My Skills
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/viewstaff"
+        >
+          View Staff
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/addstaff"
+        >
+          Add Staff
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/viewskills"
+        >
+          View Skills
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/addskill"
+        >
+          Add Skill
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/viewcategories"
+        >
+          View Categories
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <button
+          class="component signoutButton"
+          name="Sign Out"
+        >
+          Sign out
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>
+`;
+
+exports[`NavBar renders correctly when passed staff user props 1`] = `
+<div>
+  <nav
+    class="component"
+  >
+    <img
+      alt="logo"
+      aria-hidden="true"
+      class="logo"
+      src="logo.svg"
+    />
+    <ul>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/"
+        >
+          Home
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/mydetails"
+        >
+          My Details
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <a
+          class="component link"
+          href="/myskills"
+        >
+          My Skills
+        </a>
+      </li>
+      <li
+        class="listItem"
+      >
+        <button
+          class="component signoutButton"
+          name="Sign Out"
+        >
+          Sign out
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>
+`;

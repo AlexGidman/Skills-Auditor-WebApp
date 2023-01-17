@@ -19,12 +19,12 @@ function formatErrorResponse(res, code, error) {
 
 function notValidUser(user) {
     if (
-        !user.forename ||
-        !user.surname ||
+        !user.firstName ||
+        !user.lastName ||
         !user.email ||
         !user.password ||
-        !user.system_role ||
-        !user.job_role
+        !user.systemRole ||
+        !user.jobRole
     ) {
         return true;
     }
@@ -66,7 +66,7 @@ function generateAccessToken(id) {
 
 function checkToken(req, res, next) {
     const token = extractToken(req);
-    if (!token || !constants.LOGIN_USER_ID) {
+    if (!token || !constants.LOGIN_userId) {
         return formatErrorResponse(res, 401, "Authorisation required");
     }
 
@@ -76,8 +76,8 @@ function checkToken(req, res, next) {
         }
         req.tokenData = decoded;
 
-        // Additional check token userID matched LOGIN_USER_ID so that our current checks are validated
-        if (decoded.id != constants.LOGIN_USER_ID) {
+        // Additional check token userId matched LOGIN_userId so that our current checks are validated
+        if (decoded.id != constants.LOGIN_userId) {
             return formatErrorResponse(res, 403, "No Access");
         }
         res.locals.userId = decoded.id;
@@ -96,7 +96,7 @@ async function actionIsPermittedBySystemRole(userId, systemRoleArray) {
         const requestingUser = await user.findByPk(userId);
         if (!requestingUser) return false;
         for (const permittedSystemRole of systemRoleArray) {
-            if (requestingUser.system_role === permittedSystemRole) {
+            if (requestingUser.systemRole === permittedSystemRole) {
                 return true;
             }
         }
@@ -110,11 +110,11 @@ async function isUserOrDirectReportOfUser(requestingUserId, actionableUserId) {
     if (requestingUserId.toString() === actionableUserId.toString()) return true;
     try {
         const requestingUserDirectReports = await directReport.findAll({
-            where: { user_id: requestingUserId },
+            where: { userId: requestingUserId },
         });
         if (!requestingUserDirectReports || !requestingUserDirectReports.length) return false;
         for (const report of requestingUserDirectReports) {
-            if (report.report_id.toString() === actionableUserId.toString()) {
+            if (report.reportId.toString() === actionableUserId.toString()) {
                 return true;
             }
         }

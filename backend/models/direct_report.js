@@ -9,8 +9,8 @@ module.exports = (sequelize, Sequelize, user) => {
         },
     );
 
-    DirectReport.belongsTo(user, { as: "userID", foreignKey: "user_id", onDelete: "CASCADE" });
-    DirectReport.belongsTo(user, { as: "reportID", foreignKey: "report_id", onDelete: "CASCADE" });
+    DirectReport.belongsTo(user, { as: "userID", foreignKey: "userId", onDelete: "CASCADE" });
+    DirectReport.belongsTo(user, { as: "reportID", foreignKey: "reportId", onDelete: "CASCADE" });
 
     return DirectReport;
 };

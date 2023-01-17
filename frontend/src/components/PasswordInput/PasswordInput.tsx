@@ -1,0 +1,36 @@
+import React from "react";
+import { v4 as uuidv4 } from "uuid";
+import styles from "./PasswordInput.module.css";
+import cx from "classnames";
+
+import { hyphenate } from "../../utility/helper";
+
+interface Props extends React.ComponentProps<"input"> {
+    labelText: string;
+}
+
+export const PasswordInput = ({
+    labelText,
+    className,
+    children,
+    ...rest
+}: Props): React.ReactElement => {
+    const id = `${hyphenate(labelText)}-${uuidv4()}`;
+
+    return (
+        <div className={cx(styles.component, className)}>
+            <label htmlFor={id} className={styles.label}>
+                {labelText}:
+            </label>
+            <input
+                id={id}
+                type="password"
+                minLength={0}
+                maxLength={100}
+                pattern="[a-zA-ZÀ-ȕ-]+$"
+                {...rest}
+                className={styles.input}
+            />
+        </div>
+    );
+};
