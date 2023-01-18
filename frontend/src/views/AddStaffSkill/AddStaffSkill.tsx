@@ -37,7 +37,7 @@ export const AddStaffSkill = () => {
                 !!directReportsError ||
                 (!!directReportsData &&
                     !directReportsData.filter((directReport) => {
-                        return directReport.report.id === userId; // TODO: check this isn't broken by type string vs number
+                        return directReport.report.id === userId;
                     }))
             ) {
                 setShowToast({

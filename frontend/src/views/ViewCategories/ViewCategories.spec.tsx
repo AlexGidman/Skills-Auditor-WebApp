@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { ViewCategories } from "./ViewCategories";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import userEvent from "@testing-library/user-event";
 import * as ReactDom from "react-router-dom";
 import { wait } from "@testing-library/user-event/dist/utils";
@@ -27,9 +27,9 @@ describe("ViewCategories", () => {
     it("renders correctly when data successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
         mockUseOutletContext.mockReturnValue([mockAdminUser]);
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
         );
         const { container } = render(
             <ReactDom.MemoryRouter>
@@ -50,9 +50,9 @@ describe("ViewCategories", () => {
     it("should have Edit category link that has no valid href if no option is selected", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
         mockUseOutletContext.mockReturnValue([mockAdminUser]);
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -75,9 +75,9 @@ describe("ViewCategories", () => {
     it("should have Edit category link that has a valid href if option is selected", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
         mockUseOutletContext.mockReturnValue([mockAdminUser]);
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
         );
         render(
             <ReactDom.MemoryRouter>

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { AddSkill } from "./AddSkill";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import React from "react";
 import { Category } from "../../utility/types";
@@ -34,9 +34,12 @@ describe("AddSkill", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: mockCategories }),
+            Promise.resolve({
+                ...mockApiResponse,
+                data: mockCategories,
+            }),
         );
         const { container } = render(
             <ReactDom.MemoryRouter>

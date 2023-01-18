@@ -7,6 +7,7 @@ import * as apiRequests from "./utility/apiRequests";
 import * as reactCookie from "react-cookie";
 
 import { MANAGER_JR, ADMIN, User } from "./utility/types";
+import { AxiosResponse } from "axios";
 
 jest.mock("uuid", () => {
     return {
@@ -53,6 +54,14 @@ export const mockAdminUser = {
     email: "Admin@email.com",
     jobRole: MANAGER_JR,
     systemRole: ADMIN,
+};
+
+export const mockApiResponse: AxiosResponse<any, any> = {
+    data: {},
+    status: 200,
+    statusText: "",
+    headers: {},
+    config: {},
 };
 
 export const mockError = { response: { data: { error: new Error("Oops") }, status: 400 } };

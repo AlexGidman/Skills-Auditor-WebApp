@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { mockApiRequests, mockAdminUser } from "../../setupTests";
+import { mockApiRequests, mockAdminUser, mockApiResponse } from "../../setupTests";
 import * as rrd from "react-router-dom";
 import * as reactCookie from "react-cookie";
 import * as helper from "../../utility/helper";
@@ -25,9 +25,8 @@ describe("AppWrapper", () => {
             jest.fn(),
         ]);
 
-        // @ts-ignore TODO: fix this
         mockApiRequests.getUserFromToken.mockImplementation(() =>
-            Promise.resolve({ data: mockAdminUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockAdminUser }),
         );
 
         const mockNavigate = jest.fn();

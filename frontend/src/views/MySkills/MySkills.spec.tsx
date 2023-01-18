@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { MySkills } from "./MySkills";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import React from "react";
 import { Category, Skill, StaffSkill } from "../../utility/types";
@@ -38,13 +38,13 @@ describe("MySkills", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getAllStaffSkills.mockImplementation(() =>
-            Promise.resolve({ data: [mockStaffSkill1] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockStaffSkill1] }),
         );
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.deleteStaffSkill.mockImplementation(() =>
-            Promise.resolve({ data: "Success" }),
+            Promise.resolve({ ...mockApiResponse, data: "Success" }),
         );
         const { container } = render(
             <ReactDom.MemoryRouter>

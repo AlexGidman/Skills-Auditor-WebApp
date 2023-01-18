@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { ViewSkills } from "./ViewSkills";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import userEvent from "@testing-library/user-event";
 import * as ReactDom from "react-router-dom";
 import { wait } from "@testing-library/user-event/dist/utils";
@@ -37,9 +37,9 @@ describe("ViewSkills", () => {
     it("renders correctly when data successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
         mockUseOutletContext.mockReturnValue([mockAdminUser]);
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getAllSkills.mockImplementation(() =>
-            Promise.resolve({ data: [mockSkill1, mockSkill2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockSkill1, mockSkill2] }),
         );
         const { container } = render(
             <ReactDom.MemoryRouter>
@@ -64,9 +64,9 @@ describe("ViewSkills", () => {
     it("should have Edit skill link that has no valid href if no option is selected", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
         mockUseOutletContext.mockReturnValue([mockAdminUser]);
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getAllSkills.mockImplementation(() =>
-            Promise.resolve({ data: [mockSkill1, mockSkill2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockSkill1, mockSkill2] }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -89,9 +89,9 @@ describe("ViewSkills", () => {
     it("should have Edit skill link that has a valid href if option is selected", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
         mockUseOutletContext.mockReturnValue([mockAdminUser]);
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getAllSkills.mockImplementation(() =>
-            Promise.resolve({ data: [mockSkill1, mockSkill2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockSkill1, mockSkill2] }),
         );
         render(
             <ReactDom.MemoryRouter>

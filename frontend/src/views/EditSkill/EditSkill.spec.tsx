@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 
 import { wait } from "@testing-library/user-event/dist/utils";
@@ -40,11 +40,13 @@ describe("EditSkill", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getSkill.mockImplementation(() => Promise.resolve({ data: mockSkill1 }));
-        // @ts-ignore TODO: fix this
+
+        mockApiRequests.getSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: mockSkill1 }),
+        );
+
         mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
         );
         const { container } = render(
             <ReactDom.MemoryRouter>
@@ -76,11 +78,13 @@ describe("EditSkill", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getSkill.mockImplementation(() => Promise.resolve({ data: mockSkill1 }));
-        // @ts-ignore TODO: fix this
+
+        mockApiRequests.getSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: mockSkill1 }),
+        );
+
         mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -133,14 +137,18 @@ describe("EditSkill", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getSkill.mockImplementation(() => Promise.resolve({ data: mockSkill1 }));
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+
+        mockApiRequests.getSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: mockSkill1 }),
         );
-        // @ts-ignore TODO: fix this
-        mockApiRequests.updateSkill.mockImplementation(() => Promise.resolve("success"));
+
+        mockApiRequests.getAllCategories.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
+        );
+
+        mockApiRequests.updateSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: "Success" }),
+        );
         render(
             <ReactDom.MemoryRouter>
                 <EditSkill />
@@ -163,14 +171,18 @@ describe("EditSkill", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getSkill.mockImplementation(() => Promise.resolve({ data: mockSkill1 }));
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+
+        mockApiRequests.getSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: mockSkill1 }),
         );
-        // @ts-ignore TODO: fix this
-        mockApiRequests.updateSkill.mockImplementation(() => Promise.resolve("success"));
+
+        mockApiRequests.getAllCategories.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
+        );
+
+        mockApiRequests.updateSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: "Success" }),
+        );
         render(
             <ReactDom.MemoryRouter>
                 <EditSkill />
@@ -195,11 +207,13 @@ describe("EditSkill", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getSkill.mockImplementation(() => Promise.resolve({ data: mockSkill1 }));
-        // @ts-ignore TODO: fix this
+
+        mockApiRequests.getSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: mockSkill1 }),
+        );
+
         mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
         );
         mockApiRequests.updateSkill.mockImplementation(() => Promise.reject(mockError));
         render(
@@ -226,11 +240,13 @@ describe("EditSkill", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getSkill.mockImplementation(() => Promise.resolve({ data: mockSkill1 }));
-        // @ts-ignore TODO: fix this
+
+        mockApiRequests.getSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: mockSkill1 }),
+        );
+
         mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
         );
         render(
             <ReactDom.MemoryRouter>

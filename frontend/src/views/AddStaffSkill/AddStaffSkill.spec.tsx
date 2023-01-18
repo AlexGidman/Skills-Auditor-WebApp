@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { AddStaffSkill } from "./AddStaffSkill";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import React from "react";
 import { Category, Skill } from "../../utility/types";
@@ -25,8 +25,9 @@ const skillLevel = ["None", "Basic", "Intermediate", "High", "Expert"];
 
 describe("AddStaffSkill", () => {
     beforeEach(() => {
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getAllDirectReports.mockImplementation(() => Promise.resolve({ data: [] }));
+        mockApiRequests.getAllDirectReports.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: [] }),
+        );
     });
     it("renders correctly when data successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
@@ -34,9 +35,9 @@ describe("AddStaffSkill", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getAllSkills.mockImplementation(() =>
-            Promise.resolve({ data: [mockSkill1] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockSkill1] }),
         );
         const { container } = render(
             <ReactDom.MemoryRouter>

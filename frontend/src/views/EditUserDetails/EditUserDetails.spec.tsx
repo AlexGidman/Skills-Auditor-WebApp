@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import { EditUserDetails } from "./EditUserDetails";
 import { ADMIN, MANAGER_JR, SENIOR_DEVELOPER, STAFF_USER, User } from "../../utility/types";
@@ -26,8 +26,9 @@ const mockUser: User = {
 
 describe("EditUserDetails", () => {
     beforeEach(() => {
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getAllDirectReports.mockImplementation(() => Promise.resolve({ data: [] }));
+        mockApiRequests.getAllDirectReports.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: [] }),
+        );
     });
     it("renders correctly when data retrieval successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
@@ -35,9 +36,9 @@ describe("EditUserDetails", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
         const { container } = render(
             <ReactDom.MemoryRouter>
@@ -78,9 +79,9 @@ describe("EditUserDetails", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -159,9 +160,9 @@ describe("EditUserDetails", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -212,13 +213,13 @@ describe("EditUserDetails", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.updateUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: "Success" }),
+            Promise.resolve({ ...mockApiResponse, data: "Success" }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -253,13 +254,13 @@ describe("EditUserDetails", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.updateUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: "Success" }),
+            Promise.resolve({ ...mockApiResponse, data: "Success" }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -285,9 +286,9 @@ describe("EditUserDetails", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
         mockApiRequests.updateUserDetails.mockImplementation(() => Promise.reject(mockError));
         render(
@@ -315,9 +316,9 @@ describe("EditUserDetails", () => {
             currentUser: mockAdminUser,
             setShowToast: jest.fn(),
         });
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
         render(
             <ReactDom.MemoryRouter>
