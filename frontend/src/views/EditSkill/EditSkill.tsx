@@ -11,6 +11,7 @@ import styles from "./EditSkill.module.css";
 
 import { useNavigate, useParams, useOutletContext } from "react-router-dom";
 import { Category, Skill } from "../../utility/types";
+import { AppOutletContext } from "../AppWrapper/AppWrapper";
 
 export const EditSkill = () => {
     useIsAdminOrManager();
@@ -41,8 +42,8 @@ interface FormProps {
 const Form = ({ data }: FormProps) => {
     const navigate = useNavigate();
     const { data: categoryData } = useAPI<Category[]>(getAllCategories);
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [, setShowToast] = useOutletContext();
+    const { setShowToast } = useOutletContext<AppOutletContext>();
+
     const [skillDescription, setSkillDescription] = useState(data.name);
     const [skillCategoryId, setSkillCategoryId] = useState(data.category.id);
 

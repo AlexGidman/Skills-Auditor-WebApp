@@ -1,12 +1,12 @@
 import React from "react";
 import { useOutletContext } from "react-router-dom";
 import { LinkButton } from "../../components/LinkButton/LinkButton";
+import { AppOutletContext } from "../AppWrapper/AppWrapper";
 
 import styles from "./MyDetails.module.css";
 
 export const MyDetails = () => {
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [currentUser] = useOutletContext();
+    const { currentUser } = useOutletContext<AppOutletContext>();
 
     return (
         <>

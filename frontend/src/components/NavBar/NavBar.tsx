@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { LinkButton } from "../LinkButton/LinkButton";
 import { Button } from "../Button/Button";
 
-import { STAFF_USER, MANAGER_SR, ADMIN } from "../../utility/types";
+import { STAFF_USER, MANAGER_SR, ADMIN, SYSTEM_ROLES } from "../../utility/types";
 import { Hamburger, Logo } from "../../icons";
 
 import styles from "./NavBar.module.css";
@@ -53,7 +53,7 @@ const navLinks = [
 ];
 
 interface Props extends React.ComponentProps<"nav"> {
-    systemRole: string; // TODO: change this type when system role changes
+    systemRole: typeof SYSTEM_ROLES[number];
 }
 
 export const NavBar = ({ systemRole, className, ...rest }: Props): React.ReactElement => {

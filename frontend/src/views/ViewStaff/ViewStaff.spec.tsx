@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import { ViewStaff } from "./ViewStaff";
 import { wait } from "@testing-library/user-event/dist/utils";
@@ -59,18 +59,23 @@ const mockReports: DirectReport[] = [
 describe("ViewStaff", () => {
     beforeEach(() => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => jest.fn());
     });
 
     it.only("renders correctly when data retrieval successful", async () => {
-        // @ts-ignore TODO: fix this
         mockApiRequests.getAllDirectReports.mockImplementation(() =>
-            Promise.resolve({ data: mockReports }),
+            Promise.resolve({ ...mockApiResponse, data: mockReports }),
         );
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getAllStaffSkills.mockImplementation(() =>
-            Promise.resolve({ data: [{ id: "100", skill: mockSkill1, skillLevel: "1" }] }),
+            Promise.resolve({
+                ...mockApiResponse,
+                data: [{ id: "100", skill: mockSkill1, skillLevel: "1" }],
+            }),
         );
         const { container } = render(
             <ReactDom.MemoryRouter>
@@ -129,13 +134,15 @@ describe("ViewStaff", () => {
     });
 
     it("renders user info and links correctly on Direct Reports listbox option selection", async () => {
-        // @ts-ignore TODO: fix this
         mockApiRequests.getAllDirectReports.mockImplementation(() =>
-            Promise.resolve({ data: mockReports }),
+            Promise.resolve({ ...mockApiResponse, data: mockReports }),
         );
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getAllStaffSkills.mockImplementation(() =>
-            Promise.resolve({ data: [{ id: "100", skill: mockSkill1, skillLevel: "1" }] }),
+            Promise.resolve({
+                ...mockApiResponse,
+                data: [{ id: "100", skill: mockSkill1, skillLevel: "1" }],
+            }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -171,7 +178,7 @@ describe("ViewStaff", () => {
 
         userEvent.selectOptions(
             await screen.findByRole("listbox", { name: "Direct Reports" }),
-            mockUser2.id,
+            mockUser2.id || "",
         );
         expect(screen.queryByRole("cell", { name: mockUser1.email })).not.toBeInTheDocument();
         expect(screen.getByRole("cell", { name: mockUser2.email })).toBeInTheDocument();
@@ -186,13 +193,13 @@ describe("ViewStaff", () => {
     });
 
     it("renders edit staff skill link correctly on Skills listbox option selection", async () => {
-        // @ts-ignore TODO: fix this
         mockApiRequests.getAllDirectReports.mockImplementation(() =>
-            Promise.resolve({ data: mockReports }),
+            Promise.resolve({ ...mockApiResponse, data: mockReports }),
         );
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getAllStaffSkills.mockImplementation(() =>
             Promise.resolve({
+                ...mockApiResponse,
                 data: [
                     { id: "100", skill: mockSkill1, skillLevel: "1" },
                     { id: "200", skill: mockSkill2, skillLevel: "2" },
@@ -230,21 +237,23 @@ describe("ViewStaff", () => {
     });
 
     it("should have delete report button that refreshes the page following deletion of user", async () => {
-        // @ts-ignore TODO: fix this
         mockApiRequests.getAllDirectReports.mockImplementation(() =>
-            Promise.resolve({ data: mockReports }),
+            Promise.resolve({ ...mockApiResponse, data: mockReports }),
         );
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.getAllStaffSkills.mockImplementation(() =>
             Promise.resolve({
+                ...mockApiResponse,
                 data: [
                     { id: "100", skill: mockSkill1, skillLevel: "1" },
                     { id: "200", skill: mockSkill2, skillLevel: "2" },
                 ],
             }),
         );
-        // @ts-ignore TODO: fix this
-        mockApiRequests.deleteUser.mockImplementation(() => Promise.resolve({ data: "Success" }));
+
+        mockApiRequests.deleteUser.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: "Success" }),
+        );
         const mockNavigate = jest.fn();
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
 

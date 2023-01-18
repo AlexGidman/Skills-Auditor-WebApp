@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { AddSkill } from "./AddSkill";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import React from "react";
+import { Category } from "../../utility/types";
 
 jest.mock("react-router-dom", () => {
     return {
@@ -11,7 +12,7 @@ jest.mock("react-router-dom", () => {
     };
 });
 
-const mockCategories = [
+const mockCategories: Category[] = [
     {
         id: "1",
         name: "Programming",
@@ -29,10 +30,16 @@ const mockCategories = [
 describe("AddSkill", () => {
     it("renders correctly when data successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: mockCategories }),
+            Promise.resolve({
+                ...mockApiResponse,
+                data: mockCategories,
+            }),
         );
         const { container } = render(
             <ReactDom.MemoryRouter>
@@ -60,7 +67,10 @@ describe("AddSkill", () => {
 
     it("renders correctly when error", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         mockApiRequests.getAllCategories.mockImplementation(() => Promise.reject(mockError));
         const { container } = render(
             <ReactDom.MemoryRouter>

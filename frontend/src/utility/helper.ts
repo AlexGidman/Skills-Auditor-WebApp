@@ -8,15 +8,17 @@ import {
     NONE,
     INTERMEDIATE,
     MANAGER_SR,
-    systemRoleS,
+    SYSTEM_ROLES,
     TOKEN_COOKIE,
     User,
+    SKILL_LEVELS,
 } from "./types";
 import { useCookies } from "react-cookie";
 import { AxiosResponse, AxiosError } from "axios";
+import { AppOutletContext } from "../views/AppWrapper/AppWrapper";
 
 export const useLogout = () => {
-    const [, , removeCookie] = useCookies([TOKEN_COOKIE]); // TODO: Check this works!
+    const [, , removeCookie] = useCookies([TOKEN_COOKIE]);
     const navigate = useNavigate();
     const [logout, setLogout] = useState(false);
 
@@ -41,7 +43,7 @@ export function useAPI<T>(
     lazy = false,
     auth = true,
 ): { data: T | null; loading: boolean; error: Error | null; callback: CallableFunction } {
-    const [cookies] = useCookies([TOKEN_COOKIE]); // TODO: Check this works!
+    const [cookies] = useCookies([TOKEN_COOKIE]);
     const navigate = useNavigate();
 
     const [callAPI, setCallAPI] = useState<boolean>(!lazy);
@@ -94,9 +96,10 @@ export const getSelectOptionsFromArray = (valArray: string[] = [], labelArray: s
           });
 };
 
-export const getAssignableSystemRoleOptions = (currentUserSystemRole: string) => {
-    // TODO implement proper type for system role
-    const systemRolesOptions = getSelectOptionsFromArray(systemRoleS);
+export const getAssignableSystemRoleOptions = (
+    currentUserSystemRole: typeof SYSTEM_ROLES[number],
+) => {
+    const systemRolesOptions = getSelectOptionsFromArray(Array.from(SYSTEM_ROLES));
     switch (currentUserSystemRole) {
         case ADMIN:
             return systemRolesOptions;
@@ -132,8 +135,7 @@ export const isValidUser = (user: User) => {
 };
 
 export const useIsAdminOrManager = () => {
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [currentUser, setShowToast] = useOutletContext();
+    const { currentUser, setShowToast } = useOutletContext<AppOutletContext>();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -164,7 +166,6 @@ export const formatDate = (_date: string) => {
 };
 
 export const formatSkillLevel = (_skillLevel: string) => {
-    // TODO implement proper type for skill level
     if (_skillLevel === "5") {
         return EXPERT;
     } else if (_skillLevel === "4") {
@@ -178,15 +179,14 @@ export const formatSkillLevel = (_skillLevel: string) => {
     }
 };
 
-export const convertSkillLevelName = (_skillLevel: string) => {
-    // TODO implement proper type for skill level
-    if (_skillLevel === "Expert") {
+export const convertSkillLevelName = (_skillLevel: typeof SKILL_LEVELS[number]) => {
+    if (_skillLevel === EXPERT) {
         return "5";
-    } else if (_skillLevel === "High") {
+    } else if (_skillLevel === HIGH) {
         return "4";
-    } else if (_skillLevel === "Intermediate") {
+    } else if (_skillLevel === INTERMEDIATE) {
         return "3";
-    } else if (_skillLevel === "Basic") {
+    } else if (_skillLevel === BASIC) {
         return "2";
     } else {
         return "1";

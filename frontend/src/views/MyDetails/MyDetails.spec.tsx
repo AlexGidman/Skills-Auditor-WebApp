@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { MyDetails } from "./MyDetails";
-import { mockApiRequests } from "../../setupTests";
+import { mockApiRequests, mockApiResponse } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import React from "react";
+import { ADMIN, MANAGER_JR, User } from "../../utility/types";
 
 jest.mock("react-router-dom", () => {
     return {
@@ -11,22 +12,22 @@ jest.mock("react-router-dom", () => {
     };
 });
 
-const mockUser = {
-    id: 1,
+const mockUser: User = {
+    id: "1",
     firstName: "John",
     lastName: "Smith",
     email: "John@email.com",
-    jobRole: "Manager",
-    systemRole: "Admin",
+    jobRole: MANAGER_JR,
+    systemRole: ADMIN,
 };
 
 describe("MyDetails", () => {
     it("renders correctly with currentUser's details", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockUser]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({ currentUser: mockUser });
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
         const { container } = render(
             <ReactDom.MemoryRouter>
@@ -53,10 +54,10 @@ describe("MyDetails", () => {
 
     it("should have LinkButton that links to /edit/user/:userId when data successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockUser]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({ currentUser: mockUser });
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
         render(
             <ReactDom.MemoryRouter>

@@ -16,13 +16,14 @@ import { addUser, addDirectReport } from "../../utility/apiRequests";
 import styles from "./AddStaff.module.css";
 
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { MIDLEVEL_DEVELOPER, STAFF_USER, jobRoleS, User } from "../../utility/types";
+import { MIDLEVEL_DEVELOPER, STAFF_USER, JOB_ROLES, User } from "../../utility/types";
+import { AppOutletContext } from "../AppWrapper/AppWrapper";
 
 export const AddStaff = () => {
     useIsAdminOrManager();
     const navigate = useNavigate();
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [currentUser, setShowToast] = useOutletContext();
+
+    const { currentUser, setShowToast } = useOutletContext<AppOutletContext>();
     const [userDetails, setUserDetails] = useImmer<User>({
         firstName: "",
         lastName: "",
@@ -123,7 +124,7 @@ export const AddStaff = () => {
                         type="password"
                     />
                     <Select
-                        options={getSelectOptionsFromArray(jobRoleS)}
+                        options={getSelectOptionsFromArray(JOB_ROLES)}
                         labelText="Job role"
                         className={styles.item}
                         value={userDetails.jobRole}

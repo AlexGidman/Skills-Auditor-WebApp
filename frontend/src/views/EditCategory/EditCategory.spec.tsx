@@ -1,10 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import { wait } from "@testing-library/user-event/dist/utils";
 import { EditCategory } from "./EditCategory";
 import React from "react";
+import { Category } from "../../utility/types";
 
 jest.mock("react-router-dom", () => {
     return {
@@ -14,7 +15,7 @@ jest.mock("react-router-dom", () => {
     };
 });
 
-const mockCategory1 = {
+const mockCategory1: Category = {
     id: "1",
     name: "Category1",
 };
@@ -22,10 +23,13 @@ const mockCategory1 = {
 describe("EditCategory", () => {
     it("renders correctly when data retrieval successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getCategory.mockImplementation(() =>
-            Promise.resolve({ data: mockCategory1 }),
+            Promise.resolve({ ...mockApiResponse, data: mockCategory1 }),
         );
 
         const { container } = render(
@@ -49,10 +53,13 @@ describe("EditCategory", () => {
 
     it("should have Save changes button that becomes enabled when form has changed", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getCategory.mockImplementation(() =>
-            Promise.resolve({ data: mockCategory1 }),
+            Promise.resolve({ ...mockApiResponse, data: mockCategory1 }),
         );
 
         render(
@@ -88,14 +95,17 @@ describe("EditCategory", () => {
 
     it("should have pass user params to updateDetails API when Save changes button clicked", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getCategory.mockImplementation(() =>
-            Promise.resolve({ data: mockCategory1 }),
+            Promise.resolve({ ...mockApiResponse, data: mockCategory1 }),
         );
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.updateCategory.mockImplementation(() =>
-            Promise.resolve({ data: "success" }),
+            Promise.resolve({ ...mockApiResponse, data: "success" }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -114,14 +124,17 @@ describe("EditCategory", () => {
         const mockNavigate = jest.fn();
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getCategory.mockImplementation(() =>
-            Promise.resolve({ data: mockCategory1 }),
+            Promise.resolve({ ...mockApiResponse, data: mockCategory1 }),
         );
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.updateCategory.mockImplementation(() =>
-            Promise.resolve({ data: "success" }),
+            Promise.resolve({ ...mockApiResponse, data: "success" }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -142,10 +155,13 @@ describe("EditCategory", () => {
         const mockNavigate = jest.fn();
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getCategory.mockImplementation(() =>
-            Promise.resolve({ data: mockCategory1 }),
+            Promise.resolve({ ...mockApiResponse, data: mockCategory1 }),
         );
 
         mockApiRequests.updateCategory.mockImplementation(() => Promise.reject(mockError));
@@ -168,10 +184,13 @@ describe("EditCategory", () => {
         const mockNavigate = jest.fn();
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getCategory.mockImplementation(() =>
-            Promise.resolve({ data: mockCategory1 }),
+            Promise.resolve({ ...mockApiResponse, data: mockCategory1 }),
         );
         render(
             <ReactDom.MemoryRouter>

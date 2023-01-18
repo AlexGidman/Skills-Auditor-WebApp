@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { MySkills } from "./MySkills";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import React from "react";
 import { Category, Skill, StaffSkill } from "../../utility/types";
@@ -34,14 +34,17 @@ const mockStaffSkill1: StaffSkill = {
 describe("MySkills", () => {
     it("renders correctly when data successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getAllStaffSkills.mockImplementation(() =>
-            Promise.resolve({ data: [mockStaffSkill1] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockStaffSkill1] }),
         );
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.deleteStaffSkill.mockImplementation(() =>
-            Promise.resolve({ data: "Success" }),
+            Promise.resolve({ ...mockApiResponse, data: "Success" }),
         );
         const { container } = render(
             <ReactDom.MemoryRouter>
@@ -73,7 +76,10 @@ describe("MySkills", () => {
 
     it("renders correctly when data retrieval fails", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         mockApiRequests.getAllStaffSkills.mockImplementation(() => Promise.reject(mockError));
         mockApiRequests.deleteStaffSkill.mockImplementation(() => Promise.reject(mockError));
         const { container } = render(

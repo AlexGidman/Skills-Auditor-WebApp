@@ -9,6 +9,7 @@ import { useAPI } from "../../utility/helper";
 import styles from "./AddCategory.module.css";
 import { addCategory } from "../../utility/apiRequests";
 import cx from "classnames";
+import { AppOutletContext } from "../AppWrapper/AppWrapper";
 
 export const AddCategory = () => {
     return (
@@ -37,8 +38,7 @@ const Form = () => {
     };
 
     const navigate = useNavigate();
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [, setShowToast] = useOutletContext();
+    const { setShowToast } = useOutletContext<AppOutletContext>();
 
     const [formChanged, setFormChanged] = useState(false);
     const [navigateBack, setNavigateBack] = useState(false);

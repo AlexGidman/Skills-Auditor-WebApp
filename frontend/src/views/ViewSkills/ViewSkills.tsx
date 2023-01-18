@@ -9,11 +9,12 @@ import styles from "./ViewSkills.module.css";
 import { ListView } from "../../components/ListView/ListView";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { Skill } from "../../utility/types";
+import { AppOutletContext } from "../AppWrapper/AppWrapper";
 
 export const ViewSkills = () => {
     useIsAdminOrManager();
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [, setShowToast] = useOutletContext();
+    const { setShowToast } = useOutletContext<AppOutletContext>();
+
     const navigate = useNavigate();
     const [selectedSkill, setSelectedSkill] = useState<string>();
     const [refresh, setRefresh] = useState(false);

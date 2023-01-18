@@ -10,12 +10,13 @@ import { getStaffSkill, updateStaffSkill, getAllDirectReports } from "../../util
 import styles from "./EditStaffSkill.module.css";
 
 import { useNavigate, useParams, useOutletContext } from "react-router-dom";
-import { DirectReport, skillLevelS, StaffSkill } from "../../utility/types";
+import { DirectReport, SKILL_LEVELS, StaffSkill } from "../../utility/types";
+import { AppOutletContext } from "../AppWrapper/AppWrapper";
 
 export const EditStaffSkill = () => {
     const { staffskillId } = useParams();
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [currentUser, setShowToast] = useOutletContext();
+    const { currentUser, setShowToast } = useOutletContext<AppOutletContext>();
+
     const navigate = useNavigate();
 
     const { data, loading, error } = useAPI<StaffSkill>(getStaffSkill, [staffskillId]);
@@ -62,8 +63,8 @@ interface FormProps {
 
 const Form = ({ data }: FormProps) => {
     const navigate = useNavigate();
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [, setShowToast] = useOutletContext();
+    const { setShowToast } = useOutletContext<AppOutletContext>();
+
     const [skillLevel, setSkillLevel] = useState(data.skillLevel);
     const [skillNotes, setSkillNotes] = useState(data.notes);
 
@@ -106,7 +107,10 @@ const Form = ({ data }: FormProps) => {
             <Select
                 className={styles.item}
                 labelText="Select a level"
-                options={getSelectOptionsFromArray(["1", "2", "3", "4", "5"], skillLevelS)}
+                options={getSelectOptionsFromArray(
+                    ["1", "2", "3", "4", "5"],
+                    Array.from(SKILL_LEVELS),
+                )}
                 value={skillLevel}
                 onChange={(e) => {
                     setSkillLevel(e.target.value);

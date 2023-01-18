@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 
 import { wait } from "@testing-library/user-event/dist/utils";
@@ -36,12 +36,17 @@ const mockSkill1: Skill = {
 describe("EditSkill", () => {
     it("renders correctly when data retrieval successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getSkill.mockImplementation(() => Promise.resolve({ data: mockSkill1 }));
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
+        mockApiRequests.getSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: mockSkill1 }),
+        );
+
         mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
         );
         const { container } = render(
             <ReactDom.MemoryRouter>
@@ -69,12 +74,17 @@ describe("EditSkill", () => {
 
     it("should have Save changes button that becomes enabled when form has changed", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getSkill.mockImplementation(() => Promise.resolve({ data: mockSkill1 }));
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
+        mockApiRequests.getSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: mockSkill1 }),
+        );
+
         mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -123,15 +133,22 @@ describe("EditSkill", () => {
 
     it("should have pass user params to updateDetails API when Save changes button clicked", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getSkill.mockImplementation(() => Promise.resolve({ data: mockSkill1 }));
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
+        mockApiRequests.getSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: mockSkill1 }),
         );
-        // @ts-ignore TODO: fix this
-        mockApiRequests.updateSkill.mockImplementation(() => Promise.resolve("success"));
+
+        mockApiRequests.getAllCategories.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
+        );
+
+        mockApiRequests.updateSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: "Success" }),
+        );
         render(
             <ReactDom.MemoryRouter>
                 <EditSkill />
@@ -150,15 +167,22 @@ describe("EditSkill", () => {
         const mockNavigate = jest.fn();
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getSkill.mockImplementation(() => Promise.resolve({ data: mockSkill1 }));
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
+        mockApiRequests.getSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: mockSkill1 }),
         );
-        // @ts-ignore TODO: fix this
-        mockApiRequests.updateSkill.mockImplementation(() => Promise.resolve("success"));
+
+        mockApiRequests.getAllCategories.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
+        );
+
+        mockApiRequests.updateSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: "Success" }),
+        );
         render(
             <ReactDom.MemoryRouter>
                 <EditSkill />
@@ -179,12 +203,17 @@ describe("EditSkill", () => {
         const mockNavigate = jest.fn();
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getSkill.mockImplementation(() => Promise.resolve({ data: mockSkill1 }));
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
+        mockApiRequests.getSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: mockSkill1 }),
+        );
+
         mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
         );
         mockApiRequests.updateSkill.mockImplementation(() => Promise.reject(mockError));
         render(
@@ -207,12 +236,17 @@ describe("EditSkill", () => {
         const mockNavigate = jest.fn();
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getSkill.mockImplementation(() => Promise.resolve({ data: mockSkill1 }));
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
+        mockApiRequests.getSkill.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: mockSkill1 }),
+        );
+
         mockApiRequests.getAllCategories.mockImplementation(() =>
-            Promise.resolve({ data: [mockCategory1, mockCategory2] }),
+            Promise.resolve({ ...mockApiResponse, data: [mockCategory1, mockCategory2] }),
         );
         render(
             <ReactDom.MemoryRouter>

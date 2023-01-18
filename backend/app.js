@@ -17,7 +17,7 @@ const loginRouter = require("./routes/login");
 const directReportRouter = require("./routes/direct_report");
 
 const store = new ExpressBrute.MemoryStore();
-const bruteforce = new ExpressBrute(store, { freeRetries: 10, minWait: 100 }); // 10 attempts, 10 second wait
+const bruteforce = new ExpressBrute(store, { freeRetries: 10, minWait: 10000 }); // 10 attempts, 10 second wait
 
 const app = express();
 app.use(express.json({ limit: "1kb" }));

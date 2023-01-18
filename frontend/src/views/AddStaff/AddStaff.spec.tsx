@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import { AddStaff } from "./AddStaff";
 import { MIDLEVEL_DEVELOPER, STAFF_USER } from "../../utility/types";
@@ -18,7 +18,10 @@ jest.mock("react-router-dom", () => {
 describe("AddStaff", () => {
     beforeEach(() => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => jest.fn());
     });
     it("renders correctly", async () => {
@@ -84,9 +87,8 @@ describe("AddStaff", () => {
     });
 
     it("should pass user params to addUser API when Add Staff button clicked", async () => {
-        // @ts-ignore TODO fix this implementation
         mockApiRequests.addUser.mockImplementation(() =>
-            Promise.resolve({ data: { id: 5, message: "Success" } }),
+            Promise.resolve({ ...mockApiResponse, data: { id: 5, message: "Success" } }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -115,12 +117,17 @@ describe("AddStaff", () => {
 
     it("should call addDirectReport API when Add Staff button clicked following addUser called and successfully returns data", async () => {
         const mockNewUserId = 5;
-        // @ts-ignore TODO fix this implementation
+
         mockApiRequests.addUser.mockImplementation(() =>
-            Promise.resolve({ data: { id: mockNewUserId, message: "Success" } }),
+            Promise.resolve({
+                ...mockApiResponse,
+                data: { id: mockNewUserId, message: "Success" },
+            }),
         );
-        // @ts-ignore TODO fix this implementation
-        mockApiRequests.addDirectReport.mockImplementation(() => Promise.resolve("Success"));
+
+        mockApiRequests.addDirectReport.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: "Success" }),
+        );
         render(
             <ReactDom.MemoryRouter>
                 <AddStaff />
@@ -174,12 +181,14 @@ describe("AddStaff", () => {
     it("should redirect to previous page when Add Staff button clicked and API call successful", async () => {
         const mockNavigate = jest.fn();
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
-        // @ts-ignore TODO fix this implementation
+
         mockApiRequests.addUser.mockImplementation(() =>
-            Promise.resolve({ data: { id: 5, message: "Success" } }),
+            Promise.resolve({ ...mockApiResponse, data: { id: 5, message: "Success" } }),
         );
-        // @ts-ignore TODO fix this implementation
-        mockApiRequests.addDirectReport.mockImplementation(() => Promise.resolve("Success"));
+
+        mockApiRequests.addDirectReport.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: "Success" }),
+        );
         render(
             <ReactDom.MemoryRouter>
                 <AddStaff />
@@ -200,9 +209,9 @@ describe("AddStaff", () => {
     it("should redirect to previous page when Add Staff button clicked and API ca;; fails", async () => {
         const mockNavigate = jest.fn();
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
-        // @ts-ignore TODO fix this implementation
+
         mockApiRequests.addUser.mockImplementation(() =>
-            Promise.resolve({ data: { id: 5, message: "Success" } }),
+            Promise.resolve({ ...mockApiResponse, data: { id: 5, message: "Success" } }),
         );
         mockApiRequests.addDirectReport.mockImplementation(() => Promise.reject(mockError));
         render(

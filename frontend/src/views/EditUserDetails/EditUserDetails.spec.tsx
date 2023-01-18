@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockAdminUser, mockApiRequests, mockError } from "../../setupTests";
+import { mockAdminUser, mockApiRequests, mockApiResponse, mockError } from "../../setupTests";
 import * as ReactDom from "react-router-dom";
 import { EditUserDetails } from "./EditUserDetails";
-import { ADMIN, MANAGER_JR, SENIOR_DEVELOPER, STAFF_USER } from "../../utility/types";
+import { ADMIN, MANAGER_JR, SENIOR_DEVELOPER, STAFF_USER, User } from "../../utility/types";
 import { wait } from "@testing-library/user-event/dist/utils";
 import React from "react";
 
@@ -15,8 +15,8 @@ jest.mock("react-router-dom", () => {
     };
 });
 
-const mockUser = {
-    id: 1,
+const mockUser: User = {
+    id: "1",
     firstName: "John",
     lastName: "Smith",
     email: "John@email.com",
@@ -26,15 +26,19 @@ const mockUser = {
 
 describe("EditUserDetails", () => {
     beforeEach(() => {
-        // @ts-ignore TODO: fix this
-        mockApiRequests.getAllDirectReports.mockImplementation(() => Promise.resolve({ data: [] }));
+        mockApiRequests.getAllDirectReports.mockImplementation(() =>
+            Promise.resolve({ ...mockApiResponse, data: [] }),
+        );
     });
     it("renders correctly when data retrieval successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
         const { container } = render(
             <ReactDom.MemoryRouter>
@@ -71,10 +75,13 @@ describe("EditUserDetails", () => {
 
     it("should have Save changes button that becomes enabled when form is valid and has changed", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -149,10 +156,13 @@ describe("EditUserDetails", () => {
 
     it("should have Save changes button that becomes disabled when form is invalid", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -199,14 +209,17 @@ describe("EditUserDetails", () => {
 
     it("should have pass user params to updateDetails API when Save changes button clicked", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.updateUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: "Success" }),
+            Promise.resolve({ ...mockApiResponse, data: "Success" }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -223,7 +236,7 @@ describe("EditUserDetails", () => {
         expect(mockApiRequests.updateUserDetails).toHaveBeenCalled();
         expect(mockApiRequests.updateUserDetails).toHaveBeenLastCalledWith(
             { headers: { authorization: "Bearer token" } },
-            1,
+            "1",
             "Johna",
             "Smith",
             "John@email.com",
@@ -237,14 +250,17 @@ describe("EditUserDetails", () => {
         const mockNavigate = jest.fn();
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
-        // @ts-ignore TODO: fix this
+
         mockApiRequests.updateUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: "Success" }),
+            Promise.resolve({ ...mockApiResponse, data: "Success" }),
         );
         render(
             <ReactDom.MemoryRouter>
@@ -266,10 +282,13 @@ describe("EditUserDetails", () => {
         const mockNavigate = jest.fn();
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
         mockApiRequests.updateUserDetails.mockImplementation(() => Promise.reject(mockError));
         render(
@@ -293,10 +312,13 @@ describe("EditUserDetails", () => {
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
 
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
-        // @ts-ignore TODO: fix this
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
+
         mockApiRequests.getUserDetails.mockImplementation(() =>
-            Promise.resolve({ data: mockUser }),
+            Promise.resolve({ ...mockApiResponse, data: mockUser }),
         );
         render(
             <ReactDom.MemoryRouter>

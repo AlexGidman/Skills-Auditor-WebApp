@@ -13,6 +13,7 @@ import { useAPI, getSelectOptionsFromArray } from "../../utility/helper";
 import styles from "./AddSkill.module.css";
 import { addSkill, getAllCategories } from "../../utility/apiRequests";
 import { Category } from "../../utility/types";
+import { AppOutletContext } from "../AppWrapper/AppWrapper";
 
 export const AddSkill = () => {
     const { data, loading, error } = useAPI<Category[]>(getAllCategories, []);
@@ -51,8 +52,8 @@ const Form = ({ data }: FormProps) => {
     };
 
     const navigate = useNavigate();
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [, setShowToast] = useOutletContext();
+
+    const { setShowToast } = useOutletContext<AppOutletContext>();
 
     const [formChanged, setFormChanged] = useState(false);
     const [navigateBack, setNavigateBack] = useState(false);

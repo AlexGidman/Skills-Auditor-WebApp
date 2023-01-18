@@ -14,7 +14,10 @@ jest.mock("react-router-dom", () => {
 describe("AddCategory", () => {
     it("renders correctly when data successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         const { container } = render(
             <ReactDom.MemoryRouter>
                 <AddCategory />
