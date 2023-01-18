@@ -12,6 +12,19 @@ import { getUserFromToken } from "../../utility/apiRequests";
 import { TOKEN_COOKIE, User } from "../../utility/types";
 import styles from "./AppWrapper.module.css";
 
+export type AppOutletContext = {
+    currentUser: User;
+    setShowToast: React.Dispatch<
+        React.SetStateAction<
+            | {
+                  error?: string | undefined;
+                  success?: string | undefined;
+              }
+            | undefined
+        >
+    >;
+};
+
 export const AppWrapper = () => {
     const [cookies] = useCookies([TOKEN_COOKIE]);
     const processLogout = useLogout();
@@ -36,7 +49,8 @@ export const AppWrapper = () => {
     }, [showToast]);
 
     if (error) return <ErrorMessage error={error} />;
-    if (currentUser)
+    if (currentUser) {
+        const outletContext: AppOutletContext = { currentUser, setShowToast };
         return (
             <>
                 <header className={styles.header}>
@@ -52,9 +66,10 @@ export const AppWrapper = () => {
                 </header>
                 <NavBar systemRole={currentUser.systemRole} className={styles.nav} />
                 <div className={styles.content}>
-                    <Outlet context={[currentUser, setShowToast]} />
+                    <Outlet context={outletContext} />
                 </div>
             </>
         );
+    }
     return <LoadingPlaceholder />;
 };

@@ -30,7 +30,10 @@ const mockCategories: Category[] = [
 describe("AddSkill", () => {
     it("renders correctly when data successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         // @ts-ignore TODO: fix this
         mockApiRequests.getAllCategories.mockImplementation(() =>
             Promise.resolve({ data: mockCategories }),
@@ -61,7 +64,10 @@ describe("AddSkill", () => {
 
     it("renders correctly when error", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         mockApiRequests.getAllCategories.mockImplementation(() => Promise.reject(mockError));
         const { container } = render(
             <ReactDom.MemoryRouter>

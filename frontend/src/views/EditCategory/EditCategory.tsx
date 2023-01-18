@@ -10,6 +10,7 @@ import styles from "./EditCategory.module.css";
 
 import { useNavigate, useParams, useOutletContext } from "react-router-dom";
 import { Category } from "../../utility/types";
+import { AppOutletContext } from "../AppWrapper/AppWrapper";
 
 export const EditCategory = () => {
     useIsAdminOrManager();
@@ -40,8 +41,8 @@ interface FormProps {
 
 const Form = ({ data }: FormProps) => {
     const navigate = useNavigate();
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [, setShowToast] = useOutletContext();
+    const { setShowToast } = useOutletContext<AppOutletContext>();
+
     const [categoryDescription, setCategoryDescription] = useState(data.name);
 
     const [formChanged, setFormChanged] = useState(false);

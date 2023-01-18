@@ -15,6 +15,7 @@ import {
 } from "./types";
 import { useCookies } from "react-cookie";
 import { AxiosResponse, AxiosError } from "axios";
+import { AppOutletContext } from "../views/AppWrapper/AppWrapper";
 
 export const useLogout = () => {
     const [, , removeCookie] = useCookies([TOKEN_COOKIE]);
@@ -134,8 +135,7 @@ export const isValidUser = (user: User) => {
 };
 
 export const useIsAdminOrManager = () => {
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [currentUser, setShowToast] = useOutletContext();
+    const { currentUser, setShowToast } = useOutletContext<AppOutletContext>();
     const navigate = useNavigate();
 
     useEffect(() => {

@@ -24,7 +24,7 @@ const mockUser: User = {
 describe("MyDetails", () => {
     it("renders correctly with currentUser's details", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockUser]);
+        mockUseOutletContext.mockReturnValue({ currentUser: mockUser });
         // @ts-ignore TODO: fix this
         mockApiRequests.getUserDetails.mockImplementation(() =>
             Promise.resolve({ data: mockUser }),
@@ -54,7 +54,7 @@ describe("MyDetails", () => {
 
     it("should have LinkButton that links to /edit/user/:userId when data successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockUser]);
+        mockUseOutletContext.mockReturnValue({ currentUser: mockUser });
         // @ts-ignore TODO: fix this
         mockApiRequests.getUserDetails.mockImplementation(() =>
             Promise.resolve({ data: mockUser }),

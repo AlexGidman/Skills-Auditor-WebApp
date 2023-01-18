@@ -20,11 +20,11 @@ import {
 } from "../../utility/apiRequests";
 import styles from "./ViewStaff.module.css";
 import { DirectReport, StaffSkill } from "../../utility/types";
+import { AppOutletContext } from "../AppWrapper/AppWrapper";
 
 export const ViewStaff = () => {
     useIsAdminOrManager();
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [currentUser] = useOutletContext();
+    const { currentUser } = useOutletContext<AppOutletContext>();
 
     const { data, loading, error } = useAPI<DirectReport[]>(getAllDirectReports, [currentUser.id]);
     if (loading) return <LoadingPlaceholder />;
@@ -57,8 +57,7 @@ const Form = ({ data }: FormProps) => {
     const [selectedStaffSkill, setSelectedStaffSkill] = useState<StaffSkill>();
 
     const [refresh, setRefresh] = useState(false);
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [, setShowToast] = useOutletContext();
+    const { setShowToast } = useOutletContext<AppOutletContext>();
     const navigate = useNavigate();
 
     const {

@@ -18,12 +18,12 @@ import {
 import styles from "./AddStaffSkill.module.css";
 import { getAllSkills, addUserSkill, getAllDirectReports } from "../../utility/apiRequests";
 import { DirectReport, Skill, SKILL_LEVELS } from "../../utility/types";
+import { AppOutletContext } from "../AppWrapper/AppWrapper";
 
 export const AddStaffSkill = () => {
     const { userId } = useParams();
     const navigate = useNavigate();
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [currentUser, setShowToast] = useOutletContext();
+    const { currentUser, setShowToast } = useOutletContext<AppOutletContext>();
 
     const {
         data: directReportsData,
@@ -60,7 +60,7 @@ export const AddStaffSkill = () => {
                 <h1>Add Staff Skill</h1>
             </header>
             <section>
-                <Form data={sortedSkills} userId={userId ? parseInt(userId) : currentUser.id} />
+                <Form data={sortedSkills} userId={userId || currentUser.id} />
             </section>
         </>
     );
@@ -68,12 +68,12 @@ export const AddStaffSkill = () => {
 
 interface FormProps {
     data: Skill[] | null;
-    userId: string;
+    userId?: string;
 }
 
 const Form = ({ data, userId }: FormProps) => {
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [, setShowToast] = useOutletContext();
+    const { setShowToast } = useOutletContext<AppOutletContext>();
+
     const [skillLevelValue, setskillLevelValue] = useState<string>();
     const [inputValues, setInputValues] = useImmer({
         userId: userId,
@@ -131,12 +131,14 @@ const Form = ({ data, userId }: FormProps) => {
                 />
             )}
             <Select
-                options={getSelectOptionsFromArray(SKILL_LEVELS)}
+                options={getSelectOptionsFromArray(Array.from(SKILL_LEVELS))}
                 labelText="Select a level"
                 className={styles.item}
                 value={skillLevelValue}
                 onChange={(event) => {
-                    let value = convertSkillLevelName(event.target.value);
+                    let value = convertSkillLevelName(
+                        event.target.value as typeof SKILL_LEVELS[number],
+                    );
                     setskillLevelValue(event.target.value);
                     setInputValues((draft) => {
                         draft.skillLevel = value;

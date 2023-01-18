@@ -31,7 +31,10 @@ describe("EditUserDetails", () => {
     });
     it("renders correctly when data retrieval successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         // @ts-ignore TODO: fix this
         mockApiRequests.getUserDetails.mockImplementation(() =>
             Promise.resolve({ data: mockUser }),
@@ -71,7 +74,10 @@ describe("EditUserDetails", () => {
 
     it("should have Save changes button that becomes enabled when form is valid and has changed", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         // @ts-ignore TODO: fix this
         mockApiRequests.getUserDetails.mockImplementation(() =>
             Promise.resolve({ data: mockUser }),
@@ -149,7 +155,10 @@ describe("EditUserDetails", () => {
 
     it("should have Save changes button that becomes disabled when form is invalid", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         // @ts-ignore TODO: fix this
         mockApiRequests.getUserDetails.mockImplementation(() =>
             Promise.resolve({ data: mockUser }),
@@ -199,7 +208,10 @@ describe("EditUserDetails", () => {
 
     it("should have pass user params to updateDetails API when Save changes button clicked", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         // @ts-ignore TODO: fix this
         mockApiRequests.getUserDetails.mockImplementation(() =>
             Promise.resolve({ data: mockUser }),
@@ -223,7 +235,7 @@ describe("EditUserDetails", () => {
         expect(mockApiRequests.updateUserDetails).toHaveBeenCalled();
         expect(mockApiRequests.updateUserDetails).toHaveBeenLastCalledWith(
             { headers: { authorization: "Bearer token" } },
-            1,
+            "1",
             "Johna",
             "Smith",
             "John@email.com",
@@ -237,7 +249,10 @@ describe("EditUserDetails", () => {
         const mockNavigate = jest.fn();
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         // @ts-ignore TODO: fix this
         mockApiRequests.getUserDetails.mockImplementation(() =>
             Promise.resolve({ data: mockUser }),
@@ -266,7 +281,10 @@ describe("EditUserDetails", () => {
         const mockNavigate = jest.fn();
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         // @ts-ignore TODO: fix this
         mockApiRequests.getUserDetails.mockImplementation(() =>
             Promise.resolve({ data: mockUser }),
@@ -293,7 +311,10 @@ describe("EditUserDetails", () => {
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => mockNavigate);
 
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         // @ts-ignore TODO: fix this
         mockApiRequests.getUserDetails.mockImplementation(() =>
             Promise.resolve({ data: mockUser }),

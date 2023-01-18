@@ -18,7 +18,10 @@ jest.mock("react-router-dom", () => {
 describe("AddStaff", () => {
     beforeEach(() => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => jest.fn());
     });
     it("renders correctly", async () => {

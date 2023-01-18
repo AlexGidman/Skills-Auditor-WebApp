@@ -9,11 +9,12 @@ import styles from "./ViewCategories.module.css";
 import { ListView } from "../../components/ListView/ListView";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { Category } from "../../utility/types";
+import { AppOutletContext } from "../AppWrapper/AppWrapper";
 
 export const ViewCategories = () => {
     useIsAdminOrManager();
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [, setShowToast] = useOutletContext();
+    const { setShowToast } = useOutletContext<AppOutletContext>();
+
     const navigate = useNavigate();
     const [selectedCategory, setSelectedCategory] = useState<string>();
     const [refresh, setRefresh] = useState(false);

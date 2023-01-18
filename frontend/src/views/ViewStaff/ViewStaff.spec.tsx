@@ -59,7 +59,10 @@ const mockReports: DirectReport[] = [
 describe("ViewStaff", () => {
     beforeEach(() => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         jest.spyOn(ReactDom, "useNavigate").mockImplementation(() => jest.fn());
     });
 

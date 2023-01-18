@@ -34,7 +34,10 @@ const mockStaffSkill1: StaffSkill = {
 describe("MySkills", () => {
     it("renders correctly when data successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         // @ts-ignore TODO: fix this
         mockApiRequests.getAllStaffSkills.mockImplementation(() =>
             Promise.resolve({ data: [mockStaffSkill1] }),
@@ -73,7 +76,10 @@ describe("MySkills", () => {
 
     it("renders correctly when data retrieval fails", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         mockApiRequests.getAllStaffSkills.mockImplementation(() => Promise.reject(mockError));
         mockApiRequests.deleteStaffSkill.mockImplementation(() => Promise.reject(mockError));
         const { container } = render(

@@ -30,7 +30,10 @@ describe("AddStaffSkill", () => {
     });
     it("renders correctly when data successful", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         // @ts-ignore TODO: fix this
         mockApiRequests.getAllSkills.mockImplementation(() =>
             Promise.resolve({ data: [mockSkill1] }),
@@ -61,7 +64,10 @@ describe("AddStaffSkill", () => {
 
     it("renders correctly when data retrieval fails", async () => {
         const mockUseOutletContext = ReactDom.useOutletContext as jest.Mock<any, any>;
-        mockUseOutletContext.mockReturnValue([mockAdminUser, jest.fn()]);
+        mockUseOutletContext.mockReturnValue({
+            currentUser: mockAdminUser,
+            setShowToast: jest.fn(),
+        });
         mockApiRequests.getAllSkills.mockImplementation(() => Promise.reject(mockError));
         const { container } = render(
             <ReactDom.MemoryRouter>

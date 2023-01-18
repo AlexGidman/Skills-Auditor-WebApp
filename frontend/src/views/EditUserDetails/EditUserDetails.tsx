@@ -10,15 +10,15 @@ import { Select } from "../../components/Select/Select";
 
 import { useAPI, getAssignableSystemRoleOptions } from "../../utility/helper";
 import { getUserDetails, getAllDirectReports, updateUserDetails } from "../../utility/apiRequests";
-import { DirectReport, JOB_ROLES, User } from "../../utility/types";
+import { DirectReport, JOB_ROLES, SYSTEM_ROLES, User } from "../../utility/types";
 import { getSelectOptionsFromArray, isValidUser } from "../../utility/helper";
 import styles from "./EditUserDetails.module.css";
+import { AppOutletContext } from "../AppWrapper/AppWrapper";
 
 export const EditUserDetails = () => {
     const { userId } = useParams();
     const navigate = useNavigate();
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [currentUser, setShowToast] = useOutletContext();
+    const { currentUser, setShowToast } = useOutletContext<AppOutletContext>();
 
     const {
         data: directReportsData,
@@ -27,7 +27,7 @@ export const EditUserDetails = () => {
     } = useAPI<DirectReport[]>(getAllDirectReports, [currentUser.id]);
 
     useEffect(() => {
-        if (userId && currentUser.id.toString() !== userId.toString()) {
+        if (userId && currentUser?.id !== userId) {
             if (
                 !!directReportsError ||
                 (!!directReportsData &&
@@ -66,8 +66,8 @@ interface FormProps {
 
 const Form = ({ data }: FormProps) => {
     const navigate = useNavigate();
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [currentUser, setShowToast] = useOutletContext();
+    const { currentUser, setShowToast } = useOutletContext<AppOutletContext>();
+
     const [userDetails, setUserDetails] = useImmer({
         id: data?.id,
         firstName: data?.firstName,
@@ -144,13 +144,13 @@ const Form = ({ data }: FormProps) => {
                 required
             />
             <Select
-                options={getSelectOptionsFromArray(JOB_ROLES)}
+                options={getSelectOptionsFromArray(Array.from(JOB_ROLES))}
                 labelText="Job role"
                 className={styles.item}
                 value={userDetails.jobRole}
                 onChange={(event) => {
                     setUserDetails((draft) => {
-                        draft.jobRole = event.target.value;
+                        draft.jobRole = event.target.value as typeof JOB_ROLES[number];
                     });
                 }}
                 required
@@ -175,7 +175,7 @@ const Form = ({ data }: FormProps) => {
                 value={userDetails.systemRole}
                 onChange={(event) => {
                     setUserDetails((draft) => {
-                        draft.systemRole = event.target.value;
+                        draft.systemRole = event.target.value as typeof SYSTEM_ROLES[number];
                     });
                 }}
                 required

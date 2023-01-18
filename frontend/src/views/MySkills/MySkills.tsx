@@ -14,10 +14,11 @@ import { getAllStaffSkills, deleteStaffSkill } from "../../utility/apiRequests";
 import styles from "./MySkills.module.css";
 import { ListView } from "../../components/ListView/ListView";
 import { StaffSkill } from "../../utility/types";
+import { AppOutletContext } from "../AppWrapper/AppWrapper";
 
 export const MySkills = () => {
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [currentUser] = useOutletContext();
+    const { currentUser } = useOutletContext<AppOutletContext>();
+
     const { data, loading, error } = useAPI<StaffSkill[]>(getAllStaffSkills, [currentUser.id]);
     if (loading) return <LoadingPlaceholder />;
 
@@ -43,8 +44,8 @@ interface FormProps {
 
 const Form = ({ data, dataError }: FormProps) => {
     const navigate = useNavigate();
-    // @ts-ignore TODO fix type for AppOutletContext here
-    const [, setShowToast] = useOutletContext();
+    const { setShowToast } = useOutletContext<AppOutletContext>();
+
     const [selectedSkill, setSelectedSkill] = useState(data ? data[0].id : "");
     const [skillLevel, setSkillLevel] = useState(
         data ? formatSkillLevel(data[0].skillLevel) : null,
